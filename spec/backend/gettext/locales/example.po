@@ -1,0 +1,2332 @@
+# Taken from poedit's translation for arabic.
+# https://github.com/vslavik/poedit/blob/8b5eae3ed241d68496a4544969c8415929856796/locales/ar.po
+msgid ""
+msgstr ""
+"Project-Id-Version: poedit\n"
+"Report-Msgid-Bugs-To: help@poedit.net\n"
+"POT-Creation-Date: 2021-06-03 11:36+0200\n"
+"PO-Revision-Date: 2021-06-03 09:36\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar_SA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);\n"
+"X-Crowdin-Project: poedit\n"
+"X-Crowdin-Project-ID: 53425\n"
+"X-Crowdin-Language: ar\n"
+"X-Crowdin-File: /locales/poedit.pot\n"
+"X-Crowdin-File-ID: 3\n"
+
+msgid "Hide this notification message"
+msgstr "أخفِ رسالة الإخطار هذه"
+
+msgid "Don’t Show Again"
+msgstr "عدم العرض مجدّدًا"
+
+msgid "Don’t show again"
+msgstr "عدم العرض مجدّدًا"
+
+#, c-format
+msgid "(New: %i, obsolete: %i)"
+msgstr "(الجديدة: %i، البائدة: %i)"
+
+msgid "Collecting source files…"
+msgstr "جاري تجميع ملفّات المصدر…"
+
+msgid "Extracting translatable strings…"
+msgstr "جاري إستخراج مقاطع الترجمة…"
+
+msgid "Failed to load file with extracted translations."
+msgstr ""
+
+msgid "Merging differences…"
+msgstr "جاري دمج الاختلافات…"
+
+msgid "Updating translations"
+msgstr "تحديث الترجمات"
+
+#, c-format
+msgid "“%s” is not a valid POT file."
+msgstr "الملفّ ”%s“ ليس ملفّ POT صالح."
+
+#, c-format
+msgid "Malformed header: “%s”"
+msgstr "التّرويسة فاسدة: ”%s“"
+
+msgid "PO Translation Files"
+msgstr "ملفّات PO ترجميّة"
+
+msgid "POT Translation Templates"
+msgstr "ملفّات POT قالبيّة"
+
+msgid "XLIFF Translation Files"
+msgstr "ملفات ترجمة XLIFF"
+
+msgid "All Translation Files"
+msgstr "كلّ ملفّات التّرجمة"
+
+#, c-format
+msgid "File “%s” is in unsupported format."
+msgstr "صيغة الملف غير مدعومة بنسبة \"%s\"."
+
+#, c-format
+msgid "%i line of file “%s” was not loaded correctly."
+msgid_plural "%i lines of file “%s” were not loaded correctly."
+msgstr[0] "%i سطر ملف ““%s”” لم يتم تحميله بشكل صحيح."
+msgstr[1] "%i سطر الملف ““%s”” لم يتم تحميله بشكل صحيح."
+msgstr[2] "%i سطر الملف ““%s”” لم يتم تحميله بشكل صحيح."
+msgstr[3] "%i سطر الملف ““%s”” لم يتم تحميله بشكل صحيح."
+msgstr[4] "%i سطر الملف ““%s”” لم يتم تحميله بشكل صحيح."
+msgstr[5] "%i آسطر الملف ““%s”” لم يتم تحميله بشكل صحيح."
+
+#, c-format
+msgid "Line %d of file “%s” is corrupted (not valid %s data)."
+msgstr "السطر %d من الملف “%s” معطوب (بيانات %s غير صالحة)."
+
+msgid "Broken PO file: singular form msgstr used together with msgid_plural"
+msgstr ""
+
+msgid "Broken PO file: plural form msgstr used without msgid_plural"
+msgstr ""
+
+msgid ""
+"There were errors when loading the file. Some data may be missing or "
+"corrupted as the result."
+msgstr ""
+
+#, c-format
+msgid "Couldn’t load file %s, it is probably corrupted."
+msgstr "تعذّر تحميل الملفّ %s، قد يكون فاسدًا."
+
+#, c-format
+msgid ""
+"File “%s” is read-only and cannot be saved.\n"
+"Please save it under different name."
+msgstr ""
+"الملفّ ”%s“ للقراءة فقط ولا يمكن حفظه.\n"
+"رجاء احفظه باسم مختلف."
+
+#, c-format
+msgid "Couldn’t save file %s."
+msgstr "تعذّر حفظ الملفّ %s."
+
+msgid ""
+"There was a problem formatting the file nicely (but it was saved all right)."
+msgstr "حدثت مشكلة أثناء تنسيق الملفّ تنسيقًا جميلًا (لكنّه حُفِظ حفظًا صحيحًا)."
+
+#, c-format
+msgid ""
+"The file couldn’t be saved in “%s” charset as specified in translation "
+"settings.\n"
+"\n"
+"It was saved in UTF-8 instead and the setting was modified accordingly."
+msgstr ""
+
+msgid "Error saving file"
+msgstr ""
+
+#, c-format
+msgid "Error loading file “%s”: %s."
+msgstr "خطأ فى تحميل الملف ”%s”:‏ %s."
+
+#, c-format
+msgid "unsupported XLIFF version (%s)"
+msgstr "نسخة   من XLIFF غير معتمدة(%s)"
+
+#. TRANSLATORS: Shown as error if a translation of XLIFF markup is not valid XML
+msgid "Broken markup in translation string."
+msgstr "خطأ في الترميز في جملة الترجمة."
+
+msgid "(Use default language)"
+msgstr "(استخدم اللغة الافتراضيّة)"
+
+msgid "Language selection"
+msgstr "حدّد اللّغة"
+
+msgid "Select your preferred language"
+msgstr "اختر لغتك المفضّلة"
+
+msgid "You must restart Poedit for this change to take effect."
+msgstr "عليك إعادة تشغيل Poedit لتطبيق التّعديلات."
+
+msgid "Syncing"
+msgstr "جارٍ المزامنة"
+
+#. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#, c-format
+msgid "Syncing with %s…"
+msgstr "يزامن مع %s…"
+
+#. TRANSLATORS: %s is a cloud destination, e.g. "Crowdin" or ftp.wordpress.com etc.
+#, c-format
+msgid "Syncing with %s failed."
+msgstr "فشلت المزامنة مع %s."
+
+msgid "Syncing error"
+msgstr "خطأ في المزامنة"
+
+msgid "Add"
+msgstr ""
+
+msgid "JSON request error"
+msgstr "خطأ في طلب JSON"
+
+msgid "Not authorized, please sign in again."
+msgstr "غير مستوثق، رجاء لِج ثانية."
+
+msgid "Downloading translations is disabled in this project."
+msgstr "عُطِّل تنزيل التّرجمات لهذا المشروع."
+
+msgid ""
+"Crowdin is an online localization management platform and collaborative "
+"translation tool. Poedit can seamlessly sync PO files managed at Crowdin."
+msgstr ""
+"«كراودِن» هي منصّة إلكترونيّة لإدارة التّرجمات وأداة ترجمة تعاونيّة. يمكن ل‍Poedit "
+"مزامنة ملفّات PO المُدارة في «كراودِن» بسهولة."
+
+msgid "Sign In"
+msgstr "لِج"
+
+msgid "Sign in"
+msgstr "لِج"
+
+msgid "Sign Out"
+msgstr "اخرج"
+
+msgid "Sign out"
+msgstr "اخرج"
+
+msgid "Waiting for authentication…"
+msgstr "ينتظر الاستيثاق…"
+
+msgid "Updating user information…"
+msgstr "يحدّث معلومات المستخدم…"
+
+msgid "Learn more about Crowdin"
+msgstr "اطّلع على المزيد عن «كراودِن»"
+
+msgid "Sign in to Crowdin"
+msgstr "لِج إلى «كراودِن»"
+
+msgid "File"
+msgstr "ملفّ"
+
+msgid "Open Crowdin translation"
+msgstr "افتح ترجمة «كراودِن»"
+
+msgid "Project:"
+msgstr "المشروع:"
+
+msgid "Language:"
+msgstr "اللّغة:"
+
+msgid "Signed in as:"
+msgstr "والج كَ‍:"
+
+msgid "No translation projects listed in your Crowdin account."
+msgstr "لا مشاريع ترجمة موجودة في حسابك على «كراودِن»."
+
+msgid "Downloading latest translations…"
+msgstr "ينزّل أحدث التّرجمات…"
+
+msgid "Syncing with Crowdin failed."
+msgstr "فشلت المزامنة مع «كراودِن»."
+
+msgid "Crowdin error"
+msgstr "خطأ «كراودِن»"
+
+msgid "Uploading translations…"
+msgstr "يرفع التّرجمات…"
+
+msgid "&Copy"
+msgstr "ا&نسخ"
+
+msgid "Learn more"
+msgstr "اطّلع على المزيد"
+
+msgid "&Help"
+msgstr "م&ساعدة"
+
+msgid "MO files can’t be directly edited in Poedit."
+msgstr "لا يمكن تحرير ملفّات MO مباشرةً في «محرِّر Po»."
+
+msgid "Error opening file"
+msgstr "خطأ في فتح الملفّ"
+
+msgid ""
+"Please open and edit the corresponding PO file instead. When you save it, "
+"the MO file will be updated as well."
+msgstr ""
+"رجاء افتح ملفّ PO المقابل وحرّره عوض ذلك. عندما تحفظه، سيُحدَّث ملفّ MO كذلك."
+
+msgid "don’t delete temporary files (for debugging)"
+msgstr "لا تحذف الملفّات المؤقّتة (للتّنقيح)"
+
+msgid "handle a poedit:// URI"
+msgstr "تعامل مع معرّف poedit://‎"
+
+msgid "go to item at given line number"
+msgstr "انتقل إلى العنصر في رقم السطر المعين"
+
+msgid "Failed to communicate with Poedit process."
+msgstr "فشل الاتّصال مع عمليّة Poedit."
+
+#, c-format
+msgid "Unhandled exception occurred: %s"
+msgstr "حدث خطأ لا يمكن التّعامل معه: %s"
+
+msgid "Select translation template"
+msgstr ""
+
+msgid "Select translation file"
+msgstr ""
+
+msgid "Poedit is an easy to use translation editor."
+msgstr "«محرِّر Po» هو محرّر ترجمات سهل الاستخدام."
+
+#. TRANSLATORS:File kind displayed in Finder/Explorer
+msgid "PO Translation"
+msgstr "ترجمة PO"
+
+msgid ""
+"The file may be either corrupted or in a format not recognized by Poedit."
+msgstr "لربّما يكون الملفّ تالفًا أو بنسق لا يفهمه Poedit."
+
+msgid "The file cannot be opened."
+msgstr "تعذّر فتح الملفّ."
+
+msgid "Invalid file"
+msgstr "الملفّ غير صالح"
+
+msgid "You can’t drop more than one file on Poedit window."
+msgstr "لا يمكنك إسقاط أكثر من ملف واحد في Poedit."
+
+#, c-format
+msgid "File “%s” is not a translation file."
+msgstr "الملف \"%s\" ليس ملف ترجمة. "
+
+#, c-format
+msgid "File “%s” doesn’t exist."
+msgstr "الملفّ ”%s“ غير موجود."
+
+msgid "Poedit"
+msgstr "محرّر Po"
+
+msgid "&Go"
+msgstr "انت&قال"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid ""
+"Spellchecking is disabled, because the dictionary for %s isn’t installed."
+msgstr "تدقيق الإملاء معطّل لأنّ قاموس %s غير مثبّت."
+
+msgid "Install"
+msgstr "ثبّت"
+
+#, c-format
+msgid "The file “%s” has been changed by another application."
+msgstr ""
+
+msgid "Reload file"
+msgstr ""
+
+msgid ""
+"Do you want to reload the file from disk? Your unsaved edits in Poedit will "
+"be lost if you do."
+msgstr ""
+
+msgid "Ignore"
+msgstr "تجاهل"
+
+msgid "Reload File"
+msgstr ""
+
+msgid "The file has been modified. Do you want to save changes?"
+msgstr ""
+
+msgid "Save changes"
+msgstr "احفظ التّعديلات"
+
+msgid "Your changes will be lost if you don’t save them."
+msgstr "ستفقد تعديلاتك إن لم تحفظها."
+
+msgid "Save"
+msgstr "احفظ"
+
+msgid "Do&n’t save"
+msgstr "لا تحفظ"
+
+msgid "Don’t Save"
+msgstr "لا تحفظ"
+
+msgid "The changes made by the other application will be lost if you save."
+msgstr ""
+
+msgid "Cancel"
+msgstr "ألغِ"
+
+msgid "Save Anyway"
+msgstr "حفظ على أي حال"
+
+msgid "Save anyway"
+msgstr "حفظ على أي حال"
+
+msgid "Save as…"
+msgstr "احفظ ك‍…"
+
+msgid "Compile to…"
+msgstr "صرّف إلى…"
+
+msgid "Compiled Translation Files"
+msgstr "ملفّات ترجمة مصرّفة"
+
+msgid "Export as…"
+msgstr "صدّر ك‍…"
+
+msgid "HTML Files"
+msgstr "ملفّات HTML"
+
+#, c-format
+msgid "In: %s"
+msgstr "في: %s"
+
+msgid "Source code not available."
+msgstr "الكود المصدريّ غير متوفّر."
+
+msgid "Updating failed"
+msgstr "فشل التّحديث"
+
+msgid ""
+"Translations couldn’t be updated from the source code, because no code was "
+"found in the location specified in the file’s Properties."
+msgstr ""
+
+msgid "Permission denied."
+msgstr "الإذن مرفوض."
+
+msgid ""
+"You don’t have permission to read source code files from the location "
+"specified in the file’s Properties."
+msgstr ""
+
+#. TRANSLATORS: The System Preferences etc. references macOS system settings and should be translated EXACTLY as in the OS. If you don't use macOS and can't check, leave it untranslated.
+msgid ""
+"If you previously denied access to your files, you can allow it in System "
+"Preferences > Security & Privacy > Privacy > Files & Folders."
+msgstr ""
+"إذا لم يسمح لك بالدخول سابقا الى ملفاتك فيمكنك ذلك في System Preferences > "
+"Security & Privacy > Privacy > Files & Folders."
+
+msgid "Translation entries in the file are probably incorrect."
+msgstr ""
+
+msgid "Updating the file failed. Click on 'Details >>' for details."
+msgstr ""
+
+msgid "Open translation template"
+msgstr ""
+
+#, c-format
+msgid "%d issue with the translation found."
+msgid_plural "%d issues with the translation found."
+msgstr[0] "لم يُعثر على مشاكل مع التّرجمات."
+msgstr[1] "عُثر على مشكلة واحدة مع التّرجمات."
+msgstr[2] "عُثر على مشكلتين مع التّرجمات."
+msgstr[3] "عُثر على %d مشاكل مع التّرجمات."
+msgstr[4] "عُثر على %d مشكلة مع التّرجمات."
+msgstr[5] "عُثر على %d مشكلة مع التّرجمات."
+
+msgid "Validation results"
+msgstr "نتائج الفحص"
+
+msgid ""
+"Entries with errors were marked in red in the list. Details of the error "
+"will be shown when you select such an entry."
+msgstr ""
+"المدخلات بأخطاء عُلّمت بالأحمر في القائمة. ستظهر تفاصيل الخطأ عندما تختار "
+"مدخلة ما."
+
+msgid "The file was saved safely."
+msgstr "حُفظ الملفّ حفظًا آمنًا."
+
+msgid ""
+"The file was saved safely and compiled into the MO format, but it will "
+"probably not work correctly."
+msgstr "حُفظ الملفّ حفظًا آمنًا وصُرّف إلى نسق MO، لكنّه قد لا يعمل عملًا صحيحًا."
+
+msgid ""
+"The file was saved safely, but it cannot be compiled into the MO format and "
+"used."
+msgstr "حُفظ الملفّ حفظًا آمنًا، لكن فشل تصريفه إلى نسق MO واستخدامه."
+
+msgid ""
+"The file was compiled into the MO format, but it will probably not work "
+"correctly."
+msgstr "صُرّف الملفّ إلى نسق MO لكنّ ربما لن يعمل عملًا صحيحًا."
+
+msgid "The file cannot be compiled into the MO format and used."
+msgstr "تعذّر تصريف الملفّ إلى نسق MO فلا يمكن استخدامه."
+
+msgid "No problems with the translation found."
+msgstr "لم يُعثر على مشاكل مع التّرجمة."
+
+#, c-format
+msgid "The translation is ready for use, but %d entry is not translated yet."
+msgid_plural ""
+"The translation is ready for use, but %d entries are not translated yet."
+msgstr[0] "التّرجمة جاهزة لاستخدامها، ولا توجد مدخلات بحاجة إلى ترجمة."
+msgstr[1] "التّرجمة جاهزة لاستخدامها، لكن توجد مدخلة واحدة بحاجة إلى ترجمة."
+msgstr[2] "التّرجمة جاهزة لاستخدامها، لكن توجد مدخلتين بحاجة إلى الترجمة."
+msgstr[3] "التّرجمة جاهزة لاستخدامها، لكن توجد %d مدخلات بحاجة إلى ترجمة."
+msgstr[4] "التّرجمة جاهزة لاستخدامها، لكن توجد %d مدخلة بحاجة إلى ترجمة."
+msgstr[5] "التّرجمة جاهزة لاستخدامها، لكن توجد %d مدخلة بحاجة إلى ترجمة."
+
+msgid "The translation is ready for use."
+msgstr "التّرجمة جاهزة لاستخدامها."
+
+#, c-format
+msgid "Poedit automatically fixed invalid content in the file “%s”."
+msgstr "لقد أصلح Poedit محتوى غير صالح تلقائيا في الملف ”%s“."
+
+msgid ""
+"The file contained duplicate items, which is not allowed in PO files and "
+"would prevent the file from being used. Poedit fixed the issue, but you "
+"should review translations of any items marked as needing work and correct "
+"them if necessary."
+msgstr ""
+"يحوي الملفّ عناصر مكرّرة وذلك غير مسموح في ملفّات PO وسيمنع استخدام الملفّ. أصلح "
+"Poedit المشكلة، ولكن عليك مراجعة ترجمات العناصر المعلّمة ك‍”تحتاج عملًا“ "
+"وتصحيحها إن لزم."
+
+msgid "Language of the translation isn’t set."
+msgstr "لغة التّرجمة لم تُضبط."
+
+msgid "Set Language"
+msgstr "اضبط اللغة"
+
+msgid "Set language"
+msgstr "اضبط اللغة"
+
+#. TRANSLATORS: This is shown underneath "Language of the translation isn't set (or ...is the same as source language)."
+msgid ""
+"Suggestions are not available if the translation language is not set "
+"correctly. Other features, such as plural forms, may be affected as well."
+msgstr ""
+"الاقتراحات لا تتوفّر إن لم تضبط لغة التّرجمة ضبطًا صحيحًا. الميزات الأخرى (كصيغ "
+"المعدود) قد تتأثّر أيضًا."
+
+msgid "Language of the translation is the same as source language."
+msgstr "لغة التّرجمة نفسها لغة المصدر."
+
+msgid "Fix Language"
+msgstr "أصلح اللغة"
+
+msgid "Fix language"
+msgstr "أصلح اللغة"
+
+msgid ""
+"This file has entries with plural forms, but doesn’t have Plural-Forms "
+"header configured."
+msgstr ""
+
+msgid ""
+"Entries in this file have different plural forms count from what the file’s "
+"Plural-Forms header says"
+msgstr ""
+
+msgid "Required header Plural-Forms is missing."
+msgstr "ترويسة صيغ المعدود المطلوبة مفقودة."
+
+#, c-format
+msgid "Syntax error in Plural-Forms header (\"%s\")."
+msgstr "خطأ صياغيّ في ترويسة صيغ المعدود (”%s“)."
+
+msgid "Fix the Header"
+msgstr "أصلح التّرويسة"
+
+msgid "Fix the header"
+msgstr "أصلح التّرويسة"
+
+#. TRANSLATORS: %s is language name in its basic form (as you
+#. would see e.g. in a list of supported languages). You may need
+#. to rephrase it, e.g. to an equivalent of "for language %s".
+#, c-format
+msgid "Plural forms expression used by the file is unusual for %s."
+msgstr ""
+
+#. TRANSLATORS: A verb, shown as action button with ""Plural forms expression used by the file is unusual for %s.")"
+msgid "Review"
+msgstr "راجع"
+
+#, c-format
+msgid "Error loading translation file “%s”."
+msgstr ""
+
+#, c-format
+msgid "Translated: %d of %d (%d %%)"
+msgstr "المُترجَمة: %d من %d ‏(%d %%)"
+
+#, c-format
+msgid "Remaining: %d"
+msgstr "المتبقّي: %d"
+
+#, c-format
+msgid "%d error"
+msgid_plural "%d errors"
+msgstr[0] "لا أخطاء"
+msgstr[1] "خطأ واحد"
+msgstr[2] "خطآن"
+msgstr[3] "%d أخطاء"
+msgstr[4] "%d خطأ"
+msgstr[5] "%d خطأ"
+
+#, c-format
+msgid "%d entry"
+msgid_plural "%d entries"
+msgstr[0] "لا مدخلات"
+msgstr[1] "مدخلة واحدة"
+msgstr[2] "مدخلتان"
+msgstr[3] "%d مدخلات"
+msgstr[4] "%d مدخلة"
+msgstr[5] "%d مدخلة"
+
+msgid " (unsaved)"
+msgstr " (غير محفوظ)"
+
+msgid " (modified)"
+msgstr "(معدّل)"
+
+#, c-format
+msgid "Failed to update translation memory: %s"
+msgstr "فشل تحديث ذاكرة التّرجمة: %s"
+
+msgid "Purge deleted translations"
+msgstr "نظّف التّرجمات المحذوفة"
+
+msgid "Do you want to remove all translations that are no longer used?"
+msgstr "أتريد إزالة كلّ التّرجمات غير المستخدمة؟"
+
+msgid ""
+"If you continue with purging, all translations marked as deleted will be "
+"permanently removed. You will have to translate them again if they are added "
+"back in the future."
+msgstr ""
+"إن تابعت مع التّنظيف، ستُزال كلّ التّرجمات المعلّمة بِ‍”محذوفة“ نهائيًّا. ستستطيع "
+"ترجمتها مجدّدًا إن أُضيفت في المستقبل."
+
+msgid "Keep"
+msgstr "أبقها"
+
+msgid "Purge"
+msgstr "نظّف"
+
+msgid "Copy from source text"
+msgstr "انسخ من النّصّ المصدر"
+
+msgid "Copy from Source Text"
+msgstr "انسخ من النّصّ المصدر"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Ctrl+"
+msgstr "Ctrl+"
+
+msgid "Clear translation"
+msgstr "امسح التّرجمة"
+
+msgid "Clear Translation"
+msgstr "امسح التّرجمة"
+
+msgid "Edit comment"
+msgstr "حرّر التّعليق"
+
+msgid "Edit Comment"
+msgstr "حرّر التّعليق"
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code Occurrences"
+msgstr ""
+
+#. TRANSLATORS: Meaning occurrences of the string in source code
+msgid "Code occurrences"
+msgstr ""
+
+msgid "&Bookmarks"
+msgstr "ال&علامات"
+
+#. TRANSLATORS: This is the key shortcut used in menus on Windows, some languages call them differently
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Alt+"
+msgstr "Alt+"
+
+#, c-format
+msgid "Set bookmark %i"
+msgstr "اضبط العلامة %i"
+
+#, c-format
+msgid "Go to bookmark %i"
+msgstr "انتقل إلى العلامة %i"
+
+#, c-format
+msgid "Set Bookmark %i"
+msgstr "اضبط العلامة %i"
+
+#, c-format
+msgid "Go to Bookmark %i"
+msgstr "انتقل إلى العلامة %i"
+
+msgid "Hide Sidebar"
+msgstr "أخفِ الشّريط الجانبيّ"
+
+msgid "Show Sidebar"
+msgstr "أظهر الشّريط الجانبيّ"
+
+msgid "Hide Status Bar"
+msgstr "أخفِ شريط الحالة"
+
+msgid "Show Status Bar"
+msgstr "أظهر شريط الحالة"
+
+msgid "String length in characters: translation | source"
+msgstr ""
+
+msgid "String length in characters"
+msgstr ""
+
+msgid "Source text"
+msgstr "النصّ المصدر"
+
+msgid "Singular"
+msgstr "المفرد"
+
+msgid "Plural"
+msgstr "الجمع"
+
+msgid "Translation"
+msgstr "التّرجمة"
+
+msgid "Pre-translated"
+msgstr "تُرجمت مسبقًا"
+
+msgid "Needs Work"
+msgstr "تحتاج عملًا"
+
+#. TRANSLATORS: This indicates that the string's translation isn't final
+#. and has known problems.  For example, it might be machine translated or
+#. fuzzy matched from an older string. The translation should be short and
+#. convey this. If it's problematic to translate it, "Needs review" is
+#. acceptable substitute, but note that the meaning is subtly different:
+#. "needs review" implies that somebody else should review the string after
+#. I am done with it (i.e. consider it good), while "needs work" implies I
+#. need to return to it and finish the translation.
+msgid "Needs work"
+msgstr "تحتاج عملًا"
+
+msgid ""
+"POT files are only templates and don’t contain any translations themselves.\n"
+"To make a translation, create a new PO file based on the template."
+msgstr ""
+"ملفّات POT ما هي إلّا قوالب لا تحوي ترجمات.\n"
+"لبدء بترجمة، أنشئ ملفّ PO مبنيّ على القالب."
+
+msgid "Create new translation"
+msgstr "أنشئ ترجمة جديدة"
+
+msgid "Make a new translation from this POT file."
+msgstr ""
+
+msgid "Everything"
+msgstr "كلّ شيء"
+
+#, c-format
+msgid "Form %i"
+msgstr "الصّيغة %i"
+
+#, c-format
+msgid "Form %i (unused)"
+msgstr "النموذج%i (غير مستخدم)"
+
+msgid "Zero"
+msgstr "صفر"
+
+msgid "One"
+msgstr "واحد"
+
+msgid "Two"
+msgstr "إثنان"
+
+msgid "Other"
+msgstr "أخرى"
+
+#, c-format
+msgid "%s Format"
+msgstr "نسق %s"
+
+#. TRANSLATORS: %s is replaced with language name, e.g. "PHP" or "C", so "PHP Format" etc."
+#, c-format
+msgid "%s format"
+msgstr "نسق %s"
+
+#, c-format
+msgid "Translation — %s"
+msgstr "التّرجمة — %s"
+
+msgid "ID"
+msgstr "المعرّف"
+
+#, c-format
+msgid "Source text — %s"
+msgstr "النّصّ المصدر — %s"
+
+msgid "unknown language"
+msgstr "لغة مجهولة"
+
+#, c-format
+msgid "Failed command: %s"
+msgstr "فشل الأمر: %s"
+
+msgid "Failed to merge gettext catalogs."
+msgstr "فشل دمج كاتالوجات «غِت‌تكست»."
+
+msgid "Open in Editor"
+msgstr "افتح في المحرّر"
+
+msgid "Open in editor"
+msgstr "افتح في المحرّر"
+
+msgid ""
+"No information about this string’s occurrences in the source code is "
+"provided in the file."
+msgstr ""
+
+msgid "No usage information"
+msgstr ""
+
+#, c-format
+msgid "%d code occurrence"
+msgid_plural "%d code occurrences"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+msgstr[3] ""
+msgstr[4] ""
+msgstr[5] ""
+
+msgid "Source code not found"
+msgstr ""
+
+msgid ""
+"Poedit cannot show source code where the string is used, because the file is "
+"either not available in the referenced location or it is a symbolic "
+"reference that doesn’t point to a real file."
+msgstr ""
+
+msgid "File cannot be opened"
+msgstr ""
+
+#, c-format
+msgid "Poedit was unable to open the “%s” file."
+msgstr ""
+
+msgid "Find"
+msgstr "ابحث"
+
+msgid "Replace"
+msgstr "استبدل"
+
+#. TRANSLATORS: Expander in Find window for additional options (case sensitive etc.)
+msgid "Options"
+msgstr "خيارات"
+
+msgid "Ignore case"
+msgstr "تجاهل حالة الأحرف"
+
+msgid "Wrap around"
+msgstr "لفّ حول"
+
+msgid "Whole words only"
+msgstr "كامل الكلمات فقط"
+
+msgid "Find in source texts"
+msgstr "ابحث في نصوص المصدر"
+
+msgid "Find in translations"
+msgstr "ابحث في التّرجمات"
+
+msgid "Find in comments"
+msgstr "ابحث في التّعليقات"
+
+msgid "Close"
+msgstr "أغلق"
+
+msgid "Replace &All"
+msgstr "استبدل ال&كلّ"
+
+msgid "Replace &all"
+msgstr "استبدل ال&كلّ"
+
+msgid "&Replace"
+msgstr "ا&ستبدل"
+
+msgid "< &Previous"
+msgstr "< ال&سّابقة"
+
+msgid "&Next >"
+msgstr "ال&تّالية >"
+
+msgid "String to find"
+msgstr "النّص للبحث عنه"
+
+msgid "Replacement string"
+msgstr "نصّ الاستبدال"
+
+#, c-format
+msgid "Cannot execute program: %s"
+msgstr "تعذّر تنفيذ البرنامج: %s"
+
+msgid "Language Code or Name (e.g. en_GB)"
+msgstr "رمز اللغة أو اسمها (مثلًا en_GB)"
+
+msgid "Translation Language"
+msgstr "لغة التّرجمة"
+
+msgid "Language of the translation:"
+msgstr "لغة التّرجمة:"
+
+msgid "Poedit - Catalogs manager"
+msgstr "«محرِّر Po» - مدير الكتالوجات"
+
+msgid "Edit…"
+msgstr "تحرير…"
+
+msgid "Create new translations project"
+msgstr "أنشئ مشروع ترجمات جديد"
+
+msgid "Delete the project"
+msgstr "احذف المشروع"
+
+msgid "Edit the project"
+msgstr "حرّر المشروع"
+
+msgid "Update all"
+msgstr "حدّث الكلّ"
+
+msgid "Update all catalogs in the project"
+msgstr "حدّث كلّ الكتالوجات في المشروع"
+
+msgid "Total"
+msgstr "المجموع"
+
+msgid "Untrans"
+msgstr "غير المترجمة"
+
+msgctxt "column/row header"
+msgid "Needs Work"
+msgstr "تحتاج عملًا"
+
+msgid "Errors"
+msgstr "أخطاء"
+
+msgid "Last modified"
+msgstr "آخر تعديل"
+
+msgid "Select directory"
+msgstr "اختر دليلًا"
+
+msgid "Directories:"
+msgstr "الأدلّة:"
+
+msgid "<unnamed>"
+msgstr "<غير معنون>"
+
+#, c-format
+msgid "Do you want to delete project “%s”?"
+msgstr ""
+
+msgid "Delete project"
+msgstr ""
+
+msgid "Deleting the project will not delete any translation files."
+msgstr ""
+
+msgid "Confirmation"
+msgstr "أكّد"
+
+msgid "Update all catalogs in this project?"
+msgstr ""
+
+msgid "Performs update from source code on all files in the project."
+msgstr ""
+
+msgid "Catalogs Manager"
+msgstr "مدير الكتالوجات"
+
+msgid "Check for Updates…"
+msgstr "التمس التّحديثات…"
+
+msgid "&Edit"
+msgstr "ت&حرير"
+
+msgid "Undo"
+msgstr "تراجع"
+
+msgid "Redo"
+msgstr "أعد"
+
+msgid "Paste and Match Style"
+msgstr "ألصق النّمط وطابقه"
+
+msgid "Delete"
+msgstr "احذف"
+
+msgid "Spelling and Grammar"
+msgstr "الإملاء والنّحو"
+
+msgid "Show Spelling and Grammar"
+msgstr "أظهر الإملاء والنّحو"
+
+msgid "Check Document Now"
+msgstr "دقّق المستند الآن"
+
+msgid "Check Spelling While Typing"
+msgstr "دقّق الإملاء أثناء الكتابة"
+
+msgid "Check Grammar With Spelling"
+msgstr "دقّق النّحو مع الإملاء"
+
+msgid "Correct Spelling Automatically"
+msgstr "صحّح الإملاء آليًّا"
+
+msgid "Substitutions"
+msgstr "الاستبدالات"
+
+msgid "Show Substitutions"
+msgstr "أظهر الاستبدالات"
+
+msgid "Smart Copy/Paste"
+msgstr "نسخ/لصق ذكيّ"
+
+msgid "Smart Quotes"
+msgstr "علامات اقتباس ذكيّة"
+
+msgid "Smart Dashes"
+msgstr "شُرَط ذكيّة"
+
+msgid "Smart Links"
+msgstr "روابط ذكيّة"
+
+msgid "Text Replacement"
+msgstr "استبدال النّصّ"
+
+msgid "Transformations"
+msgstr "التّحويلات"
+
+msgid "Make Upper Case"
+msgstr "اجعلها بحالة أحرف كبيرة"
+
+msgid "Make Lower Case"
+msgstr "اجعلها بحالة أحرف صغيرة"
+
+msgid "Capitalize"
+msgstr "كبّر الحروف"
+
+msgid "Speech"
+msgstr "النّطق"
+
+msgid "Start Speaking"
+msgstr "ابدأ النّطق"
+
+msgid "Stop Speaking"
+msgstr "أوقف النّطق"
+
+msgid "&View"
+msgstr "من&ظور"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Show Toolbar"
+msgstr "أظهر شريط الأدوات"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Customize Toolbar…"
+msgstr "خصّص شريط الأدوات…"
+
+#. TRANSLATORS: This must be the same as OS X's translation of this View menu item
+msgid "Enter Full Screen"
+msgstr "ادخل ملء الشّاشة"
+
+msgid "Window"
+msgstr "نافذة"
+
+msgid "Minimize"
+msgstr "صغّر"
+
+msgid "Zoom"
+msgstr "قرّب"
+
+msgid "Welcome to Poedit"
+msgstr "مرحبًا في Poedit"
+
+msgid "Bring All to Front"
+msgstr "اجلب الكلّ إلى الأمام"
+
+msgid "Information about the translator"
+msgstr "معلومات حول المترجم"
+
+msgid "Name:"
+msgstr "الاسم:"
+
+msgid "Your Name"
+msgstr "اسمك"
+
+msgid "Email:"
+msgstr "البريد الإلكترونيّ:"
+
+msgid "you@example.com"
+msgstr ""
+
+msgid ""
+"Your name and email address are only used to set the Last-Translator header "
+"of GNU gettext files."
+msgstr ""
+"يُستخدم اسمك وبريدك الإلكترونيّ فقط لضبط ترويسة ”آخر مترجم“ لملفّات «غنو "
+"غِت‌تكست»."
+
+msgid "Editing"
+msgstr "التّحرير"
+
+msgid "Automatically compile MO file when saving"
+msgstr "صرّف آليًّا ملف ‎.mo عند الحفظ"
+
+msgid "Show summary after updating files"
+msgstr ""
+
+msgid "Check spelling"
+msgstr "دقّق الإملاء"
+
+msgid "Always change focus to text input field"
+msgstr "غيّر دائمًا التّركيز إلى حقل إدخال النصّ"
+
+msgid ""
+"Never let the list of strings take focus. If enabled, you must use Ctrl-"
+"arrows for keyboard navigation but you can also type text immediately, "
+"without having to press Tab to change focus."
+msgstr ""
+"لا تدع قائمة السلاسل تأخذ التّركيز أبدًا. إن فُعّل، عليك استخدام مفتاح Ctrl مع "
+"الأسهم للتّنقّل عبر لوحة المفاتيح. يمكنك هكذا طباعة النصّ مباشرةً دون الحاجة إلى "
+"ضغط مفتاح Tab لتغيير التّركيز."
+
+msgid "Appearance"
+msgstr "المظهر"
+
+msgid "Use custom list font:"
+msgstr "استخدم خطّ قوائم مخصّص:"
+
+msgid "Use custom text fields font:"
+msgstr "استخدم خطّ حقول النّصوص مخصّص:"
+
+msgid "Change UI language"
+msgstr "غيّر لغة الواجهة"
+
+#. TRANSLATORS: This is a note appended to "Check spelling" when running on older Windows versions
+msgid "(requires Windows 8 or newer)"
+msgstr "(يتطلّب «وندوز» 8 وأحدث)"
+
+msgid "General"
+msgstr "عامّ"
+
+msgid "Use translation memory"
+msgstr "استخدم ذاكرة التّرجمة"
+
+msgid "Manage…"
+msgstr "إدارة…"
+
+#. TRANSLATORS: Followed by "match translations within the file" or "pre-translate from TM"
+msgid "When updating from sources"
+msgstr "عند التّحديث من المصادر"
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "fuzzy match within the file"
+msgstr "مطابقة غبشة داخل الملفّ"
+
+#. TRANSLATORS: Preceded by "When updating from sources"
+msgid "pre-translate from TM"
+msgstr "ترجم مسبقًا من ذاكرة التّرجمة"
+
+msgid ""
+"Poedit can attempt to fill in new entries from only previous translations in "
+"the file or from your entire translation memory. Using the TM won’t be very "
+"effective if it’s near-empty, but it will get better as you add more "
+"translations to it."
+msgstr ""
+"يمكن ل‍«محرِّر Po» محاولة ملء المدخلات الجديدة فقط من التّرجمات السّابقة في الملفّ "
+"أو من ذاكرة التّرجمة كلّها. استخدام ذاكرة التّرجمة لن يكون فعّالًا جديًّا إن كانت "
+"شبه فارغة، ولكنّها ستصبح أفضل متى ما أضف ترجمات أخرى إليها."
+
+msgid "Stored translations:"
+msgstr "التّرجمات المخزّنة:"
+
+msgid "Database size on disk:"
+msgstr "حجم قاعدة البيانات في القرص:"
+
+msgid "Import Translation Files…"
+msgstr "استيراد ملفات الترجمة…"
+
+msgid "Import translation files…"
+msgstr "استيراد ملفات الترجمة…"
+
+msgid "Import From TMX…"
+msgstr "استيراد من TMX…"
+
+msgid "Import from TMX…"
+msgstr "استيراد من TMX…"
+
+msgid "Export To TMX…"
+msgstr "تصدير إلى TMX ..."
+
+msgid "Export to TMX…"
+msgstr "تصدير إلى TMX ..."
+
+#. TRANSLATORS: This is a button that deletes everything in the translation memory (i.e. clears/resets it).
+msgid "Reset"
+msgstr "صفّر"
+
+msgid "Select translation files to import"
+msgstr "اختر ملفات التّرجمة لاستيرادها"
+
+msgid "Translation Memory"
+msgstr "ذاكرة التّرجمة"
+
+msgid "Importing translations…"
+msgstr "يستورد التّرجمات…"
+
+msgid "Finalizing…"
+msgstr "جاري الإنهاء…"
+
+msgid "Select TMX files to import"
+msgstr "حدد ملفات TMX لاستيرادها"
+
+msgid "TMX Files"
+msgstr "ملفّات TMX"
+
+#, c-format
+msgid "Importing translation memory from “%s” failed."
+msgstr "فشل استيراد ذاكرة الترجمة من \"%s\"."
+
+msgid "Import error"
+msgstr "خطأ في الإستيراد"
+
+msgid "Exporting translations…"
+msgstr "تصدير الترجمات ..."
+
+#, c-format
+msgid "Exporting translation memory to “%s” failed."
+msgstr "فشل تصدير ذاكرة الترجمة إلى \"%s\"."
+
+msgid "Export error"
+msgstr "خطأ في التصدير"
+
+msgid "Reset translation memory"
+msgstr "صفّر ذاكرة الترجمة"
+
+msgid "Are you sure you want to reset the translation memory?"
+msgstr "أمتأكّد من تصفير ذاكرة التّرجمة؟"
+
+msgid ""
+"Resetting the translation memory will irrevocably delete all stored "
+"translations from it. You can’t undo this operation."
+msgstr ""
+"تصفير ذاكرة الترجمة سيحذف كلّ التّرجمات المخزّنة منها إلى الأبد. لا عودة عن هذه "
+"العمليّة."
+
+#. TRANSLATORS: This is abbreviation of "Translation Memory" used in Preferences on macOS.
+#. Long text looks weird there, too short (like TM) too, but less so. "General" is about ideal
+#. length there.
+msgid "TM"
+msgstr "TM"
+
+msgid ""
+"Source code extractors are used to find translatable strings in the source "
+"code files and extract them so that they can be translated."
+msgstr ""
+"تُستخدم مستخرجات الكود المصدريّ للبحث عن السّلاسل القابلة للتّرجمة في ملفّات "
+"الكود المصدريّ واستخراجها ليمكن ترجمتها."
+
+msgid "Custom Extractors:"
+msgstr "مستخرجات مخصّصة:"
+
+msgid "Custom extractors:"
+msgstr "مستخرجات مخصّصة:"
+
+msgid "GNU gettext"
+msgstr "GNU gettext"
+
+msgid ""
+"Supports all programming languages recognized by GNU gettext tools (PHP, C/C+"
+"+, C#, Perl, Python, Java, JavaScript and others)."
+msgstr ""
+"يدعم كلّ لغات البرمجة التي تتعرّف عليها أدوات غنو ‌غِت‌‌تكست (PHP، وسي/سي++، وسي#، "
+"وبيرل، وبايثون، وجافا، وجافاسكربت وغيرها)."
+
+msgid "Delete extractor"
+msgstr "احذف المستخرج"
+
+#, c-format
+msgid "Are you sure you want to delete the “%s” extractor?"
+msgstr "أمتأكّد من حذف مستخرج «%s»؟"
+
+msgid "Extractors"
+msgstr "المستخرجات"
+
+msgid "Accounts"
+msgstr "الحسابات"
+
+msgid "Automatically check for updates"
+msgstr "التمس آليًّا عن التّحديثات"
+
+msgid "Include beta versions"
+msgstr "ضمّن نسخ بيتا"
+
+msgid ""
+"Beta versions contain the latest new features and improvements, but may be a "
+"bit less stable."
+msgstr ""
+"نسخ بيتا تحوي المزايا الجديدة الأخيرة مع التّحسينات، لكن قد تكون أقلّ استقرارًا."
+
+msgid "Updates"
+msgstr "التّحديثات"
+
+msgid ""
+"These settings affect internal formatting of PO files. Adjust them if you "
+"have specific requirements e.g. because of version control."
+msgstr ""
+"تؤثّر هذه الإعدادات على تنسيق ملفّات PO الدّاخليّ. عدّلها إن أردت متطلّبات محدّدة "
+"كالتّحكّم بالإصدارات."
+
+msgid "Line endings:"
+msgstr "نهايات الأسطر:"
+
+msgid "Unix (recommended)"
+msgstr "يُنِكس (مستحسن)"
+
+msgid "Windows"
+msgstr "وندوز"
+
+#. TRANSLATORS: Followed by text control for entering number; wraps text at given width
+msgid "Wrap at:"
+msgstr "لفّ عند:"
+
+msgid "Preserve formatting of existing files"
+msgstr "حافظ على تنسيق الملفّات الموجودة"
+
+msgid "Advanced"
+msgstr "متقدّم"
+
+msgid "Preparing strings…"
+msgstr ""
+
+msgid "Pre-translating from translation memory…"
+msgstr ""
+
+#, c-format
+msgid "Pre-translated %u string"
+msgid_plural "Pre-translated %u strings"
+msgstr[0] "لم يُترجم أيّ مقطع مسبقًا"
+msgstr[1] "تُرجم مقطع واحد مسبقًا"
+msgstr[2] "تُرجم مقطعين مسبقًا"
+msgstr[3] "تُرجمت %u مقاطع مسبقًا"
+msgstr[4] "تُرجمت %u مقطعًا مسبقًا"
+msgstr[5] "تُرجمت %u مقطع مسبقًا"
+
+msgid "Pre-translating…"
+msgstr "يترجم مسبقًا…"
+
+#. TRANSLATORS: This is a somewhat common term describing the action where
+#. you apply the translation memory and/or machine translation to all of the
+#. strings you're translating as the first step, followed by correcting,
+#. improving etc., i.e. actually translating the strings. This may be tricky
+#. to express in other languages as simply as in English, but please try to
+#. keep it similarly concise. Please try to avoid, if possible, describing it
+#. as "auto-translation" and similar, because such terminology would mislead
+#. some users into thinking it's all that needs to be done (spoken from
+#. experience). "Pre-translate" nicely expresses that it's only the step done
+#. *before* actual translation.
+msgid "Pre-translate"
+msgstr "ترجم مسبقًا"
+
+msgid "Only fill in exact matches"
+msgstr "املأ فقط المطابقات التّامّة"
+
+msgid ""
+"By default, inaccurate results are filled in as well and marked as needing "
+"work. Check this option to only include accurate matches."
+msgstr ""
+"افتراضيًّا، تُملأ النّتائج غير الدّقيقة أيضًا وتُعلّم بِ‍”تحتاج عملًا“. أشّر على هذا "
+"الخيار لتضمين المطابقات الدّقيقة فقط."
+
+msgid "Don’t mark exact matches as needing work"
+msgstr "لا تعلّم المطابقات التّامّة بِ‍”تحتاج عملًا“"
+
+msgid ""
+"Only enable if you trust the quality of your TM. By default, all matches "
+"from the TM are marked as needing work and should be reviewed before use."
+msgstr ""
+"فعّله فقط إن كنت تثق بجودة TM. افتراضيًّا، كلّ المطابقات من TM تُعلّم بِ‍”تحتاج "
+"عملًا“ ويجب مراجعتها قبل استخدامها."
+
+msgid ""
+"Pre-translation automatically finds exact or fuzzy matches for untranslated "
+"strings in the translation memory and fills in their translations."
+msgstr ""
+"التّرجمة مسبقًا تبحث آليًّا عن المطابقات التّامّة أو الغبشة للسّلاسل غير المترجمة، "
+"وذلك في ذاكرة التّرجمة لملء التّرجمات."
+
+#, c-format
+msgid "%d entry was pre-translated."
+msgid_plural "%d entries were pre-translated."
+msgstr[0] "لا مدخلات تُرجمت مسبقًا."
+msgstr[1] "تُرجمت مدخلة واحدة مسبقًا."
+msgstr[2] "تُرجمت مدخلتين مسبقًا."
+msgstr[3] "تُرجمت %d مدخلات مسبقًا."
+msgstr[4] "تُرجمت %d مدخلة مسبقًا."
+msgstr[5] "تُرجمت %d مدخلة مسبقًا."
+
+msgid ""
+"The translations were marked as needing work, because they may be "
+"inaccurate. You should review them for correctness."
+msgstr ""
+"عُلّمت التّرجمات ب‍”تحتاج عملًا“، لأنّها قد تكون غير دقيقة. عليك مراجعتها لتصحيحها."
+
+msgid "No entries could be pre-translated."
+msgstr "لا مدخلات يمكن ترجمتها مسبقًا."
+
+msgid ""
+"The TM doesn’t contain any strings similar to the content of this file. It "
+"is only effective for semi-automatic translations after Poedit learns enough "
+"from files that you translated manually."
+msgstr ""
+"لا تحوي TM أيّة سلاسة مشابهة لمحتوى الملفّ. هي فعّالة فقط للتّرجمات شبه الآليّة "
+"بعد أن يتعلّم Poedit كفايةً من الملفّات التي تترجمها يدويًّا."
+
+msgid "Cancelling…"
+msgstr "جارٍ الإلغاء…"
+
+msgid "Drag Folders or Files Here"
+msgstr "اسحب المجلدات أو الملفات هنا"
+
+msgid "Drag folders or files here"
+msgstr "اسحب المجلدات أو الملفات هنا"
+
+msgid "Add Folders…"
+msgstr "أضف مجلّدات…"
+
+msgid "Add folders…"
+msgstr "أضف مجلّدات…"
+
+msgid "Add Files…"
+msgstr "أضف ملفّات…"
+
+msgid "Add files…"
+msgstr "أضف ملفّات…"
+
+msgid "Add Wildcard…"
+msgstr "أضف حرف بدل…"
+
+msgid "Add wildcard…"
+msgstr "أضف حرف بدل…"
+
+#. TRANSLATORS: Used on macOS, should match standard translation of this in other apps (incl. name of the Finder app)
+msgid "Reveal in Finder"
+msgstr "كشف في Finder"
+
+#. TRANSLATORS: Used on Windows to show in the Explorer file manager, should match standard translation of "Explorer"
+msgid "Show in Explorer"
+msgstr "أظهر في المتصفّح"
+
+msgid "Show in Folder"
+msgstr "إظهار في المجلد"
+
+msgid "Paths"
+msgstr "المسارات"
+
+msgid "Excluded paths"
+msgstr "المسارات المستثناة"
+
+msgid "Advanced extraction settings"
+msgstr "إعدادات استخراج متقدّمة"
+
+msgid "Extract notes for translators from:"
+msgstr "استخرج ملاحظات المترجمين من:"
+
+msgid "Comments prefixed with:"
+msgstr "التعليقات المُبتدأة ب‍:"
+
+msgid "All comments"
+msgstr "كل التّعليقات"
+
+msgid "Additional xgettext flags:"
+msgstr "رايات xgettext إضافيّة:"
+
+msgid "Additional keywords"
+msgstr "الكلمات المفتاحيّة الإضافيّة"
+
+msgid "Name of the project the translation is for"
+msgstr "اسم المشروع الذي تكون التّرجمات له"
+
+msgid "Team name and email address or URL"
+msgstr "اسم الفريق وعنوان البريد الإلكتروني أو عنوان URL"
+
+msgid "e.g. nplurals=2; plural=(n > 1);"
+msgstr "مثلًا nplurals=2; plural=(n > 1);‎"
+
+msgid "UTF-8 (recommended)"
+msgstr "UTF-8 (مستحسن)"
+
+msgid "Please save the file first. This section cannot be edited until then."
+msgstr "رجاء احفظ الملفّ أوّلًا. لا يمكن تحرير هذا القسم حتّى ذلك الحين."
+
+msgid "Plural form translations"
+msgstr ""
+
+msgid "Not all plural forms are translated."
+msgstr "لم تُترجم كلّ صيغ الجموع."
+
+msgid "Inconsistent upper/lower case"
+msgstr ""
+
+msgid "The translation should start as a sentence."
+msgstr "يجب أن تبدأ التّرجمة كجملة."
+
+msgid "The translation should start with a lowercase character."
+msgstr "يجب أن تبدأ التّرجمة بحرف صغير."
+
+msgid "Inconsistent whitespace"
+msgstr ""
+
+msgid "The translation doesn’t start with a space."
+msgstr "يجب ألّا تبدأ التّرجمة بمسافة."
+
+msgid "The translation starts with a space, but the source text doesn’t."
+msgstr "بدأت التّرجمة بمسافة، ولكنّ النّصّ المصدر لم يبدأ بها."
+
+msgid "The translation is missing a newline at the end."
+msgstr "ينقص التّرجمة سطرًا جديدًا في نهايتها."
+
+msgid "The translation ends with a newline, but the source text doesn’t."
+msgstr "انتهت التّرجمة بمسافة، ولكنّ النّصّ المصدر لم ينتهِ بها."
+
+msgid "The translation is missing a space at the end."
+msgstr "ينقص التّرجمة مسافة في نهايتها."
+
+msgid "The translation ends with a space, but the source text doesn’t."
+msgstr "انتهت التّرجمة بسطر جديد، ولكنّ النّصّ المصدر لم ينتهِ بها."
+
+msgid "Punctuation checks"
+msgstr ""
+
+#, c-format
+msgid "The translation should end with “%s”."
+msgstr "يجب أن تنتهي التّرجمة ب‍”%s“."
+
+#, c-format
+msgid "The translation should not end with “%s”."
+msgstr "يجب ألّا تنتهي التّرجمة ب‍”%s“."
+
+#, c-format
+msgid "The translation ends with “%s”, but the source text ends with “%s”."
+msgstr "تنتهي الترجمة بـ \"%s\" ، لكن النص المصدر ينتهي بـ \"%s\"."
+
+msgid "Clear Menu"
+msgstr ""
+
+msgid "Clear menu"
+msgstr ""
+
+msgid "Comment:"
+msgstr "التّعليق:"
+
+msgid "Update"
+msgstr "تحديث"
+
+msgid "&Delete"
+msgstr "ا&حذف"
+
+msgid "Delete the comment"
+msgstr ""
+
+msgid "Edit project"
+msgstr "حرّر المشروع"
+
+msgid "Project name:"
+msgstr "اسم المشروع:"
+
+msgid "Browse"
+msgstr "تصفّح"
+
+msgid "Add directory to the list"
+msgstr "أضف الدّليل إلى القائمة"
+
+msgid "OK"
+msgstr "حسنًا"
+
+msgid "&File"
+msgstr "&ملفّ"
+
+msgid "&New…"
+msgstr "&جديد…"
+
+msgid "New from &POT/PO file…"
+msgstr "ملف جديد من &POT/PO…"
+
+msgid "New From &POT/PO File…"
+msgstr "ملف جديد من &POT/PO…"
+
+msgid "&Open…"
+msgstr "&فتح…"
+
+msgid "Open Recent"
+msgstr "افتح الأخيرة"
+
+msgid "Open recent"
+msgstr ""
+
+msgid "Open from Crowdin…"
+msgstr "فتح من Crowdin…"
+
+msgid "Open From Crowdin…"
+msgstr "فتح من Crowdin…"
+
+msgid "&Start window"
+msgstr ""
+
+msgid "&Start Window"
+msgstr ""
+
+msgid "Catalogs &manager"
+msgstr "م&دير الكتالوجات"
+
+msgid "Catalogs &Manager"
+msgstr "م&دير الكتالوجات"
+
+msgid "&Close"
+msgstr "أ&غلق"
+
+msgid "&Save"
+msgstr "ا&حفظ"
+
+msgid "Save &as…"
+msgstr "حفظ &باسم…"
+
+msgid "Save &As…"
+msgstr "حفظ &باسم…"
+
+msgid "Compile to MO…"
+msgstr "جمع الى MO…"
+
+msgid "E&xport as HTML…"
+msgstr "ت&صدير كـHTML…"
+
+msgid "Check for updates…"
+msgstr "تحقق من التحديثات…"
+
+msgid "&Preferences…"
+msgstr "&التفضيلات…"
+
+msgid "E&xit"
+msgstr "أ&نهِ"
+
+msgid "Quit"
+msgstr "أنهِ"
+
+msgid "Copy from singular"
+msgstr "انسخ من الصّيغة المفردة"
+
+msgid "Copy From Singular"
+msgstr "انسخ من الصّيغة المفردة"
+
+msgid "Translation needs &work"
+msgstr "تحتاج التّرجمة &عملًا"
+
+msgid "Translation Needs &Work"
+msgstr "تحتاج التّرجمة &عملًا"
+
+msgid "Edit &comment"
+msgstr "حرّر التّ&عليق"
+
+msgid "Edit &Comment"
+msgstr "حرّر التّ&عليق"
+
+#. TRANSLATORS: as in: translation suggestions, suggested translations; should be similarly short
+msgid "Suggestions"
+msgstr "الاقتراحات"
+
+msgid "&Find…"
+msgstr "&إيجاد…"
+
+msgid "Replace…"
+msgstr "استبدال…"
+
+msgid "Find next"
+msgstr "ابحث عن التّالي"
+
+msgid "Find previous"
+msgstr "ابحث عن السّابق"
+
+msgid "Find and Replace…"
+msgstr "إيجاد والاستبدال…"
+
+msgid "Find Next"
+msgstr "ابحث عن التّالي"
+
+msgid "Find Previous"
+msgstr "ابحث عن السّابق"
+
+msgid "&Preferences"
+msgstr "ت&فضيلات"
+
+msgid "Show string &ID"
+msgstr "إظهار السلسلة ومعرف ID&"
+
+msgid "Show String &ID"
+msgstr "إظهار السلسلة ومعرف ID&"
+
+msgid "Show warnings"
+msgstr "عرض التحذيرات"
+
+msgid "Show Warnings"
+msgstr "عرض التحذيرات"
+
+msgid "Sort by &file order"
+msgstr "افرز بترتيب ال&ملفّ"
+
+msgid "Sort by &File Order"
+msgstr "افرز بترتيب ال&ملفّ"
+
+msgid "Sort by &source"
+msgstr "افرز بالم&صدر"
+
+msgid "Sort by &Source"
+msgstr "افرز بالم&صدر"
+
+msgid "Sort by &translation"
+msgstr "افرز بال&تّرجمة"
+
+msgid "Sort by &Translation"
+msgstr "افرز بال&تّرجمة"
+
+msgid "&Group by context"
+msgstr "&جمّع بالسّياق"
+
+msgid "&Group By Context"
+msgstr "&جمّع بالسّياق"
+
+msgid "Entries with errors first"
+msgstr "المدخلات مع أخطاء أولا"
+
+msgid "Entries with Errors First"
+msgstr "المدخلات مع أخطاء أولا"
+
+msgid "&Untranslated entries first"
+msgstr "المدخلات &غير المترجمة أوّلًا"
+
+msgid "&Untranslated Entries First"
+msgstr "المدخلات &غير المترجمة أوّلًا"
+
+msgid "&Show code occurrences"
+msgstr ""
+
+msgid "&Show Code Occurrences"
+msgstr ""
+
+msgid "Show sidebar"
+msgstr "أظهر الشّريط الجانبيّ"
+
+msgid "Show status bar"
+msgstr "أظهر شريط الحالة"
+
+msgid "&Translation"
+msgstr ""
+
+msgid "&Update from source code"
+msgstr "تحديث من &مصادرِ"
+
+msgid "&Update from Source Code"
+msgstr "تحديث من &مصادرِ"
+
+msgid "Update from &POT file…"
+msgstr "تحديث من ملف &POT…"
+
+msgid "Update from &POT File…"
+msgstr "تحديث من ملف &POT…"
+
+msgid "Sync with Crowdin"
+msgstr "زامن مع كراودِن"
+
+msgid "Pre-&translate…"
+msgstr "الترجمة &المسبقة…"
+
+msgid "&Purge deleted translations"
+msgstr "ن&ظّف التّرجمات المحذوفة"
+
+msgid "&Purge Deleted Translations"
+msgstr "ن&ظّف التّرجمات المحذوفة"
+
+msgid "&Validate translations"
+msgstr "ت&حقّق من سلامة التّرجمات"
+
+msgid "&Validate Translations"
+msgstr "ت&حقّق من سلامة التّرجمات"
+
+msgid "&Properties…"
+msgstr "&خصائص…"
+
+msgid "&Done and next"
+msgstr "&تمّت وإلى التّالية"
+
+msgid "&Done and Next"
+msgstr "&تمّت وإلى التّالية"
+
+msgid "&Previous translation"
+msgstr "التّرجمة ال&سّابقة"
+
+msgid "&Previous Translation"
+msgstr "التّرجمة ال&سّابقة"
+
+msgid "&Next translation"
+msgstr "التّرجمة ال&تّالية"
+
+msgid "&Next Translation"
+msgstr "التّرجمة ال&تّالية"
+
+msgid "P&revious unfinished"
+msgstr "غير المنتهية ال&سّابقة"
+
+msgid "P&revious Unfinished"
+msgstr "غير المنتهية ال&سّابقة"
+
+msgid "Ne&xt unfinished"
+msgstr "غير المنتهية ال&تّالية"
+
+msgid "Ne&xt Unfinished"
+msgstr "غير المنتهية ال&تّالية"
+
+msgid "Previous plural form"
+msgstr "صيغة المعدود السّابقة"
+
+msgid "Previous Plural Form"
+msgstr "صيغة المعدود السّابقة"
+
+msgid "Next plural form"
+msgstr "صيغة المعدود التّالية"
+
+msgid "Next Plural Form"
+msgstr "صيغة المعدود التّالية"
+
+msgid "&Online help"
+msgstr "مساعدة &شبكيّة"
+
+msgid "&Online Help"
+msgstr "مساعدة &شبكيّة"
+
+msgid "&GNU gettext manual"
+msgstr "كتيّب &غنو غِت​تكست"
+
+msgid "&GNU gettext Manual"
+msgstr "كتيّب &غنو غِت​تكست"
+
+msgid "&About Poedit"
+msgstr "&عنْ Poedit"
+
+msgid "&About"
+msgstr "&عنْ"
+
+msgid "Extractor setup"
+msgstr "إعداد المستخرج"
+
+msgid "List of extensions separated by semicolons (e.g. *.cpp;*.h):"
+msgstr "قائمة الامتدادات مفصولة بفواصل منقوطة (مثلًا ‎*.cpp;*.h):"
+
+msgid "Invocation:"
+msgstr "الاستدعاء:"
+
+msgid "Command to extract translations:"
+msgstr "أمر استخراج التّرجمات:"
+
+msgid ""
+"This is the command used to launch the extractor.\n"
+"%o expands to the name of output file, %K to list\n"
+"of keywords, %F to list of input files,\n"
+"%C to charset flag (see below)."
+msgstr ""
+"يُستخدم هذا الأمر لإطلاق المستخرج.\n"
+"يُوسّع ‎%o إلى اسم ملفّ الخرج، و‎%K إلى\n"
+"قائمة الكلمات المفتاحيّة، و‎%F إلى قائمة ملفّات الدّخل،\n"
+"و‎%C إلى راية طقم المحارف (طالع أدناه)."
+
+msgid "An item in keywords list:"
+msgstr "عنصر في قائمة الكلمات المفتاحيّة:"
+
+msgid ""
+"This will be attached to the command line once\n"
+"for each keyword. %k expands to the keyword."
+msgstr ""
+"سيُرفق هذا بسطر الأمر مرّة لكلّ ملفّ دخل.\n"
+"يُوسّع ‎%K إلى الكلمة المفتاحيّة."
+
+msgid "An item in input files list:"
+msgstr "عنصر في قائمة ملفّات الدّخل:"
+
+#, c-format
+msgid ""
+"This will be attached to the command line once\n"
+"for each input file. %f expands to the filename."
+msgstr ""
+"سيُرفق هذا بسطر الأمر مرّة لكلّ ملفّ دخل.\n"
+"يُوسّع ‎%f إلى اسم الملفّ."
+
+msgid "Source code charset:"
+msgstr "طقم محارف الكود المصدريّ:"
+
+#, c-format
+msgid ""
+"This will be attached to the command line\n"
+"only if source code charset was given. %c expands to charset value."
+msgstr ""
+"سيُرفق هذا بسطر الأمر فقط إن أُعطي طقم المحارف.\n"
+"يُوسّع ‎%c إلى قيمة طقم المحارف."
+
+msgid "Translation Properties"
+msgstr "خصائص التّرجمة"
+
+msgid "Project name and version:"
+msgstr "اسم المشروع وإصداره:"
+
+msgid "Language team:"
+msgstr "فريق التّرجمة:"
+
+msgid "Plural forms:"
+msgstr "صيغ المعدود:"
+
+msgid "Use default rules for this language"
+msgstr "استخدم قواعد اللغة الافتراضيّة"
+
+msgid "Use custom expression"
+msgstr "استخدم تعبيرًا مخصّصًا"
+
+msgid "Learn about plural forms"
+msgstr "تعلّم حول صيغ المعدود"
+
+msgid "Charset:"
+msgstr "طقم المحارف:"
+
+msgid "Advanced Extraction Settings…"
+msgstr "إعدادات استخراج متقدّمة…"
+
+msgid "Advanced extraction settings…"
+msgstr "إعدادات استخراج متقدّمة…"
+
+msgid "Translation properties"
+msgstr "خصائص التّرجمة"
+
+msgid "Sources Paths"
+msgstr "مسارات المصادر"
+
+msgid "Sources paths"
+msgstr "مسارات المصادر"
+
+msgid "Extract text from source files in the following directories:"
+msgstr "استخرج النّصوص من الملفّات المصدريّة في الأدلّة التّالية:"
+
+msgid "Base path:"
+msgstr "المسار الأساس:"
+
+msgid "Sources Keywords"
+msgstr "كلمات المصادر المفتاحيّة"
+
+msgid "Sources keywords"
+msgstr "كلمات المصادر المفتاحيّة"
+
+msgid ""
+"Use these keywords (function names) to recognize translatable strings\n"
+"in source files:"
+msgstr ""
+"استخدم الكلمات المفتاحيّة هذه (أسماء الدّوال) للتعرّف على\n"
+"السلاسل القابلة للتّرجمة في الملفات المصدريّة:"
+
+msgid "Also use default keywords for supported languages"
+msgstr "استخدم أيضًا الكلمات المفتاحيّة الافتراضيّة للّغات المدعومة"
+
+msgid "Learn about gettext keywords"
+msgstr "تعلّم المزيد عن كلمات «غِت‌​تكست» المفتاحيّة"
+
+msgid "Update summary"
+msgstr "ملخص التّحديث"
+
+msgid ""
+"These strings were found in the sources but were not in the file.\n"
+"Poedit will add them to the file now."
+msgstr ""
+
+msgid "New strings"
+msgstr "السلاسل الجديدة"
+
+msgid ""
+"These strings are no longer in the source code.\n"
+"Poedit will remove them from the file now."
+msgstr ""
+
+msgid "Obsolete strings"
+msgstr "السّلاسل البائدة"
+
+msgid "(0 new, 0 obsolete)"
+msgstr "(لا جديدة، لا بائدة)"
+
+msgid "Open"
+msgstr "افتح"
+
+msgid "Open file"
+msgstr ""
+
+msgid "Save file"
+msgstr "حفظ الملف"
+
+msgid "Validate"
+msgstr "تحقّق من السّلامة"
+
+msgid "Check for errors in the translation"
+msgstr "تحقّق الأخطاء في التّرجمة"
+
+msgid "Update from code"
+msgstr "تحديث من التعليمات البرمجية"
+
+msgid "Update from Code"
+msgstr "تحديث من التعليمات البرمجية"
+
+msgid "Update from source code"
+msgstr "تحديث من شفرة المصدر"
+
+msgid "Sidebar"
+msgstr "الشّريط الجانبيّ"
+
+msgid "Show or hide the sidebar"
+msgstr "أظهر الشّريط الجانبيّ أو أخفه"
+
+#. TRANSLATORS: "Previous" as in used in the past, now replaced with newer.
+msgid "Previous source text"
+msgstr ""
+
+msgid ""
+"The old source text (before it changed during an update) that the now-"
+"inaccurate translation corresponds to."
+msgstr ""
+"نصّ المصدر القديم (قبل أن يتغيّر أثناء التحديث) الذي تقابله التّرجمة غير "
+"الدّقيقة الحاليّة."
+
+msgid "Notes for translators"
+msgstr ""
+
+msgid "Comment"
+msgstr "تعليق"
+
+msgid "Add comment"
+msgstr "أضف تعليقًا"
+
+msgid "Add Comment"
+msgstr "أضف تعليقًا"
+
+msgid "Delete From Translation Memory"
+msgstr "حذف من ذاكرة الترجمة"
+
+msgid "Delete from translation memory"
+msgstr "حذف من ذاكرة الترجمة"
+
+msgid "Translation suggestions"
+msgstr ""
+
+#. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (Windows).
+msgid "No matches found"
+msgstr "لا مطابقات"
+
+#. TRANSLATORS: This is shown when no translation suggestions can be found in the TM (macOS, Linux).
+msgid "No Matches Found"
+msgstr "لا مطابقات"
+
+msgid "This string was found in Poedit’s translation memory."
+msgstr "عُثر على السّلسلة في ذاكرة ترجمة «محرِّر Po»."
+
+msgid "The TMX file is malformed."
+msgstr "ملف TMX تالف."
+
+msgid "No translations were found in the TMX file."
+msgstr "لم يتم العثور على ترجمات في ملف TMX."
+
+#, c-format
+msgid "Translation memory database is corrupted: %s (%d)."
+msgstr "قاعدة بيانات ذاكرة الترجمة تالفة: %s (%d)."
+
+#, c-format
+msgid "Translation memory error: %s (%d)."
+msgstr "خطأ في ذاكرة الترجمة: %s (%d)."
+
+msgid "Cannot create temporary directory."
+msgstr "تعذّر إنشاء الدّليل المؤقّت."
+
+msgid "There are no translations. That’s unusual."
+msgstr "ليست هناك ترجمات. هذا غير طبيعيّ."
+
+msgid ""
+"Translatable entries aren’t added manually in the Gettext system, but are "
+"automatically extracted\n"
+"from source code. This way, they stay up to date and accurate.\n"
+"Translators typically use PO template files (POTs) prepared for them by the "
+"developer."
+msgstr ""
+"لا تتم إضافة الإدخالات القابلة للترجمة يدويا في نظام Gettext، ولكن يتم "
+"استخراجها تلقائيا\n"
+"من شفرة المصدر. وبهذه الطريقة، فإنها تبقى محدثة ودقيقة.\n"
+"يستخدم المترجمون عادة ملفات نماذج PO (POTs) المعدة لهم بواسطة المطور."
+
+msgid "(Learn more about GNU gettext)"
+msgstr "(اطّلع على المزيد عن «غنو غِت‌تكست»)"
+
+msgid ""
+"The simplest way to fill this file with translations is to update it from a "
+"POT:"
+msgstr ""
+
+msgid "Update from POT"
+msgstr "حدّث من POT"
+
+msgid "Take translatable strings from an existing POT template."
+msgstr "خُذ السّلاسل التّرجميّة من قالب POT موجود."
+
+msgid ""
+"You can also extract translatable strings directly from the source code:"
+msgstr "يمكنك أيضًا استخراج السّلاسل التّرجميّة مباشرةً من الكود المصدريّ:"
+
+msgid "Extract from sources"
+msgstr "استخرج من المصادر"
+
+msgid "Configure source code extraction in Properties."
+msgstr "اضبط استخراج الكود المصدريّ في الخصائص."
+
+#. TRANSLATORS: This is version information in about dialog, "%s" will be
+#. version number when used
+#, c-format
+msgid "Version %s"
+msgstr "النّسخة %s"
+
+msgid "Create new…"
+msgstr ""
+
+msgid "Create new translation from POT template."
+msgstr ""
+
+msgid "Browse files"
+msgstr ""
+
+msgid "Open and edit translation files."
+msgstr ""
+
+msgid "Translate Crowdin project"
+msgstr ""
+
+msgid "Collaborate with others in a Crowdin project."
+msgstr ""
+
+msgid "Recent files"
+msgstr ""
+
+msgid "Sync"
+msgstr "زامن"
+
+msgid "Synchronize the translation with Crowdin"
+msgstr "زامن التّرجمة مع «كراودِن»"
+
+#. TRANSLATORS: This is titlebar of about dialog, "%s" is application name
+#. ("Poedit" here, but please use "%s")
+#, c-format
+msgid "About %s"
+msgstr "عنْ %s"
+
+#. TRANSLATORS: Title of the preferences window on Windows and Linux. "%s" is replaced with "Poedit" when running.
+#, c-format
+msgid "%s Preferences"
+msgstr "تفضيلات %s"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Services"
+msgstr "الخدمات"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Hide %s"
+msgstr "أخفِ «%s»"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Hide Others"
+msgstr "أخفِ البقية"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Show All"
+msgstr "أظهر الكل"
+
+#. TRANSLATORS: macOS item in app menu, %s is replaced with "Poedit"
+#, c-format
+msgid "Quit %s"
+msgstr "أنهِ %s"
+
+#. TRANSLATORS: macOS item in app menu
+msgid "Preferences…"
+msgstr "التّفضيلات…"
+
+msgid "Preferences..."
+msgstr "تفضيلات..."
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Recent"
+msgstr "الأخيرة"
+
+#. TRANSLATORS: Title of a category in Windows task menu (right-click icon in taskbar)
+msgid "Frequent"
+msgstr "المتكرّرة"
+
+msgid "&Apply"
+msgstr "&طبّق"
+
+msgid "Apply"
+msgstr "طبّق"
+
+msgid "&Back"
+msgstr "&عُد"
+
+msgid "Back"
+msgstr "عُد"
+
+msgid "&Cancel"
+msgstr "أل&غِ"
+
+msgid "&Clear"
+msgstr "ام&سح"
+
+msgid "Clear"
+msgstr "امسح"
+
+msgid "Copy"
+msgstr "انسخ"
+
+msgid "Cu&t"
+msgstr "&قصّ"
+
+msgid "Cut"
+msgstr "قصّ"
+
+msgid "Edit"
+msgstr "حرّر"
+
+msgid "&Quit"
+msgstr "أ&نهِ"
+
+msgid "Help"
+msgstr "مساعدة"
+
+msgid "&New"
+msgstr "&جديد"
+
+msgid "New"
+msgstr "جديد"
+
+msgid "&No"
+msgstr "&لا"
+
+msgid "No"
+msgstr "لا"
+
+msgid "&OK"
+msgstr "&حسنًا"
+
+msgid "Open…"
+msgstr "افتح…"
+
+msgid "&Open..."
+msgstr "ا&فتح..."
+
+msgid "Open..."
+msgstr "افتح..."
+
+msgid "&Paste"
+msgstr "أ&لصق"
+
+msgid "Paste"
+msgstr "ألصق"
+
+msgid "Preferences"
+msgstr "تفضيلات"
+
+msgid "&Redo"
+msgstr "أ&عد"
+
+msgid "Refresh"
+msgstr "أنعش"
+
+msgid "&Save as"
+msgstr "ا&حفظ ك‍"
+
+msgid "Save as"
+msgstr "احفظ ك‍"
+
+msgid "Select &All"
+msgstr "حدّد الك&لّ"
+
+msgid "Select All"
+msgstr "حدّد الكلّ"
+
+msgid "&Undo"
+msgstr "ترا&جع"
+
+msgid "&Yes"
+msgstr "ن&عم"
+
+msgid "Yes"
+msgstr "نعم"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Shift+"
+msgstr "Shift+"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Enter"
+msgstr "Enter"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Up"
+msgstr "أعلى"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Down"
+msgstr "أسفل"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Left"
+msgstr "شمال"
+
+#. TRANSLATORS: Keyboard shortcut for display in Windows menus
+msgid "Right"
+msgstr "يمين"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Ctrl+"
+msgid "ctrl"
+msgstr "ctrl"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Alt+"
+msgid "alt"
+msgstr "alt"
+
+#. TRANSLATORS: Keyboard shortcut, must correspond to translation of "Shift+"
+msgid "shift"
+msgstr "shift"

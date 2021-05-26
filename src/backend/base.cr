@@ -9,6 +9,6 @@ module Base
   end
 
   abstract struct Token
-    property token_type, lexeme, literal, line
+    property token_type, literal, line
   end
 end
