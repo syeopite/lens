@@ -1,0 +1,10 @@
+name: lens
+version: 0.1.0
+description: A multiformat internationalization (i18n) shard for Crystal. Supports GNU Gettext, JSON, YAML and much more!
+
+authors:
+  - syeopite <syeopite@syeopite.dev>
+
+crystal: 1.0.0
+
+license: MIT
