@@ -96,14 +96,12 @@ module Gettext
     # Any token that is found would get removed from the line, tokenized and appended to the output list. Afterwards,
     # the remaining line is dropped into this method for further processing.
     private def scan_for_token(line)
-      if line.starts_with?("[")
-        self.process_plural_id(line)
-      elsif line.starts_with?("#")
-      elsif line.starts_with?("\n")
-      elsif line.starts_with?("\"")
-        self.add_token(GettextTokens::STRING, line.strip("\""))
-      else
-        self.process_potential_keyword(line)
+      case line
+        when .starts_with?("[") then self.process_plural_id(line)
+        when .starts_with?("#")
+        when .starts_with?("\n")
+        when .starts_with?("\"") then self.add_token(GettextTokens::STRING, line.strip("\""))
+        else self.process_potential_keyword(line)
       end
     end
 
