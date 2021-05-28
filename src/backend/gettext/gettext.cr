@@ -1,8 +1,17 @@
 require "../base.cr"
 
 module Gettext
+  # Backend for the Gettext module. Provide methods of interacting and using .po gettext files
+  #
+  # TODO Move everything into the Gettext module itself. There's no reason why the logic here
+  # should be a separate class
   class Backend
-    def initialize(@path : String)
+    # Create a new backend instance that reads from the given locale directory path
+    #
+    # ```
+    # Gettext::Backend.new("locales")
+    # ```
+    def initialize(@locale_directory_path : String)
       @had_error = false
       @_source = {} of String => Array(String)
     end
@@ -17,6 +26,12 @@ module Gettext
     end
 
     # Scans loaded locale data into tokens for easier parsing.
+    #
+    # ```
+    # backend = Gettext::Backend.new("locales")
+    # backend.load
+    # backend.scan # => Array(Token)
+    # ```
     def scan
       if @_source.empty?
         # TODO better error handling
@@ -35,10 +50,11 @@ module Gettext
       return tokenized_locales
     end
 
+    # Opens and reads all .po file from the locale directory
     private def open_files
       raw_locales = {} of String => Array(String)
 
-      Dir.glob("#{@path}/*.po") do |gettext_file|
+      Dir.glob("#{@locale_directory_path}/*.po") do |gettext_file|
         name = File.basename(gettext_file)
         raw_locales[name] = File.read_lines(gettext_file)
       end
@@ -47,6 +63,7 @@ module Gettext
     end
   end
 
+  # Enum of current supported Tokens for Gettext (po)
   private enum GettextTokens
     STRING
     PREV_MSGID
@@ -57,6 +74,8 @@ module Gettext
     MSGSTR_PLURAL_ID
   end
 
+  # Hash mapping string representation of keywords to their Enum type counterpart.
+  # This is to allow for faster parsing.
   private KEYWORDS = {
     "msgctxt" => GettextTokens::MSGCTXT,
     "msgid" => GettextTokens::MSGID,
@@ -64,6 +83,7 @@ module Gettext
     "msgstr" => GettextTokens::MSGSTR
   }
 
+  # Object representing a token from the grammar of gettext po files
   private struct Token < Base::Token
     def initialize(@token_type : GettextTokens, @literal : String?, @line : Int32)
     end
@@ -73,7 +93,13 @@ module Gettext
   #
   # Inspired by the [scanner in the python project Babel.](https://github.com/python-babel/babel/blob/master/babel/messages/pofile.py)
   class Scanner
-    def initialize(@source : Array(String), @backend_instance : Backend)
+    # Creates a new scanner instance that scans from the given source, which is usually an Array of lines from a Gettext file (.po).
+    #
+    # ```
+    # lines = ["msgid \"Example\"", "msgstr \"Translation\""]
+    # Gettext::Backend.Scanner.new(lines)
+    # ```
+    def initialize(@source : Array(String))
       @tokens = [] of Token
 
       # Positional markers
@@ -83,6 +109,12 @@ module Gettext
     end
 
     # Tokenizes the grammar of gettext files (.po version) into tokens for parsing
+    #
+    # ```
+    # lines = ["msgid \"Example\"", "msgstr \"Translation\""]
+    # scanner = Gettext::Backend.Scanner.new(lines)
+    # scanner.scan() # => Array(Token)
+    # ```
     def scan()
       @source.each do | line |
         self.scan_for_token(line)
@@ -96,12 +128,12 @@ module Gettext
     # Any token that is found would get removed from the line, tokenized and appended to the output list. Afterwards,
     # the remaining line is dropped into this method for further processing.
     private def scan_for_token(line)
-      case line
-        when .starts_with?("[") then self.process_plural_id(line)
-        when .starts_with?("#")
-        when .starts_with?("\n")
-        when .starts_with?("\"") then self.add_token(GettextTokens::STRING, line.strip("\""))
-        else self.process_potential_keyword(line)
+      if line.starts_with?("[")
+        self.process_plural_id(line)
+      elsif line.starts_with?("\"")
+        self.add_token(GettextTokens::STRING, line.strip("\""))
+      else
+        self.process_potential_keyword(line)
       end
     end
 
