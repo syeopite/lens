@@ -98,6 +98,8 @@ module Gettext
     private def scan_for_token(line)
       if line.starts_with?("[")
         self.process_plural_id(line)
+      elsif line.starts_with?("#")
+      elsif line.starts_with?("\n")
       elsif line.starts_with?("\"")
         self.add_token(GettextTokens::STRING, line.strip("\""))
       else
