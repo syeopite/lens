@@ -12,6 +12,18 @@ module Gettext
     MSGID_PLURAL
     MSGSTR
     MSGSTR_PLURAL_ID
+
+    # Headers
+    PROJECT_ID_VERSION
+    REPORT_MSGID_BUGS_TO
+    POT_CREATION_DATE
+    PO_REVISION_DATE
+    LAST_TRANSLATOR
+    LANGUAGE_TEAM
+    LANGUAGE
+    CONTENT_TYPE
+    CONTENT_TRANSFER_ENCODING
+    PLURAL_FORMS
   end
 
   # Hash mapping string representation of keywords to their Enum type counterpart.
