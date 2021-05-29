@@ -41,7 +41,7 @@ module Gettext
       if line.starts_with?("[")
         self.process_plural_id(line)
       elsif line.starts_with?("\"")
-        self.add_token(GettextTokens::STRING, line.strip("\""))
+        self.add_token(POTokens::STRING, line.strip("\""))
       else
         self.process_potential_keyword(line)
       end
@@ -68,7 +68,7 @@ module Gettext
         end
       end
 
-      self.add_token(GettextTokens::MSGSTR_PLURAL_ID, identifier)
+      self.add_token(POTokens::MSGSTR_PLURAL_ID, identifier)
       self.scan_for_token(line_without_plural_identifier)
     end
 
