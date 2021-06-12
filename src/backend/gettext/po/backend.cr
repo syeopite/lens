@@ -1,5 +1,6 @@
 module Gettext
   extend self
+
   # The backend for Gettext's PO files. This class contains methods to parse and interact with them.
   class POBackend
     # Create a new PO backend instance that reads from the given locale directory path
@@ -9,13 +10,13 @@ module Gettext
     # ```
     def initialize(@locale_directory_path : String)
       @had_error = false
-      @_source = {} of String => Array(String)
+      @_source = {} of String => String
     end
 
-    # Loads all gettext files from configured directory path into memory
+    # Loads all gettext files from configured directory path into the class
     #
     # ```
-    # Gettext::POBackend.new("locales").load # => {locale_name => Array(String),...}
+    # Gettext::POBackend.new("locales").load
     # ```
     def load
       @_source = self.open_files
@@ -38,7 +39,7 @@ module Gettext
       tokenized_locales = {} of String => Array(Token)
       @_source.each do |file_name, contents|
         scanner = POScanner.new(contents)
-        tokens = scanner.scan()
+        tokens = scanner.scan
 
         tokenized_locales[file_name] = tokens
       end
@@ -48,11 +49,11 @@ module Gettext
 
     # Opens and reads all .po file from the locale directory
     private def open_files
-      raw_locales = {} of String => Array(String)
+      raw_locales = {} of String => String
 
       Dir.glob("#{@locale_directory_path}/*.po") do |gettext_file|
         name = File.basename(gettext_file)
-        raw_locales[name] = File.read_lines(gettext_file)
+        raw_locales[name] = File.read(gettext_file)
       end
 
       return raw_locales
