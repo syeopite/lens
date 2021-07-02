@@ -2,13 +2,13 @@
 module PluralForm
   extend self
 
-  private abstract struct Expression
+  private abstract class Expression
     abstract def accept(visitor)
   end
 
   # Object representing binary expression
-  private struct Binary < Expression
-    def initialize(@left, @operator, @right)
+  private class Binary < Expression
+    def initialize(@left : Expression, @operator : Expression, @right : Expression)
     end
 
     def accept(visitor)
@@ -17,8 +17,8 @@ module PluralForm
   end
 
   # Object representing a logical expression
-  private struct Logical < Expression
-    def initialize(@left, @operator, @right)
+  private class Logical < Expression
+    def initialize(@left : Expression, @operator : Expression, @right : Expression)
     end
 
     def accept(visitor)
@@ -27,8 +27,8 @@ module PluralForm
   end
 
   # Object representing a conditional
-  private struct Conditional < Expression
-    def initialize(@condition, @then_branch, @else_branch)
+  private class Conditional < Expression
+    def initialize(@condition : Expression, @then_branch : Expression, @else_branch : Expression)
     end
 
     def accept(visitor)
@@ -37,8 +37,8 @@ module PluralForm
   end
 
   # Object representing a expression grouping
-  private struct Grouping < Expression
-    def initialize(@expression)
+  private class Grouping < Expression
+    def initialize(@expression : Expression)
     end
 
     def accept(visitor)
@@ -47,8 +47,8 @@ module PluralForm
   end
 
   # Object representing a unary expression
-  private struct Unary < Expression
-    def initialize(@operator, @right)
+  private class Unary < Expression
+    def initialize(@operator : Expression, @right : Expression)
     end
 
     def accept(visitor)
@@ -57,8 +57,8 @@ module PluralForm
   end
 
   # Object representing a literal expression
-  private struct Literal < Expression
-    def initialize(@value)
+  private class Literal < Expression
+    def initialize(@value : Token)
     end
 
     def accept(vistior)
@@ -67,8 +67,8 @@ module PluralForm
   end
 
   # Object representing a variable expression
-  private struct Variable < Expression
-    def initialize(@name)
+  private class Variable < Expression
+    def initialize(@name : String)
     end
 
     def accept(vistior)
