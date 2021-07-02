@@ -75,4 +75,14 @@ module PluralForm
       visitor.visit(self)
     end
   end
+
+  abstract class ExpressionVisitor
+    abstract def visit(expr : Binary)
+    abstract def visit(expr : Logical)
+    abstract def visit(expr : Conditional)
+    abstract def visit(expr : Grouping)
+    abstract def visit(expr : Unary)
+    abstract def visit(expr : Literal)
+    abstract def visit(expr : Variable)
+  end
 end
