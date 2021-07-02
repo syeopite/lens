@@ -8,7 +8,7 @@ module PluralForm
 
   # Object representing binary expression
   private class Binary < Expression
-    def initialize(@left : Expression, @operator : Expression, @right : Expression)
+    def initialize(@left : Expression, @operator : Token, @right : Expression)
     end
 
     def accept(visitor)
@@ -28,7 +28,7 @@ module PluralForm
 
   # Object representing a logical expression
   private class Logical < Expression
-    def initialize(@left : Expression, @operator : Expression, @right : Expression)
+    def initialize(@left : Expression, @operator : Token, @right : Expression)
     end
 
     def accept(visitor)
@@ -58,7 +58,7 @@ module PluralForm
 
   # Object representing a unary expression
   private class Unary < Expression
-    def initialize(@operator : Expression, @right : Expression)
+    def initialize(@operator : Token, @right : Expression)
     end
 
     def accept(visitor)
@@ -67,8 +67,8 @@ module PluralForm
   end
 
   # Object representing a literal expression
-  private class Literal < Expression
-    def initialize(@value : Token)
+  private class Literal(T) < Expression
+    def initialize(@value : T)
     end
 
     def accept(vistior)
@@ -78,7 +78,9 @@ module PluralForm
 
   # Object representing a variable expression
   private class Variable < Expression
-    def initialize(@name : String)
+    getter name : String
+
+    def initialize(@name)
     end
 
     def accept(vistior)

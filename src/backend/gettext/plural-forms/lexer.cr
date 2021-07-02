@@ -57,24 +57,24 @@ module PluralForm
       when '-'
         self.add_token(TokenTypes::MINUS)
       when '?'
-        self.add_token(TokenTypes::COLON)
-      when ':'
         self.add_token(TokenTypes::QUESTION)
+      when ':'
+        self.add_token(TokenTypes::COLON)
       when ';'
         self.add_token(TokenTypes::SEMICOLON)
         # Two character tokens
       when '<'
-        self.match("=") ? self.add_token(TokenTypes::LESS_EQUAL) : self.add_token(TokenTypes::LESS)
+        self.match('=') ? self.add_token(TokenTypes::LESS_EQUAL) : self.add_token(TokenTypes::LESS)
       when '>'
-        self.match("=") ? self.add_token(TokenTypes::GREATER) : self.add_token(TokenTypes::GREATER_EQUAL)
+        self.match('=') ? self.add_token(TokenTypes::GREATER_EQUAL) : self.add_token(TokenTypes::GREATER)
       when '='
-        self.match("=") ? self.add_token(TokenTypes::EQUAL_EQUAL) : self.add_token(TokenTypes::EQUAL)
+        self.match('=') ? self.add_token(TokenTypes::EQUAL_EQUAL) : self.add_token(TokenTypes::EQUAL)
       when '!'
-        self.match("=") ? self.add_token(TokenTypes::NOT_EQUAL) : self.add_token(TokenTypes::NOT)
+        self.match('=') ? self.add_token(TokenTypes::NOT_EQUAL) : self.add_token(TokenTypes::NOT)
       when '&'
-        self.match("&") ? self.add_token(TokenTypes::AND) : nil
+        self.match('&') ? self.add_token(TokenTypes::AND) : nil
       when '|'
-        self.match("|") ? self.add_token(TokenTypes::OR) : nil
+        self.match('|') ? self.add_token(TokenTypes::OR) : nil
         # Ignore spaces
       when ' '
       when .number?
@@ -96,7 +96,7 @@ module PluralForm
         self.advance_and_store
       end
 
-      self.add_token(TokenTypes::NUMBER, @io.to_s)
+      self.add_token(TokenTypes::NUMBER, @io.to_s.to_i)
       @io.clear
     end
 
@@ -113,7 +113,8 @@ module PluralForm
     # Checks to see if the next character equals the given character
     private def match(expected)
       return false if at_end_of_source?
-      if @reader.peek_next_char == expected
+      if @reader.current_char == expected
+        @reader.next_char
         return true
       end
     end
