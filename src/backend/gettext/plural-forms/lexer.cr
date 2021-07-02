@@ -1,4 +1,9 @@
 # Module for handling the plural-forms header used by Gettext PO
+#
+# [Everything in here is based on the tree-walk interpreter from
+# crafting interpreters](https://www.craftinginterpreters.com/a-tree-walk-interpreter.html)
+#
+# Thanks Robert Nystrom!
 module PluralForm
   # A scanner to tokenize a subset of C's grammar
   #
