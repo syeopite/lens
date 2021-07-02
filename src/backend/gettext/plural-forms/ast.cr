@@ -16,6 +16,16 @@ module PluralForm
     end
   end
 
+  # Object representing an assignment expression
+  private class Assignment < Expression
+    def initialize(@name : String, @value : Expression)
+    end
+
+    def accept(visitor)
+      visitor.visit(self)
+    end
+  end
+
   # Object representing a logical expression
   private class Logical < Expression
     def initialize(@left : Expression, @operator : Expression, @right : Expression)
