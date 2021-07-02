@@ -88,7 +88,7 @@ module PluralForm
     end
   end
 
-  abstract class ExpressionVisitor
+  private abstract class ExpressionVisitor
     abstract def visit(expr : Binary)
     abstract def visit(expr : Logical)
     abstract def visit(expr : Conditional)
