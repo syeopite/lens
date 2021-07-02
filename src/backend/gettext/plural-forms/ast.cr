@@ -1,5 +1,7 @@
 # Abstract syntax trees for representing gettext plural-form expressions
 module PluralForm
+  extend self
+
   private abstract struct Expression
     abstract def accept(visitor)
   end

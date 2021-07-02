@@ -5,6 +5,8 @@
 #
 # Thanks Robert Nystrom!
 module PluralForm
+  extend self
+
   # A scanner to tokenize a subset of C's grammar
   #
   # Based on https://www.craftinginterpreters.com/scanning.html
@@ -23,7 +25,7 @@ module PluralForm
     #
     # ```
     # plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
-    # tokens = plural_form_scanner.scan() # => Array(Tokens)
+    # tokens = plural_form_scanner.scan # => Array(Tokens)
     # ```
     def scan
       while !self.at_end_of_source?
@@ -34,7 +36,7 @@ module PluralForm
     end
 
     # Scans a token from the given source
-    private def scan_token()
+    private def scan_token
       character = @reader.current_char
       @reader.next_char
 
@@ -60,8 +62,7 @@ module PluralForm
         self.add_token(TokenTypes::QUESTION)
       when ';'
         self.add_token(TokenTypes::SEMICOLON)
-
-      # Two character tokens
+        # Two character tokens
       when '<'
         self.match("=") ? self.add_token(TokenTypes::LESS_EQUAL) : self.add_token(TokenTypes::LESS)
       when '>'
@@ -74,16 +75,15 @@ module PluralForm
         self.match("&") ? self.add_token(TokenTypes::AND) : nil
       when '|'
         self.match("|") ? self.add_token(TokenTypes::OR) : nil
-
-      # Ignore spaces
+        # Ignore spaces
       when ' '
       when .number?
         @io << character
-        self.handle_number()
+        self.handle_number
       else
         if character.alphanumeric?
           @io << character
-          self.handle_identifier()
+          self.handle_identifier
         else
           raise Exception.new("Unexpected character '#{character}' at column: #{@reader.pos} of the plural form header")
         end
@@ -91,9 +91,9 @@ module PluralForm
     end
 
     # Proceses a number token
-    private def handle_number()
-      while !self.at_end_of_source?() && @reader.current_char.number?
-        self.advance_and_store()
+    private def handle_number
+      while !self.at_end_of_source? && @reader.current_char.number?
+        self.advance_and_store
       end
 
       self.add_token(TokenTypes::NUMBER, @io.to_s)
@@ -101,9 +101,9 @@ module PluralForm
     end
 
     # Processes a variable
-    private def handle_identifier()
-      while !self.at_end_of_source?() && @reader.current_char.alphanumeric?
-        self.advance_and_store()
+    private def handle_identifier
+      while !self.at_end_of_source? && @reader.current_char.alphanumeric?
+        self.advance_and_store
       end
 
       self.add_token(TokenTypes::IDENTIFIER, @io.to_s)
@@ -113,7 +113,7 @@ module PluralForm
     # Checks to see if the next character equals the given character
     private def match(expected)
       return false if at_end_of_source?
-      if @reader.peek_next_char() == expected
+      if @reader.peek_next_char == expected
         return true
       end
     end
