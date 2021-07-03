@@ -42,7 +42,7 @@ module PluralForm
     {% for binary_expr in [
                             # Name, object, lower precedence function, tokentypes
                             ["logical_or", "Logical", "logical_and", "TokenTypes::OR"],
-                            ["logical_and", "Logical", "conditional", "TokenTypes::AND"],
+                            ["logical_and", "Logical", "equality", "TokenTypes::AND"],
                             ["equality", "Binary", "comparison", "TokenTypes::NOT_EQUAL, TokenTypes::EQUAL_EQUAL"],
                             ["comparison", "Binary", "term", "TokenTypes::GREATER, TokenTypes::GREATER_EQUAL, TokenTypes::LESS, TokenTypes::LESS_EQUAL"],
                             ["term", "Binary", "factor", "TokenTypes::MINUS, TokenTypes::PLUS"],
@@ -63,7 +63,7 @@ module PluralForm
 
     # Parses an assignment expression into an AST
     private def assignment
-      expression = self.logical_or
+      expression = self.conditional
 
       if self.match(TokenTypes::EQUAL)
         equals = @previous_token
@@ -81,7 +81,7 @@ module PluralForm
 
     # Parses a C conditional expression into an AST
     private def conditional
-      expression = self.equality
+      expression = self.logical_or
 
       if self.match(TokenTypes::QUESTION)
         then_branch = self.expression
