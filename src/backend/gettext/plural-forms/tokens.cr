@@ -32,8 +32,8 @@ module PluralForm
 
   # Object representing a token from the grammar of gettext po files
   private struct Token
-    getter literal : String | Int32 | Float64
-    getter column : Int32
+    getter literal : String | Int32 | Int64 | Float64
+    getter column : Int32 | Int64
     getter token_type : TokenTypes
 
     def initialize(@token_type, @literal, @column)

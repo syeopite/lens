@@ -88,7 +88,7 @@ module PluralForm
 
   # Object representing a literal expression
   private class Literal < Expression
-    getter value : String | Int32 | Float64
+    getter value : String | Int32 | Int64 | Float64
 
     def initialize(@value)
     end

@@ -6,7 +6,7 @@ module PluralForm
   class Interpreter < ExpressionVisitor
     def initialize(@expressions : Array(Expression))
       # We don't really need scope for something like this
-      @environment = {} of String => Int32 | Float64
+      @environment = {} of String => Int32 | Int64 | Float64
     end
 
     # Interpret Binary expression
@@ -47,7 +47,7 @@ module PluralForm
     def visit(expr : Assignment)
       value = self.evaluate(expr.value)
       value = value.to_unsafe.to_i if value.is_a? Bool
-      @environment[expr.name] = value.as(Int32 | Float64)
+      @environment[expr.name] = value.as(Int32 | Int64 | Float64)
       return value
     end
 
@@ -101,7 +101,7 @@ module PluralForm
     end
 
     def check_number_operand(operator, operand)
-      if !operand.is_a? Int32 | Float64
+      if !operand.is_a? Int32 | Int64 | Float64
         raise Exception.new("Operand must be a number at #{operator.column}")
       else
         return operand
@@ -109,7 +109,7 @@ module PluralForm
     end
 
     def check_number_operands(operator, left, right)
-      if left.is_a? Int32 | Float64 && right.is_a? Int32 | Float64
+      if left.is_a? Int32 | Int64 | Float64 && right.is_a? Int32 | Int64 | Float64
         return left, right
       else
         raise Exception.new("Operand must be a number at #{operator.column}")
@@ -140,7 +140,7 @@ module PluralForm
       return @environment["plural"]
     end
 
-    private def assign_plural(number : Int32 | Float64)
+    private def assign_plural(number : Int32 | Int64 | Float64)
       self.evaluate(Assignment.new("n", Literal.new(number)))
     end
   end

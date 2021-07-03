@@ -32,7 +32,7 @@ module Gettext
 
   # Object representing a token from the grammar of gettext po files
   private struct Token < Base::Token
-    def initialize(@token_type : POTokens, @literal : String?, @line : Int32)
+    def initialize(@token_type : POTokens, @literal : String?, @line : Int32 | Int64)
     end
   end
 end

@@ -32,11 +32,11 @@ describe PluralForm do
       expressions = PluralForm::Parser.new(plural_form_scanner.scan).parse
       interpreter = PluralForm::Interpreter.new(expressions)
 
-      [0, 1].each { |i| interpreter.interpret(i).should eq 0 }
-      [0.0, 0.3, 0.5, 0.25].each { |i| interpreter.interpret(i).should eq 0 }
+      [0, 1, -3288923893892389238].each { |i| interpreter.interpret(i).should eq 0 }
+      [0.0, 0.3, 0.5, 0.25, -3288923893892389238].each { |i| interpreter.interpret(i).should eq 0 }
 
-      [2, 3, 4, 100, 30, 50, 3239, 323].each { |i| interpreter.interpret(i).should eq 1 }
-      [2.0, 3.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0].each { |i| interpreter.interpret(i).should eq 1 }
+      [2, 3, 4, 100, 30, 50, 3239, 323, 3288923893892389238].each { |i| interpreter.interpret(i).should eq 1 }
+      [2.0, 3.5, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, 3288923893892389238.0].each { |i| interpreter.interpret(i).should eq 1 }
     end
 
     it "is able to interpret a complex plural form expression" do
