@@ -3,14 +3,26 @@ require "../../../helpers/*"
 module PluralForm
   extend self
 
+  # A interpreter that calculates the plural-form to take from the given expression trees and a number.
+  #
+  # [Based on this interpreter from crafting interpreters](https://craftinginterpreters.com/evaluating-expressions.html)
   class Interpreter < ExpressionVisitor
+    # Creates an interpreter with the given expression trees
+    #
+    # ```
+    # plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
+    # expressions = PluralForm::Parser.new(plural_form_scanner.scan).parse
+    # interpreter = PluralForm::Interpreter.new(expressions)
+    # interpreter.interpret(1)  # => 0
+    # interpreter.interpret(50) # => 1
+    # ```
     def initialize(@expressions : Array(Expression))
       # We don't really need scope for something like this
       @environment = {} of String => Int32 | Int64 | Float64
     end
 
     # Interpret Binary expression
-    def visit(expr : Binary)
+    protected def visit(expr : Binary)
       left, right = self.evaluate(expr.left), self.evaluate(expr.right)
       left, right = self.check_number_operands(expr.operator, left, right)
 
@@ -44,7 +56,7 @@ module PluralForm
     end
 
     # Interpret assignment expression
-    def visit(expr : Assignment)
+    protected def visit(expr : Assignment)
       value = self.evaluate(expr.value)
       value = value.to_unsafe.to_i if value.is_a? Bool
       @environment[expr.name] = value.as(Int32 | Int64 | Float64)
@@ -52,7 +64,7 @@ module PluralForm
     end
 
     # Interpet logical expression
-    def visit(expr : Logical)
+    protected def visit(expr : Logical)
       left = self.evaluate(expr.left)
 
       case expr.operator.token_type
@@ -66,7 +78,7 @@ module PluralForm
     end
 
     # Interpret conditional expression
-    def visit(expr : Conditional)
+    protected def visit(expr : Conditional)
       if self.is_truthy(self.evaluate(expr.condition))
         return self.evaluate(expr.then_branch)
       else
@@ -75,12 +87,12 @@ module PluralForm
     end
 
     # Interpret grouping expression
-    def visit(expr : Grouping)
+    protected def visit(expr : Grouping)
       return self.evaluate(expr.expression)
     end
 
     # Interpret unary expression
-    def visit(expr : Unary)
+    protected def visit(expr : Unary)
       right = self.evaluate(expr.right)
 
       right = self.check_number_operand(expr.operator, right)
@@ -92,15 +104,17 @@ module PluralForm
     end
 
     # Interpret literal expression
-    def visit(expr : Literal)
+    protected def visit(expr : Literal)
       return expr.value
     end
 
-    def visit(expr : Variable)
+    # Interpret variable expression
+    protected def visit(expr : Variable)
       return @environment[expr.name]
     end
 
-    def check_number_operand(operator, operand)
+    # Validate that the given operand is a number
+    private def check_number_operand(operator, operand)
       if !operand.is_a? Int32 | Int64 | Float64
         raise Exception.new("Operand must be a number at #{operator.column}")
       else
@@ -108,16 +122,20 @@ module PluralForm
       end
     end
 
-    def check_number_operands(operator, left, right)
+    # Validate that the given operands are numbers
+    private def check_number_operands(operator, left, right)
       if left.is_a? Int32 | Int64 | Float64 && right.is_a? Int32 | Int64 | Float64
         return left, right
       else
-        raise Exception.new("Operand must be a number at #{operator.column}")
+        raise Exception.new("Operands must be a numbers at #{operator.column}")
       end
     end
 
-    def is_truthy(value)
-      if value == 0 || value.nil?
+    # Evaluate the truthfulness for certain values
+    #
+    # Different from Crystal's own truthfulness measures as an 0 is considered
+    private def is_truthy(value)
+      if value == 0
         return false
       elsif value.is_a? Bool
         return value
@@ -126,10 +144,12 @@ module PluralForm
       end
     end
 
-    def evaluate(expr)
+    # Evaluate an expression via the visitor pattern
+    private def evaluate(expr)
       return expr.accept(self)
     end
 
+    # Calculates which plural form to use for the given number
     def interpret(number)
       self.assign_plural(number)
 
@@ -140,6 +160,7 @@ module PluralForm
       return @environment["plural"]
     end
 
+    # Adds the given number as a variable for the plural-form expression to read from
     private def assign_plural(number : Int32 | Int64 | Float64)
       self.evaluate(Assignment.new("n", Literal.new(number)))
     end
