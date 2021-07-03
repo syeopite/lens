@@ -112,6 +112,7 @@ module PluralForm
 
   private abstract class ExpressionVisitor
     abstract def visit(expr : Binary)
+    abstract def visit(expr : Assignment)
     abstract def visit(expr : Logical)
     abstract def visit(expr : Conditional)
     abstract def visit(expr : Grouping)
