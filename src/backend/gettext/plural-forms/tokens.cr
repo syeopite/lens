@@ -32,7 +32,7 @@ module PluralForm
 
   # Object representing a token from the grammar of gettext po files
   private struct Token
-    getter literal : String | Int32
+    getter literal : String | Int32 | Float64
     getter column : Int32
     getter token_type : TokenTypes
 

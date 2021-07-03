@@ -1,10 +1,12 @@
+require "../../../helpers/*"
+
 module PluralForm
   extend self
 
   class Interpreter < ExpressionVisitor
     def initialize(@expressions : Array(Expression))
       # We don't really need scope for something like this
-      @environment = {} of String => Int32
+      @environment = {} of String => Int32 | Float64
     end
 
     # Interpret Binary expression
@@ -22,7 +24,10 @@ module PluralForm
       when TokenTypes::STAR
         return left * right
       when TokenTypes::MOD
-        return left % right
+        # Crystal does not support modulos between ints and floats
+        # So we'll use an helper function that provides conversations between
+        # ints and floats to allow for this operation
+        return modulo(left, right)
       when TokenTypes::GREATER
         return left > right
       when TokenTypes::GREATER_EQUAL
@@ -42,7 +47,7 @@ module PluralForm
     def visit(expr : Assignment)
       value = self.evaluate(expr.value)
       value = value.to_unsafe.to_i if value.is_a? Bool
-      @environment[expr.name] = value.as(Int32)
+      @environment[expr.name] = value.as(Int32 | Float64)
       return value
     end
 
@@ -96,7 +101,7 @@ module PluralForm
     end
 
     def check_number_operand(operator, operand)
-      if !operand.is_a? Int32
+      if !operand.is_a? Int32 | Float64
         raise Exception.new("Operand must be a number at #{operator.column}")
       else
         return operand
@@ -104,7 +109,7 @@ module PluralForm
     end
 
     def check_number_operands(operator, left, right)
-      if left.is_a? Int32 && right.is_a? Int32
+      if left.is_a? Int32 | Float64 && right.is_a? Int32 | Float64
         return left, right
       else
         raise Exception.new("Operand must be a number at #{operator.column}")
@@ -135,7 +140,7 @@ module PluralForm
       return @environment["plural"]
     end
 
-    private def assign_plural(number : Int32)
+    private def assign_plural(number : Int32 | Float64)
       self.evaluate(Assignment.new("n", Literal.new(number)))
     end
   end

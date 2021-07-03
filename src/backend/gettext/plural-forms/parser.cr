@@ -107,7 +107,7 @@ module PluralForm
 
     private def primary
       if self.match(TokenTypes::NUMBER)
-        return Literal.new(@previous_token.not_nil!.literal.as(Int32))
+        return Literal.new(@previous_token.not_nil!.literal.as(Int32 | Float64))
       end
 
       if self.match(TokenTypes::IDENTIFIER)

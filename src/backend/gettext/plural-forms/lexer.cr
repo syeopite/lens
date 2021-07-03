@@ -96,7 +96,13 @@ module PluralForm
         self.advance_and_store
       end
 
-      self.add_token(TokenTypes::NUMBER, @io.to_s.to_i)
+      number = @io.to_s
+      if number.includes? "."
+        self.add_token(TokenTypes::NUMBER, number.to_f)
+      else
+        self.add_token(TokenTypes::NUMBER, number.to_i)
+      end
+
       @io.clear
     end
 
