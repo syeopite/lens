@@ -47,6 +47,19 @@ module Gettext
       return tokenized_locales
     end
 
+    def parse(token_hash)
+      locale_catalogues = {} of String => Catalogue
+
+      token_hash.each do |file_name, contents|
+        parser = Parser.new(contents)
+        catalogue = parser.parse
+
+        locale_catalogues[file_name] = Catalogue.new(catalogue)
+      end
+
+      return locale_catalogues
+    end
+
     # Opens and reads all .po file from the locale directory
     private def open_files
       raw_locales = {} of String => String
@@ -57,6 +70,32 @@ module Gettext
       end
 
       return raw_locales
+    end
+  end
+
+  class Catalogue
+    @headers : Hash(String, String)
+    @plural_interpreter : PluralForm::Interpreter?
+
+    def initialize(@contents : Hash(String, Hash(Int8, String)))
+      @headers = {} of String => String
+
+      headers = [] of String
+      @contents[""]?.try &.[0].split("\\n") { |v| headers << v.strip("\\") } || nil
+
+      headers.each do |h|
+        header = h.split(":", limit: 2)
+        next if header.size <= 1
+        @headers[header[0]] = header[1].strip
+      end
+
+      if plural_form_expression = @headers["Plural-Forms"]?
+        # Get interpreter for plural expressions
+        expressions = PluralForm::Parser.new(PluralForm::Scanner.new(plural_form_expression).scan).parse
+        @plural_interpreter = PluralForm::Interpreter.new(expressions)
+      else
+        @plural_interpreter = nil
+      end
     end
   end
 end
