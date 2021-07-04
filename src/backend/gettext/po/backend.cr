@@ -47,6 +47,13 @@ module Gettext
       return tokenized_locales
     end
 
+    # Parse tokens into message catalogues
+    #
+    # ```
+    # backend = Gettext::POBackend.new("locales")
+    # backend.load
+    # backend.parse(backend.scan)
+    # ```
     def parse(token_hash)
       locale_catalogues = {} of String => Catalogue
 
@@ -73,6 +80,7 @@ module Gettext
     end
   end
 
+  # Gettext message catalogue. Contains methods for handling translations
   class Catalogue
     @headers : Hash(String, String)
     @plural_interpreter : PluralForm::Interpreter?
