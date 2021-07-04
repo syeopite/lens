@@ -19,7 +19,7 @@ module Gettext
       @line = 1
     end
 
-    # Tokenizes the grammar of gettext files (.po version) into tokens for parsing
+    # Tokenize the grammar of gettext files (.po version) into tokens for parsing
     #
     # ```
     # source = "msgid \"Hello There\"\nmsgstr \"Translation\""
@@ -31,6 +31,7 @@ module Gettext
         self.scan_token
       end
 
+      self.add_token(POTokens::EOF)
       return @tokens
     end
 
@@ -55,8 +56,6 @@ module Gettext
       when ' '
       when '\n'
         @line += 1
-      when '\0'
-        self.add_token(POTokens::EOF)
       else
         # TODO better error handling
         raise Exception.new("Unexpected character '#{character}' at line: #{@line}")
