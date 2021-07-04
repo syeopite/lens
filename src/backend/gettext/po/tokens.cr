@@ -28,6 +28,7 @@ module Gettext
     PLURAL_FORMS
 
     EOF
+    DUMMY # Used as a dummy token in the parser
   end
 
   # Object representing a token from the grammar of gettext po files
