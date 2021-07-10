@@ -90,8 +90,15 @@ module Gettext
           raise Exception.new("Unterminated string at line: #{@line}")
         end
 
+        # Handle escapes
         if current_char == '\\'
-          self.advance_and_store
+          case @reader.next_char
+          when 'n'
+            @io << "\n"
+          end
+
+          @reader.next_char
+          next
         end
 
         self.advance_and_store

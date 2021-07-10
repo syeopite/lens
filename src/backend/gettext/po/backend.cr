@@ -89,7 +89,7 @@ module Gettext
       @headers = {} of String => String
 
       headers = [] of String
-      @contents[""]?.try &.[0].split("\\n") { |v| headers << v.strip("\\") } || nil
+      @contents[""]?.try &.[0].split("\n") { |v| headers << v if !v.empty? } || nil
 
       headers.each do |h|
         header = h.split(":", limit: 2)
