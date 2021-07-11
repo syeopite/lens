@@ -95,6 +95,8 @@ module Gettext
           case @reader.next_char
           when 'n'
             @io << "\n"
+          else
+            @io << @reader.current_char
           end
 
           @reader.next_char
