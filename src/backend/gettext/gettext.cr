@@ -31,7 +31,7 @@ module Gettext
     end
 
     private def process_plural(n)
-      return @plural_interpreter.interpret(n)
+      return @plural_interpreter.not_nil!.interpret(n)
     end
 
     # Fetch the translated message for the specific ID. If none can be found the given ID is returned.
@@ -45,6 +45,10 @@ module Gettext
 
     # Fetches the translated message for the specific ID with the correct plural form. Returns either the singular or plural id if none can be found.
     def ngettext(id : String, plural_id, n)
+      if @plural_interpreter.nil?
+        return id
+      end
+
       begin
         return @contents[id][self.process_plural(n)]
       rescue KeyError
@@ -67,6 +71,10 @@ module Gettext
 
     # Fetches the translated message for the specific ID that is bound by context with the correct plural form.
     def npgettext(context, id, plural_id, n)
+      if @plural_interpreter.nil?
+        return id
+      end
+
       begin
         return @contents["#{context}\u0004#{id}"][self.process_plural(n)]
       rescue KeyError
