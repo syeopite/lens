@@ -69,7 +69,6 @@ module Gettext
         self.consume(POTokens::PLURAL_FORM, "Missing plural form indicator at line #{@current_token.line}. Perhaps you forgotten to add a msgid expression for the current block?")
 
         plural_form = @previous_token.literal.not_nil!.to_i8
-        self.advance_token_iterator
         str = self.string
         msgstr_dict[plural_form] = str
       end
