@@ -58,7 +58,7 @@ module Gettext
       locale_catalogues = {} of String => Catalogue
 
       token_hash.each do |file_name, contents|
-        parser = Parser.new(contents)
+        parser = POParser.new(contents)
         catalogue = parser.parse
 
         locale_catalogues[file_name] = Catalogue.new(catalogue)

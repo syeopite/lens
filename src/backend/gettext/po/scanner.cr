@@ -2,7 +2,7 @@ require "../../../helpers/*"
 
 module Gettext
   # A scanner to tokenize the grammar of gettext po files.
-  class POScanner
+  private class POScanner
     @error_column : Int32?
 
     # Creates a new scanner instance that scans from the given contents of a Gettext file (.po).

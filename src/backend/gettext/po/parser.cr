@@ -2,7 +2,7 @@ module Gettext
   extend self
 
   # Parser for generating a hash of translation expressions out of lexed tokens for Gettext PO files.
-  class Parser
+  private class POParser
     @token_iter : Iterator(Token)
 
     # Dummy variables
