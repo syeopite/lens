@@ -2,7 +2,7 @@ module Gettext
   extend self
 
   # The backend for Gettext's PO files. This class contains methods to parse and interact with them.
-  class POBackend
+  struct POBackend
     # Create a new PO backend instance that reads from the given locale directory path
     #
     # ```
