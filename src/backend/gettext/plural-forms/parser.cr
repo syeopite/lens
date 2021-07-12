@@ -7,24 +7,21 @@ module PluralForm
   #
   #
   # [Based on this parser from crafting interpreters](https://www.craftinginterpreters.com/parsing-expressions.html)
-  #
-  #
-  # ```
-  # plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
-  # tokens = plural_form_scanner.scan
-  # plural_form_parser = PluralForm::Parser.new(tokens)
-  # ```
   class Parser
     @tokens : Array(Token)
     @token_iter : Iterator(Token)
     @previous_token : Token? = nil
     @current_token : Token? = nil
 
+    # Creates a new parser instance with the array of tokens from the `PluralForm::Scanner` as input.
+    #
+    # ```
+    # plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
+    # tokens = plural_form_scanner.scan
+    # plural_form_parser = PluralForm::Parser.new(tokens)
+    # ```
     def initialize(@tokens)
       @token_iter = @tokens.each
-    end
-
-    private def generate_binary_parse
     end
 
     # Parse an plural-form expression into AST trees

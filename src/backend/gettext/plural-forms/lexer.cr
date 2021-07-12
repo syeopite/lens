@@ -1,4 +1,7 @@
-# Module for handling the plural-forms header used by Gettext PO
+# Module for handling the plural-forms header used by Gettext
+#
+# You should **never** have to deal with this module. The Gettext backends automatically
+# calls the required methods here for interpreting plural-forms.
 #
 # [Everything in here is based on the tree-walk interpreter from
 # crafting interpreters](https://www.craftinginterpreters.com/a-tree-walk-interpreter.html)
@@ -10,10 +13,12 @@ module PluralForm
   # A scanner to tokenize a subset of C's grammar
   #
   # Based on https://www.craftinginterpreters.com/scanning.html
-  # ```
-  # plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
-  # ```
   class Scanner
+    # Creates a new scanner instance with the given source
+    #
+    # ```
+    # plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
+    # ```
     def initialize(@source : String)
       @tokens = [] of Token
 

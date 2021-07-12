@@ -3,11 +3,11 @@ require "../../../helpers/*"
 module PluralForm
   extend self
 
-  # A interpreter that calculates the plural-form to take from the given expression trees and a number.
+  # A interpreter that calculates the plural-form to take from syntax trees representing the plural-form expression.
   #
   # [Based on this interpreter from crafting interpreters](https://craftinginterpreters.com/evaluating-expressions.html)
   class Interpreter < ExpressionVisitor
-    # Creates an interpreter with the given expression trees
+    # Creates an interpreter with the given expression trees from the `PluralForm::Parser` as input.
     #
     # ```
     # plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
