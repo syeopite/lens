@@ -1,22 +1,30 @@
+require "../../../helpers/*"
+
 module Gettext
   # A scanner to tokenize the grammar of gettext po files.
   class POScanner
+    @error_column : Int32?
+
     # Creates a new scanner instance that scans from the given contents of a Gettext file (.po).
     #
     # ```
     # source = "msgid \"Hello There\"\nmsgstr \"Translation\""
     # Gettext::Backend.POScanner.new(source)
     # ```
-    def initialize(@source : String)
+    def initialize(@file_name : String, @source : String)
       @tokens = [] of Token
 
       @reader = Char::Reader.new(@source)
       @io = IO::Memory.new
 
-      # Positional markers
-      @token_start_index = 0
-      @current_token_cursor_index = 0
+      # Positional markers. Mainly used for error handling
       @line = 1
+      @column = 0
+      @error_column = nil
+
+      # Latches onto all characters on the current line to display
+      # in case of error.
+      @line_accumulator = IO::Memory.new
     end
 
     # Tokenize the grammar of gettext files (.po version) into tokens for parsing
@@ -40,7 +48,8 @@ module Gettext
     # Any token that is found would get appended into the output list.
     private def scan_token
       character = @reader.current_char
-      @reader.next_char
+      @line_accumulator << character
+      self.advance
 
       case character
       when '"'
@@ -55,10 +64,16 @@ module Gettext
         self.process_hashed_character
       when ' '
       when '\n'
+        return if !@error_column.nil?
+        @column = 0
+        @line_accumulator.clear
         @line += 1
       else
-        # TODO better error handling
-        raise Exception.new("Unexpected character '#{character}' at line: #{@line}")
+        @error_column = @column - 1
+        consume_till('\n', store = true)
+        @line_accumulator << @io.to_s
+
+        raise LensExceptions::LexError.new(@file_name, "Unexpected character", @line_accumulator.to_s, @line, @error_column.not_nil!)
       end
     end
 
@@ -87,30 +102,36 @@ module Gettext
         if current_char == '"' || self.at_end_of_source?
           break
         elsif current_char == '\n'
-          raise Exception.new("Unterminated string at line: #{@line}")
+          @line_accumulator << @io.to_s.lstrip("\"") # Remove the extra " added before calling current method
+          @error_column = @column
+          raise LensExceptions::LexError.new(@file_name, "Unterminated string", @line_accumulator.to_s, @line, @error_column.not_nil!)
         end
 
         # Handle escapes
         if current_char == '\\'
-          case @reader.next_char
+          case self.advance
           when 'n'
             @io << "\n"
           else
             @io << @reader.current_char
           end
 
-          @reader.next_char
+          self.advance
           next
         end
 
         self.advance_and_store
       end
 
+      @line_accumulator << @io.to_s.lstrip("\"") # Remove the extra " added before calling current method
+
       if self.at_end_of_source?
-        raise Exception.new("Unterminated string at line: #{@line}")
+        @error_column = @column
+        raise LensExceptions::LexError.new(@file_name, "Unterminated string", @line_accumulator.to_s, @line, @error_column.not_nil!)
       end
 
       self.advance_and_store
+
       self.add_token(POTokens::STRING, @io.to_s.strip("\""))
       @io.clear
     end
@@ -118,6 +139,7 @@ module Gettext
     private def process_potential_keyword
       while true
         character = @reader.current_char
+
         if !character.alphanumeric? && character != '_'
           break
         end
@@ -125,6 +147,7 @@ module Gettext
         self.advance_and_store
       end
 
+      @line_accumulator << @io.to_s.lstrip("m") # Remove the extra m added before calling current method
       begin
         kw = POTokens.parse(@io.to_s.upcase)
         self.add_token(kw)
@@ -138,24 +161,25 @@ module Gettext
       while true
         current_char = @reader.current_char
         if current_char == ']' || self.at_end_of_source?
-          @reader.next_char
+          self.advance
           break
         end
 
         self.advance_and_store
       end
 
+      @line_accumulator << "#{@io}]"
       self.add_token(POTokens::PLURAL_FORM, @io.to_s)
       @io.clear
     end
 
-    private def consume_till(till)
+    private def consume_till(till, store = false)
       while true
         if self.at_end_of_source? || @reader.current_char == till
           break
         end
 
-        @reader.next_char
+        store ? self.advance_and_store : self.advance
       end
     end
 
@@ -167,9 +191,18 @@ module Gettext
       end
     end
 
+    # Advance reader by one character
+    private def advance
+      @reader.next_char
+      @column += 1
+
+      return @reader.current_char
+    end
+
+    # Advance reader by one character and store in IO
     private def advance_and_store
       @io << @reader.current_char
-      @reader.next_char
+      self.advance
     end
 
     # Appends a token to the final token list

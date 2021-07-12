@@ -38,7 +38,7 @@ module Gettext
 
       tokenized_locales = {} of String => Array(Token)
       @_source.each do |file_name, contents|
-        scanner = POScanner.new(contents)
+        scanner = POScanner.new(file_name, contents)
         tokens = scanner.scan
 
         tokenized_locales[file_name] = tokens
