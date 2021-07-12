@@ -55,7 +55,13 @@ module Gettext
         parser = POParser.new(contents)
         catalogue = parser.parse
 
-        locale_catalogues[file_name] = Catalogue.new(catalogue)
+        catalogue = Catalogue.new(catalogue)
+
+        if lang = catalogue.headers["Language"]?
+          locale_catalogues[lang] = catalogue
+        else
+          locale_catalogues[file_name] = catalogue
+        end
       end
 
       return locale_catalogues

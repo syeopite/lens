@@ -10,7 +10,7 @@ describe Gettext do
 
     it "Able to parse and use po files" do
       new_backend_instance = Gettext::POBackend.new("spec/backend/gettext/locales")
-      c = new_backend_instance.parse(new_backend_instance.scan)["example.po"]
+      c = new_backend_instance.parse(new_backend_instance.scan)["ar_SA"]
 
       c.gettext("%i line of file “%s” was not loaded correctly.").should eq("%i سطر ملف ““%s”” لم يتم تحميله بشكل صحيح.")
       c.ngettext("%i line of file “%s” was not loaded correctly.", "%i lines of file “%s” were not loaded correctly.", 0).should eq("%i سطر ملف ““%s”” لم يتم تحميله بشكل صحيح.")
@@ -23,7 +23,7 @@ describe Gettext do
   describe "mo" do
     it "Able to parse and use mo files" do
       new_backend_instance = Gettext::MOBackend.new("spec/backend/gettext/locales")
-      c = new_backend_instance.parse["example.mo"]
+      c = new_backend_instance.parse["ar_SA"]
 
       c.gettext("%i line of file “%s” was not loaded correctly.").should eq("%i سطر ملف ““%s”” لم يتم تحميله بشكل صحيح.")
       c.ngettext("%i line of file “%s” was not loaded correctly.", "%i lines of file “%s” were not loaded correctly.", 0).should eq("%i سطر ملف ““%s”” لم يتم تحميله بشكل صحيح.")
