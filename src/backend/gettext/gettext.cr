@@ -32,8 +32,8 @@ module Gettext
 
       if plural_form_expression = @headers["Plural-Forms"]?
         # Get interpreter for plural expressions
-        expressions = PluralForm::Parser.new(PluralForm::Scanner.new(plural_form_expression).scan).parse
-        @plural_interpreter = PluralForm::Interpreter.new(expressions)
+        expressions = Gettext::PluralForm::Parser.new(Gettext::PluralForm::Scanner.new(plural_form_expression).scan).parse
+        @plural_interpreter = Gettext::PluralForm::Interpreter.new(expressions)
       else
         @plural_interpreter = nil
       end

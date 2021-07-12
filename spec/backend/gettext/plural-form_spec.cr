@@ -1,36 +1,36 @@
 require "digest"
 require "../../../src/backend/gettext/plural-forms/*"
 
-describe PluralForm do
-  describe "Scanner" do
+describe Gettext::PluralForm do
+  describe Gettext::PluralForm::Scanner do
     it "is able to tokenize a simple plural form expression" do
-      plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
-      Digest::SHA256.hexdigest(plural_form_scanner.scan.to_s).should eq "576fccccc5bd649076cb7209a91db5192e26937b18bfd293cc9e3d01b8ea0cef"
+      plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
+      Digest::SHA256.hexdigest(plural_form_scanner.scan.to_s).should eq "bdf1aa90c05da1887d5eb4d43083abfc4107f623e4a05fdbbf8ea804c12c026e"
     end
 
     it "is able to tokenize a complex plural form expressions" do
-      plural_form_scanner = PluralForm::Scanner.new("nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);")
-      Digest::SHA256.hexdigest(plural_form_scanner.scan.to_s).should eq "fe58796b4c706c1476ee8daee0b8a1f57514811cdbb0e8a8db152b686a0751cf"
+      plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);")
+      Digest::SHA256.hexdigest(plural_form_scanner.scan.to_s).should eq "286a6c1a2856720d784d4630696fe8aadbfbdc5c1d29ec84a7738d00a69dd85b"
     end
   end
 
-  describe "Parser" do
+  describe Gettext::PluralForm::Parser do
     it "is able to parse a simple plural form expression" do
-      plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
-      PluralForm::Parser.new(plural_form_scanner.scan).parse
+      plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
+      Gettext::PluralForm::Parser.new(plural_form_scanner.scan).parse
     end
 
     it "is able to parse a complex plural form expression" do
-      plural_form_scanner = PluralForm::Scanner.new("nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);")
-      PluralForm::Parser.new(plural_form_scanner.scan).parse
+      plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);")
+      Gettext::PluralForm::Parser.new(plural_form_scanner.scan).parse
     end
   end
 
-  describe "Interpreter" do
+  describe Gettext::PluralForm::Interpreter do
     it "is able to interpret a simple plural form expression" do
-      plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
-      expressions = PluralForm::Parser.new(plural_form_scanner.scan).parse
-      interpreter = PluralForm::Interpreter.new(expressions)
+      plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
+      expressions = Gettext::PluralForm::Parser.new(plural_form_scanner.scan).parse
+      interpreter = Gettext::PluralForm::Interpreter.new(expressions)
 
       [0, 1, -3288923893892389238].each { |i| interpreter.interpret(i).should eq 0 }
       [0.0, 0.3, 0.5, 0.25, -3288923893892389238].each { |i| interpreter.interpret(i).should eq 0 }
@@ -40,9 +40,9 @@ describe PluralForm do
     end
 
     it "is able to interpret a complex plural form expression" do
-      plural_form_scanner = PluralForm::Scanner.new("nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);")
-      expressions = PluralForm::Parser.new(plural_form_scanner.scan).parse
-      interpreter = PluralForm::Interpreter.new(expressions)
+      plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);")
+      expressions = Gettext::PluralForm::Parser.new(plural_form_scanner.scan).parse
+      interpreter = Gettext::PluralForm::Interpreter.new(expressions)
 
       # https://unicode-org.github.io/cldr-staging/charts/37/supplemental/language_plural_rules.html
       [1, 21, 31, 41, 51, 61, 71, 81, 101, 1001].each { |i| interpreter.interpret(i).should eq 0 }

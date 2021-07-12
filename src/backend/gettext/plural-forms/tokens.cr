@@ -1,42 +1,46 @@
-module PluralForm
+module Gettext
   extend self
 
-  # All possible token types
-  private enum TokenTypes
-    LEFT_PAREN
-    RIGHT_PAREN
-    STAR
-    SLASH
-    MOD
-    PLUS
-    MINUS
-    LESS
-    LESS_EQUAL
-    COLON
-    SEMICOLON
-    QUESTION
+  module PluralForm
+    extend self
 
-    AND
-    OR
-    NOT
+    # All possible token types
+    private enum TokenTypes
+      LEFT_PAREN
+      RIGHT_PAREN
+      STAR
+      SLASH
+      MOD
+      PLUS
+      MINUS
+      LESS
+      LESS_EQUAL
+      COLON
+      SEMICOLON
+      QUESTION
 
-    GREATER
-    GREATER_EQUAL
-    EQUAL
-    EQUAL_EQUAL
-    NOT_EQUAL
+      AND
+      OR
+      NOT
 
-    IDENTIFIER
-    NUMBER
-  end
+      GREATER
+      GREATER_EQUAL
+      EQUAL
+      EQUAL_EQUAL
+      NOT_EQUAL
 
-  # Object representing a token from the grammar of gettext po files
-  private struct Token
-    getter literal : String | Int32 | Int64 | Float64
-    getter column : Int32 | Int64
-    getter token_type : TokenTypes
+      IDENTIFIER
+      NUMBER
+    end
 
-    def initialize(@token_type, @literal, @column)
+    # Object representing a token from the grammar of gettext po files
+    private struct Token
+      getter literal : String | Int32 | Int64 | Float64
+      getter column : Int32 | Int64
+      getter token_type : TokenTypes
+
+      def initialize(@token_type, @literal, @column)
+      end
     end
   end
 end
