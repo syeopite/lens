@@ -73,7 +73,8 @@ module PluralForm
           return Assignment.new(expression.name, value)
         end
 
-        raise Exception.new("Invalid assignment in plural form header at column #{@current_token.not_nil!.column}")
+        raise LensExceptions::ParseError.new("Invalid assignment detected when parsing 'Plural-Forms' at" \
+        + " Column #{@current_token.not_nil!.column}\n")
       end
 
       return expression
@@ -120,7 +121,7 @@ module PluralForm
         return Grouping.new(expression)
       end
 
-      raise Exception.new("Expecting plural-form expression!")
+      raise LensExceptions::ParseError.new("Expecting plural-form expression!")
     end
 
     # Checks to see if the current_token is any of the given types. If so consumes the token.
@@ -145,13 +146,13 @@ module PluralForm
       if self.check(token_type)
         return self.advance_token_iterator
       else
-        raise Exception.new(error_message)
+        raise LensExceptions::ParseError.new(error_message)
       end
     end
 
     # Checks to see if we're at the end of the token iterator
     private def is_at_end?
-      if @current_token == Iterator::Stop::INSTANCE
+      if @current_token == Iterator::Stop
         return true
       end
       return false
@@ -163,7 +164,10 @@ module PluralForm
       char = @token_iter.next
 
       if char.is_a? Iterator::Stop
-        raise Exception.new("Unreachable")
+        raise LensExceptions::ParseError.new("Unexpected end of token iteration when parsing 'Plural-Forms' at" \
+        + " Column #{@current_token.not_nil!.column}\n" \
+        + "Perhaps you've forgotten an ';'?\n"
+        )
       else
         @current_token = char
       end

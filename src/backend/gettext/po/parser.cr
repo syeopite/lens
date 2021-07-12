@@ -111,7 +111,7 @@ module Gettext
       if self.check(token_type)
         return self.advance_token_iterator
       else
-        raise Exception.new(error_message)
+        raise LensExceptions::ParseError.new(error_message)
       end
     end
 
@@ -129,6 +129,7 @@ module Gettext
       char = @token_iter.next
 
       if char.is_a? Iterator::Stop
+        # Theoretically unreachable.
         raise Exception.new("Unreachable")
       else
         @current_token = char

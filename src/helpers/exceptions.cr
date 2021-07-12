@@ -21,4 +21,8 @@ module LensExceptions
       return instance
     end
   end
+
+  # Exception thrown when an error occurs during parsing
+  class ParseError < Exception
+  end
 end

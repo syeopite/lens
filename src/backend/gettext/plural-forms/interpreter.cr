@@ -113,21 +113,29 @@ module PluralForm
       return @environment[expr.name]
     end
 
-    # Validate that the given operand is a number
+    # Validate that the given operand is a number.
+    #
+    # As we can only lex numbers for plural-forms this method
+    # is only used to inform the compiler that the values are numbers
     private def check_number_operand(operator, operand)
-      if !operand.is_a? Int32 | Int64 | Float64
-        raise Exception.new("Operand must be a number at #{operator.column}")
-      else
+      if operand.is_a? Int32 | Int64 | Float64
         return operand
+      else
+        raise Exception.new("Unreachable")
+        # raise Exception.new("Operand must be a number at #{operator.column}")
       end
     end
 
     # Validate that the given operands are numbers
+    #
+    # As we can only lex numbers for plural-forms this method
+    # is only used to inform the compiler that the values are numbers
     private def check_number_operands(operator, left, right)
       if left.is_a? Int32 | Int64 | Float64 && right.is_a? Int32 | Int64 | Float64
         return left, right
       else
-        raise Exception.new("Operands must be a numbers at #{operator.column}")
+        raise Exception.new("Unreachable")
+        # raise Exception.new("Operands must be a numbers at #{operator.column}")
       end
     end
 
