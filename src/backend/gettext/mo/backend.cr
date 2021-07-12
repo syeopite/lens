@@ -14,22 +14,17 @@ module Gettext
     def initialize(@locale_directory_path : String)
       @had_error = false
       @_source = {} of String => File
-    end
 
-    # Loads all gettext files from configured directory path into the class
-    #
-    # ```
-    # Gettext::POBackend.new("locales").load
-    # ```
-    def load
-      @_source = self.open_files
+      Dir.glob("#{@locale_directory_path}/*.mo") do |gettext_file|
+        name = File.basename(gettext_file)
+        @_source[name] = File.open(gettext_file)
+      end
     end
 
     # Parse gettext mo files into message catalogues
     #
     # ```
     # backend = Gettext::MOBackend.new("locales")
-    # backend.load
     # backend.parse
     # ```
     def parse
@@ -93,18 +88,6 @@ module Gettext
       end
 
       return locale_catalogues
-    end
-
-    # Opens and reads all .po file from the locale directory
-    private def open_files
-      raw_locales = {} of String => File
-
-      Dir.glob("#{@locale_directory_path}/*.mo") do |gettext_file|
-        name = File.basename(gettext_file)
-        raw_locales[name] = File.open(gettext_file)
-      end
-
-      return raw_locales
     end
   end
 end
