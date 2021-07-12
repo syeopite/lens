@@ -1,3 +1,5 @@
+# :nodoc:
+# Work around for crystal-lang/crystal#10888
 def modulo(a, b)
   if a.is_a? Int && b.is_a? Int
     return a % b

@@ -1,5 +1,6 @@
+# Contains all the exceptions lens would throw
 module LensExceptions
-  # Exception thrown when an error occurred during lexing.
+  # Exception thrown when an error occurrs during lexing.
   class LexError < Exception
     def self.new(file_name, message, full_line : String, line : Int, column : Int)
       error_message = String.build do |str|
