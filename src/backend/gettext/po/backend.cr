@@ -20,11 +20,13 @@ module Gettext
 
     # Scans loaded locale data into tokens parsing.
     #
+    # Returned as a mapping of the po file name to the token array
+    #
     # ```
     # backend = Gettext::POBackend.new("locales")
     # backend.scan # => Array(Token)
     # ```
-    def scan
+    def scan : Hash(String, Array(Token))
       if @_source.empty?
         # TODO better error handling
         raise Exception.new("No locale files have been loaded yet. Did you forget to call
@@ -44,11 +46,15 @@ module Gettext
 
     # Parse tokens into message catalogues
     #
+    # This is returned as a mapping of the language code to the catalogue
+    # in which the language code is taken from the `Language` header. If
+    # none can be found then the po file name is used as a fallback.
+    #
     # ```
     # backend = Gettext::POBackend.new("locales")
     # backend.parse(backend.scan)
     # ```
-    def parse(token_hash)
+    def parse(token_hash) : Hash(String, Catalogue)
       locale_catalogues = {} of String => Catalogue
 
       token_hash.each do |file_name, contents|
@@ -71,11 +77,15 @@ module Gettext
     #
     # Shortcut to avoid calling `scan` and `parse`
     #
+    # This is returned as a mapping of the language code to the catalogue
+    # in which the language code is taken from the `Language` header. If
+    # none can be found then the po file name is used as a fallback.
+    #
     # ```
     # backend = Gettext::POBackend.new("locales")
     # backend.create # => Catalogue
     # ```
-    def create
+    def create : Hash(String, Catalogue)
       return self.parse(self.scan)
     end
   end

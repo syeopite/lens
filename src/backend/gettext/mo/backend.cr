@@ -23,11 +23,15 @@ module Gettext
 
     # Parse gettext mo files into message catalogues.
     #
+    # This is returned as a mapping of the language code to the catalogue
+    # in which the language code is taken from the `Language` header. If
+    # none can be found then the mo file name is used as a fallback.
+    #
     # ```
     # backend = Gettext::MOBackend.new("locales")
     # backend.parse # => Catalogue
     # ```
-    def parse
+    def parse : Hash(String, Catalogue)
       if @_source.empty?
         raise Exception.new("No locale files have been loaded yet. Did you forget to call
                              the .load() method?")
@@ -100,11 +104,15 @@ module Gettext
     #
     # This is the equivalent to `parse` and is only here for compatibility with `Gettext::POBackend`
     #
+    # This is returned as a mapping of the language code to the catalogue
+    # in which the language code is taken from the `Language` header. If
+    # none can be found then the mo file name is used as a fallback.
+    #
     # ```
     # backend = Gettext::MOBackend.new("locales")
     # backend.create # => Catalogue
     # ```
-    def create
+    def create : Hash(String, Catalogue)
       return self.parse
     end
   end
