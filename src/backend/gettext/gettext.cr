@@ -5,7 +5,7 @@ module Gettext
 
   # Gettext message catalogue. Contains methods for handling translations
   class Catalogue
-    @headers : Hash(String, String)
+    getter headers : Hash(String, String)
     @plural_interpreter : PluralForm::Interpreter?
 
     def initialize(@contents : Hash(String, Hash(Int8, String)))
