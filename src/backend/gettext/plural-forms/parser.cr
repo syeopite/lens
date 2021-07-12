@@ -74,7 +74,7 @@ module PluralForm
         end
 
         raise LensExceptions::ParseError.new("Invalid assignment detected when parsing 'Plural-Forms' at" \
-        + " Column #{@current_token.not_nil!.column}\n")
+                                             " Column #{@current_token.not_nil!.column}\n")
       end
 
       return expression
@@ -165,8 +165,8 @@ module PluralForm
 
       if char.is_a? Iterator::Stop
         raise LensExceptions::ParseError.new("Unexpected end of token iteration when parsing 'Plural-Forms' at" \
-        + " Column #{@current_token.not_nil!.column}\n" \
-        + "Perhaps you've forgotten an ';'?\n"
+                                             " Column #{@current_token.not_nil!.column}\n" \
+                                             "Perhaps you've forgotten an ';'?\n"
         )
       else
         @current_token = char
