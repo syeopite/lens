@@ -2,6 +2,10 @@ module Gettext
   extend self
 
   # The backend for Gettext's MO files. This class contains methods to parse and interact with them.
+  #
+  # Similar to the Gettext module from Python, feel free to subclass and override the `#parse` method
+  # to create a backend for other .mo files. However, please consider opening a PR and adding it directly
+  # to lens instead!
   class MOBackend
     LE_MAGIC = 0x950412de
     BE_MAGIC = 0xde120495
