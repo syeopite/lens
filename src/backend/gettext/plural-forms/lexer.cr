@@ -85,7 +85,7 @@ module PluralForm
           @io << character
           self.handle_identifier
         else
-          raise Exception.new("Unexpected character '#{character}' at column: #{@reader.pos} of the plural form header")
+          raise LensExceptions::LexError.new("Plural-Forms", "Unexpected character", @source, 1, @reader.pos - 1)
         end
       end
     end
