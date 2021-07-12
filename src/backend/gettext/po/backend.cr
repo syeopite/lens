@@ -18,16 +18,7 @@ module Gettext
       end
     end
 
-    # Loads all gettext files from configured directory path into the class
-    #
-    # ```
-    # Gettext::POBackend.new("locales").load
-    # ```
-    def load
-      @_source = self.open_files
-    end
-
-    # Scans loaded locale data into tokens for easier parsing.
+    # Scans loaded locale data into tokens parsing.
     #
     # ```
     # backend = Gettext::POBackend.new("locales")
@@ -68,6 +59,18 @@ module Gettext
       end
 
       return locale_catalogues
+    end
+
+    # Create message catalogue from the loaded locale files
+    #
+    # Shortcut to avoid calling `scan` and `parse`
+    #
+    # ```
+    # backend = Gettext::POBackend.new("locales")
+    # backend.create # => Catalogue
+    # ```
+    def create
+      return self.parse(self.scan)
     end
   end
 end

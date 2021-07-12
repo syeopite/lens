@@ -21,11 +21,11 @@ module Gettext
       end
     end
 
-    # Parse gettext mo files into message catalogues
+    # Parse gettext mo files into message catalogues.
     #
     # ```
     # backend = Gettext::MOBackend.new("locales")
-    # backend.parse
+    # backend.parse # => Catalogue
     # ```
     def parse
       if @_source.empty?
@@ -88,6 +88,18 @@ module Gettext
       end
 
       return locale_catalogues
+    end
+
+    # Create message catalogue from the loaded locale files.
+    #
+    # This is the equivalent to `parse` and is only here for compatibility with `Gettext::POBackend`
+    #
+    # ```
+    # backend = Gettext::MOBackend.new("locales")
+    # backend.create # => Catalogue
+    # ```
+    def create
+      return self.parse
     end
   end
 end
