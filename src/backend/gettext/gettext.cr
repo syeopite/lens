@@ -7,7 +7,7 @@ module Gettext
   #
   # You **should not** be manually creating an instance of this class! Instead let the Gettext backends
   # do it for you! See `Gettext::MOBackend` and `Gettext::POBackend`
-  class Catalogue
+  struct Catalogue
     # Returns a hash of the headers
     #
     # ```
