@@ -37,8 +37,16 @@ module CrystalI18n
           contents = YAML.parse(File.read(yaml_file)).as_h
         rescue YAML::ParseException
           raise LensExceptions::ParseError.new("Invalid yaml file detected when parsing for the crystal-i18n format. " + \
-            "Please make sure that the file: '#{locale_directory_path}/#{yaml_file}' " + \
+            "Please make sure that the file: '#{yaml_file}' " + \
               "is formatted correctly")
+        rescue ex
+          case ex.message
+          # If a directory has a .yml suffix we'll just ignore it.
+          when "Error reading file: Is a directory"
+            next
+          else
+            raise ex
+          end
         end
 
         if @_source[name]?
