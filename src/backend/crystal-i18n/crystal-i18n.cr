@@ -61,8 +61,8 @@ module CrystalI18n
     #
     # This method can also translate plural-forms through the count argument.
     # ```
-    # catalogue.translate("en", "processions.fruits.apples", 50) # => "I have 50 apples"
-    # catalogue.translate("en", "processions.fruits.apples", 1)  # => "I have 1 apple"
+    # catalogue.translate("en", "possessions .fruits.apples", 50) # => "I have 50 apples"
+    # catalogue.translate("en", "possessions .fruits.apples", 1)  # => "I have 1 apple"
     # ```
     #
     # Interpolation can be done through kwargs.
