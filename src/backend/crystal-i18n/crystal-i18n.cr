@@ -46,6 +46,7 @@ module CrystalI18n
     end
 
     def translate(locale : String, key : String, count : Int | Float? = nil, **kwargs)
+      puts kwargs
       self.internal_translate(locale, key, count, **kwargs)
     end
 
@@ -58,6 +59,15 @@ module CrystalI18n
       if count
         plural_rule = PluralRulesCollection::Rules[locale].call(count)
         translation = translation[plural_rule]
+
+        translation = translation.as_s.gsub("%{count}", count)
+      else
+        translation = translation.as_s
+      end
+
+      # Handle interpolation
+      kwargs.each do |k, v|
+        translation = translation.gsub("%{#{k}}", v)
       end
 
       return translation
