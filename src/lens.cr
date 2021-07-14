@@ -1,4 +1,4 @@
-require "./backend/*"
+require "./backend/**"
 
 module Lens
   VERSION = "0.1.0"
@@ -26,11 +26,11 @@ module Lens
   # Lens.fetch_backend(Lens::Formats::GettextMO)       # => Gettext::MOBackend
   # Lens.fetch_backend(Lens::Formats::CrystalI18nYAML) # => CrystalI18n::I18n
   # ```
-  def fetch_backend(fmt : Formats)
+  def self.fetch_backend(fmt : Formats)
     case fmt
-    when GettextPO       then Gettext::POBackend
-    when GettextMO       then Gettext::MOBackend
-    when CrystalI18nYAML then CrystalI18n::I18n
+    when .gettext_po?        then Gettext::POBackend
+    when .gettext_mo?        then Gettext::MOBackend
+    when .crystal_i18n_yaml? then CrystalI18n::I18n
     end
   end
 end
