@@ -35,3 +35,6 @@ interpolation_stress_testing:
 new_messages:
   "one": "you have %{count} message"
   "other": "you have %{count} messages"
+
+items:
+  foods: ["Cake", "Pie", "Hamburger", "French Fries"]

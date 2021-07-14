@@ -67,6 +67,13 @@ describe "crystal-i18n" do
     it "handles multiple interpolations" do
       i18n_instance.translate("en", "interpolation_stress_testing.message", one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10).should eq ("1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10")
     end
+
+    it "able to access items stored in arrays" do
+      foods = ["Cake", "Pie", "Hamburger", "French Fries"]
+      foods.each_with_index do |item, index|
+        i18n_instance.translate("en", "items.foods", iter: index).should eq(item)
+      end
+    end
   end
 
   describe "monolingual usage" do

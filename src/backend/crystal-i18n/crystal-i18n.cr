@@ -92,8 +92,8 @@ module CrystalI18n
     #
     # Functionality is the same as `CrystalI18n::I18n.translate(locale : String, key : String, count : Int | Float? = nil)`
     # but with the first argument removed
-    def translate(key : String, count : Int | Float? = nil, **kwargs)
-      self.translate(@lang_state, key, count, **kwargs)
+    def translate(key : String, count : Int | Float? = nil, iter : Int? = nil, **kwargs)
+      self.translate(@lang_state, key, count, iter, **kwargs)
     end
 
     # Fetches a translation from the *given* locale with the given path (key).
@@ -106,8 +106,8 @@ module CrystalI18n
     #
     # This method can also translate plural-forms through the count argument.
     # ```
-    # catalogue.translate("en", "possessions .fruits.apples", 50) # => "I have 50 apples"
-    # catalogue.translate("en", "possessions .fruits.apples", 1)  # => "I have 1 apple"
+    # catalogue.translate("en", "possessions.fruits.apples", 50) # => "I have 50 apples"
+    # catalogue.translate("en", "possessions.fruits.apples", 1)  # => "I have 1 apple"
     # ```
     #
     # Interpolation can be done through kwargs.
@@ -117,10 +117,16 @@ module CrystalI18n
     # result # => "Hello there, my name is Steve and I'm a programmer"
     # ```
     #
+    # If the value at the given path (key) turns out to be an array then you can pass in the iter argument
+    # to select a specific value at the given index
+    # ```
+    # catalogue.translate("en", "items.foods", iter: 2) # => "Hamburger"
+    # ```
+    #
     # When a translation is not found `LensExceptions::MissingTranslation` would be raised.
     #
-    def translate(locale : String, key : String, count : Int | Float? = nil, **kwargs)
-      self.internal_translate(locale, key, count, **kwargs)
+    def translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil, **kwargs)
+      self.internal_translate(locale, key, count, iter, **kwargs)
     rescue ex : KeyError | Exception
       if ex.is_a? KeyError
         raise LensExceptions::MissingTranslation.new("Translation in the path '#{key}' does not exist for #{locale} locale")
@@ -144,13 +150,17 @@ module CrystalI18n
     end
 
     # Internal method for fetching and "decorating" translations.
-    private def internal_translate(locale : String, key : String, count : Int | Float? = nil, **kwargs)
+    private def internal_translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil, **kwargs)
       # Traversal through nested structure is done by stating paths separated by "."s
       keys = key.split(".")
       if keys.size > 1
         translation = @_source[locale].dig(keys[0], keys[1..])
       else
         translation = @_source[locale][keys[0]]
+      end
+
+      if iter && translation.as_a?
+        translation = translation[iter]
       end
 
       if count
