@@ -87,27 +87,10 @@ module CrystalI18n
       end
     end
 
-    # Set pluralization rules for the given locale
-    #
-    # This allows you to overwrite or even define new pluralization rules
-    # for whatever locale you desire.
-    #
-    # ```
-    # catalogue = CrystalI18n::I18n.new("locales")
-    #
-    # catalogue.define_rule("ar", ->(n : Int32 | Int64 | Float64) {
-    #   case
-    #   when n == 0             then "zero"
-    #   when n == 1             then "one"
-    #   when n == 2             then "two"
-    #   when 3..10 === n % 100  then "few"
-    #   when 11..99 === n % 100 then "many"
-    #   else                         "other"
-    #   end
-    # })
-    # ```
+    # Set pluralization rules for the given locale.
+    # See `CrystalI18n.define_rule` for more information
     def define_rule(locale : String, value : Int32 | Int64 | Float64 -> String)
-      PluralRulesCollection::Rules[locale] = value
+      CrystalI18n.define_rule(locale, value)
     end
 
     # Internal method for fetching and "decorating" translations.
@@ -147,5 +130,26 @@ module CrystalI18n
 
       return output
     end
+  end
+
+  # Set pluralization rules for the given locale
+  #
+  # This allows you to overwrite or even define new pluralization rules
+  # for whatever locale you desire.
+  #
+  # ```
+  # CrystalI18n.define_rule("ar", ->(n : Int32 | Int64 | Float64) {
+  #   case
+  #   when n == 0             then "zero"
+  #   when n == 1             then "one"
+  #   when n == 2             then "two"
+  #   when 3..10 === n % 100  then "few"
+  #   when 11..99 === n % 100 then "many"
+  #   else                         "other"
+  #   end
+  # })
+  # ```
+  def self.define_rule(locale : String, value : Int32 | Int64 | Float64 -> String)
+    PluralRulesCollection::Rules[locale] = value
   end
 end
