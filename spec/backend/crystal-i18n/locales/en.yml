@@ -31,3 +31,7 @@ possessions:
 
 interpolation_stress_testing:
   message: "%{one}, %{two}, %{three}, %{four}, %{five}, %{six}, %{seven}, %{eight}, %{nine}, %{ten}, %{one}, %{two}, %{three}, %{four}, %{five}, %{six}, %{seven}, %{eight}, %{nine}, %{ten}"
+
+new_messages:
+  "one": "you have %{count} message"
+  "other": "you have %{count} messages"

@@ -19,8 +19,6 @@ module CrystalI18n
   #
   # Note that this is still experimental, mainly in regards to plural-forms. Other than that, it should be
   # fully usable and accurate.
-  #
-  # TODO: write usage documentation
   @[Experimental]
   class I18n
     # Creates a new crystal-i18n instance that reads from the given locale directory path.
@@ -59,7 +57,46 @@ module CrystalI18n
       @lang_state = reference_locale
     end
 
-    # Fetches a translation from the selected locale with the given path (key).
+    # Selects a locale to use for translations
+    #
+    # Raises a KeyError when the selected locale isn't found.
+    #
+    # If your application is monolingual then this along with `#translate(key, count)` is your friend.
+    # However, if you need to switch languages on the fly then this method should be ignored.
+    #
+    # Instead, you should use the `#translate(locale, key, count)` overload, which allows for fetching
+    # messages from any locales without changing the state of the instance.
+    #
+    # ```
+    # catalogue = CrystalI18n::I18n.new("locales")
+    #
+    # catalogue.select("en")
+    # catalogue.translate("translation") # => "Translated Message"
+    #
+    # catalogue.select("example")
+    # catalogue.translate("translation") # => "Some message in another language"
+    #
+    # catalogue.select("dontexist")
+    # catalogue.translate("translation") # => "Some message in another language"
+    # ```
+    #
+    def select(locale)
+      if @_source.has_key?(locale)
+        @lang_state = locale
+      else
+        raise KeyError.new("The #{locale} doesn't exist")
+      end
+    end
+
+    # Fetches a translation from the *selected* locale with the given path (key).
+    #
+    # Functionality is the same as `CrystalI18n::I18n.translate(locale : String, key : String, count : Int | Float? = nil)`
+    # but with the first argument removed
+    def translate(key : String, count : Int | Float? = nil, **kwargs)
+      self.translate(@lang_state, key, count, **kwargs)
+    end
+
+    # Fetches a translation from the *given* locale with the given path (key).
     #
     # Basic usage is this:
     # ```

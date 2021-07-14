@@ -68,4 +68,22 @@ describe "crystal-i18n" do
       i18n_instance.translate("en", "interpolation_stress_testing.message", one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10).should eq ("1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10")
     end
   end
+
+  describe "monolingual usage" do
+    it "handles switching languages" do
+      i18n_instance = CrystalI18n::I18n.new("spec/backend/crystal-i18n/locales")
+      i18n_instance.translate("new_messages", 0).should eq("you have 0 messages")
+      i18n_instance.translate("new_messages", 1).should eq("you have 1 message")
+
+      i18n_instance.select("ru")
+
+      i18n_instance.translate("new_message", 0).should eq("у вас 0 сообщений")
+      i18n_instance.translate("new_message", count: 1).should eq("у вас 1 сообщение")
+
+      i18n_instance.select("en")
+
+      i18n_instance.translate("new_messages", 0).should eq("you have 0 messages")
+      i18n_instance.translate("new_messages", 1).should eq("you have 1 message")
+    end
+  end
 end
