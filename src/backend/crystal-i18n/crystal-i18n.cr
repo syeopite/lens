@@ -6,7 +6,6 @@ require "../../helpers/plural-rules/*"
 # This is a reimplementation of the crystal-i18n format from the following projects:
 # * [TechMagister/i18n.cr](https://github.com/TechMagister/i18n)
 # * [crystal-i18n/i18n](https://github.com/crystal-i18n/i18n)
-# * [mattetti/i18n](https://github.com/mattetti/i18n)
 #
 # and any of the other similar implementations the community has made.
 #
