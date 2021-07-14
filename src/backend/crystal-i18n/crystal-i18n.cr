@@ -32,7 +32,9 @@ module CrystalI18n
         begin
           contents = YAML.parse(File.read(yaml_file)).as_h
         rescue YAML::ParseException
-          raise LensExceptions::ParseError.new("Invalid yaml file: #{yaml_file} for crystal-i18n format")
+          raise LensExceptions::ParseError.new("Invalid yaml file detected when parsing for the crystal-i18n format. " + \
+            "Please make sure that the file: '#{locale_directory_path}/#{yaml_file}' " + \
+              "is formatted correctly")
         end
 
         if @_source[name]?
