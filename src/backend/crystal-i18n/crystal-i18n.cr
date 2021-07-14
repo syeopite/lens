@@ -93,6 +93,11 @@ module CrystalI18n
       CrystalI18n.define_rule(locale, value)
     end
 
+    # Returns all defined CLDR plural rules.
+    def plural_rules(locale : String, value : Int32 | Int64 | Float64 -> String)
+      CrystalI18n.define_rule(locale, value)
+    end
+
     # Internal method for fetching and "decorating" translations.
     private def internal_translate(locale : String, key : String, count : Int | Float? = nil, **kwargs)
       # Traversal through nested structure is done by stating paths separated by "."s
@@ -151,5 +156,10 @@ module CrystalI18n
   # ```
   def self.define_rule(locale : String, value : Int32 | Int64 | Float64 -> String)
     PluralRulesCollection::Rules[locale] = value
+  end
+
+  # Returns all defined CLDR plural rules
+  def self.plural_rules : Hash(String, Int32 | Int64 | Float64 -> String)
+    return PluralRulesCollection::Rules
   end
 end
