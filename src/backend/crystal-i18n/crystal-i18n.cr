@@ -1,4 +1,5 @@
 require "yaml"
+require "../../helpers/plural-rules/*"
 
 # Namespace for logic relating to the crystal-i18n format.
 #
@@ -44,11 +45,22 @@ module CrystalI18n
       @lang_state = reference_locale
     end
 
+    def translate(locale : String, key : String, count : Int | Float? = nil, **kwargs)
+      self.internal_translate(locale, key, count, **kwargs)
+    end
+
     # Internal method for fetching and "decorating" translations.
     private def internal_translate(locale : String, key : String, count : Int | Float? = nil, **kwargs)
       # Traversal through nested structure is done by stating paths separated by "."s
       keys = key.split(".")
       translation = @_source[locale].dig(keys[0], keys[1..])
+
+      if count
+        plural_rule = PluralRulesCollection::Rules[locale].call(count)
+        translation = translation[plural_rule]
+      end
+
+      return translation
     end
 
     # Stringify all keys to allow for easy digging without type casting.
