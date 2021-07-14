@@ -60,10 +60,10 @@ module CrystalI18n
     #
     # Raises a KeyError when the selected locale isn't found.
     #
-    # If your application is monolingual then this along with `#translate(key, count)` is your friend.
+    # If your application is monolingual then this along with `#translate(key, count, iter)` is your friend.
     # However, if you need to switch languages on the fly then this method should be ignored.
     #
-    # Instead, you should use the `#translate(locale, key, count)` overload, which allows for fetching
+    # Instead, you should use the `#translate(locale, key, count, iter)` overload, which allows for fetching
     # messages from any locales without changing the state of the instance.
     #
     # ```
@@ -89,7 +89,7 @@ module CrystalI18n
 
     # Fetches a translation from the *selected* locale with the given path (key).
     #
-    # Functionality is the same as `CrystalI18n::I18n.translate(locale : String, key : String, count : Int | Float? = nil)`
+    # Functionality is the same as `CrystalI18n::I18n.translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil)`
     # but with the first argument removed
     def translate(key : String, count : Int | Float? = nil, iter : Int? = nil, **kwargs)
       self.translate(@lang_state, key, count, iter, **kwargs)

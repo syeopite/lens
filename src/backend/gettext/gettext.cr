@@ -66,8 +66,8 @@ module Gettext
     # catalogue.ngettext("I have %d apple", "I have %d apples", 1) # => "Translated message with plural-form 0"
     #
     # # Not found:
-    # catalogue.ngettext("I have %d pear", "I have %d pears", 0) # => "I have %d pear"
-    # catalogue.ngettext("I have %d pear", "I have %d pears", 1) # => "I have %d pears"
+    # catalogue.ngettext("I have %d pear", "I have %d pears", 0) # => "I have %d pears"
+    # catalogue.ngettext("I have %d pear", "I have %d pears", 1) # => "I have %d pear"
     # ```
     def ngettext(id : String, plural_id, n)
       if @plural_interpreter.nil?

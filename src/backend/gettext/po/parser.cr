@@ -142,8 +142,8 @@ module Gettext
     #
     # ```
     # new_backend_instance = Gettext::POBackend.new("example/locales")
-    # new_backend_instance.load
-    # catalogues = new_backend_instance.parse(new_backend_instance.scan)["example.po"] # => {"test" => {0=> "translated-test"}}
+    # tokens = new_backend_instance.scan
+    # Gettext::POParser.new(tokens).parse["example.po"] # => {"test" => {0=> "translated-test"}}
     # ```
     def parse
       # Skip dummy @current_token

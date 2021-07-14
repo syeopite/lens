@@ -20,7 +20,7 @@ module Gettext
       # Creates a new scanner instance with the given source
       #
       # ```
-      # plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
+      # plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
       # ```
       def initialize(@source : String)
         @tokens = [] of Token
@@ -32,7 +32,7 @@ module Gettext
       # Tokenizes the subset of C's grammar needed for parsing plural-forms
       #
       # ```
-      # plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
+      # plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
       # tokens = plural_form_scanner.scan # => Array(Tokens)
       # ```
       def scan

@@ -52,7 +52,7 @@ module Gettext
     #
     # ```
     # backend = Gettext::POBackend.new("locales")
-    # backend.parse(backend.scan)
+    # backend.parse(backend.scan) # => Hash(String, Catalogue)
     # ```
     def parse(token_hash) : Hash(String, Catalogue)
       locale_catalogues = {} of String => Catalogue
@@ -83,7 +83,7 @@ module Gettext
     #
     # ```
     # backend = Gettext::POBackend.new("locales")
-    # backend.create # => Catalogue
+    # backend.create # => Hash(String, Catalogue)
     # ```
     def create : Hash(String, Catalogue)
       return self.parse(self.scan)

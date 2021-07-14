@@ -11,19 +11,19 @@ module Gettext
     MSGSTR
     PLURAL_FORM
 
-    # Headers
-    # Most of this is unnessersary for us. We really only need the plural-forms and
-    # and language header. But just in case we'll tokenize them anyways
-    PROJECT_ID_VERSION
-    REPORT_MSGID_BUGS_TO
-    POT_CREATION_DATE
-    PO_REVISION_DATE
-    LAST_TRANSLATOR
-    LANGUAGE_TEAM
-    LANGUAGE
-    CONTENT_TYPE
-    CONTENT_TRANSFER_ENCODING
-    PLURAL_FORMS
+    # # Headers
+    # # Most of this is unnecessary for us. We really only need the plural-forms and
+    # # and language header. But just in case we'll tokenize them anyways
+    # PROJECT_ID_VERSION
+    # REPORT_MSGID_BUGS_TO
+    # POT_CREATION_DATE
+    # PO_REVISION_DATE
+    # LAST_TRANSLATOR
+    # LANGUAGE_TEAM
+    # LANGUAGE
+    # CONTENT_TYPE
+    # CONTENT_TRANSFER_ENCODING
+    # PLURAL_FORMS
 
     EOF
     DUMMY # Used as a dummy token in the parser

@@ -9,7 +9,7 @@ module Gettext
     #
     # ```
     # source = "msgid \"Hello There\"\nmsgstr \"Translation\""
-    # Gettext::Backend.POScanner.new(source)
+    # Gettext::POScanner.new(source)
     # ```
     def initialize(@file_name : String, @source : String)
       @tokens = [] of Token
@@ -31,7 +31,7 @@ module Gettext
     #
     # ```
     # source = "msgid \"Hello There\"\nmsgstr \"Translation\""
-    # scanner = Gettext::Backend.POScanner.new(source)
+    # scanner = Gettext::POScanner::new(source)
     # scanner.scan # => Array(Token)
     # ```
     def scan

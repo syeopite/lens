@@ -19,9 +19,9 @@ module Gettext
       # Creates a new parser instance with the array of tokens from the `PluralForm::Scanner` as input.
       #
       # ```
-      # plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
+      # plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
       # tokens = plural_form_scanner.scan
-      # plural_form_parser = PluralForm::Parser.new(tokens)
+      # plural_form_parser = Gettext::PluralForm::Parser.new(tokens)
       # ```
       def initialize(@tokens)
         @token_iter = @tokens.each
@@ -187,9 +187,9 @@ module Gettext
       # Parse an array of tokens into abstract syntax trees that represents a plural-form expression (C)
       #
       # ```
-      # plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
+      # plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
       # tokens = plural_form_scanner.scan
-      # plural_form_parser = PluralForm::Parser.new(tokens)
+      # plural_form_parser = Gettext::PluralForm::Parser.new(tokens)
       # plural_form_parser.parse # => Array(Expressions)
       # ```
       def parse

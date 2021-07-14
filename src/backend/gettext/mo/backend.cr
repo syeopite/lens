@@ -13,7 +13,7 @@ module Gettext
     # Create a new MO backend instance that reads from the given locale directory path
     #
     # ```
-    # Gettext::POBackend.new("locales")
+    # Gettext::MOBackend.new("locales")
     # ```
     def initialize(@locale_directory_path : String)
       @had_error = false
@@ -33,7 +33,7 @@ module Gettext
     #
     # ```
     # backend = Gettext::MOBackend.new("locales")
-    # backend.parse # => Catalogue
+    # backend.parse # => Hash(String, Catalogue)
     # ```
     def parse : Hash(String, Catalogue)
       if @_source.empty?
@@ -114,7 +114,7 @@ module Gettext
     #
     # ```
     # backend = Gettext::MOBackend.new("locales")
-    # backend.create # => Catalogue
+    # backend.create # => Hash(String, Catalogue)
     # ```
     def create : Hash(String, Catalogue)
       return self.parse

@@ -13,9 +13,9 @@ module Gettext
       # Creates an interpreter with the given expression trees from the `PluralForm::Parser` as input.
       #
       # ```
-      # plural_form_scanner = PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
-      # expressions = PluralForm::Parser.new(plural_form_scanner.scan).parse
-      # interpreter = PluralForm::Interpreter.new(expressions)
+      # plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
+      # expressions = Gettext::PluralForm::Parser.new(plural_form_scanner.scan).parse
+      # interpreter = Gettext::PluralForm::Interpreter.new(expressions)
       # interpreter.interpret(1)  # => 0
       # interpreter.interpret(50) # => 1
       # ```
