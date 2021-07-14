@@ -46,8 +46,16 @@ module CrystalI18n
     end
 
     def translate(locale : String, key : String, count : Int | Float? = nil, **kwargs)
-      puts kwargs
       self.internal_translate(locale, key, count, **kwargs)
+    rescue ex : KeyError | Exception
+      if ex.is_a? KeyError
+        raise LensExceptions::MissingTranslation.new("Translation in the path '#{key}' does not exist for #{locale} locale")
+      elsif ex.message == "Expected Array or Hash, not String"
+        raise LensExceptions::MissingTranslation.new("One of the routes given in the path: '#{key}' for the '#{locale}' locale leads to a dead end. " + \
+          "Please make sure the path to the locale key is correct.")
+      else
+        raise ex
+      end
     end
 
     # Internal method for fetching and "decorating" translations.
