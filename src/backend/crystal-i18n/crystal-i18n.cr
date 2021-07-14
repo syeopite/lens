@@ -76,7 +76,7 @@ module CrystalI18n
     # catalogue.select("example")
     # catalogue.translate("translation") # => "Some message in another language"
     #
-    # catalogue.select("dontexist")
+    # catalogue.select("doesn'texist")
     # catalogue.translate("translation") # => "Some message in another language"
     # ```
     #
