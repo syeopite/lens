@@ -102,7 +102,11 @@ module CrystalI18n
     private def internal_translate(locale : String, key : String, count : Int | Float? = nil, **kwargs)
       # Traversal through nested structure is done by stating paths separated by "."s
       keys = key.split(".")
-      translation = @_source[locale].dig(keys[0], keys[1..])
+      if keys.size > 1
+        translation = @_source[locale].dig(keys[0], keys[1..])
+      else
+        translation = @_source[locale][keys[0]]
+      end
 
       if count
         plural_rule = PluralRulesCollection::Rules[locale].call(count)
