@@ -29,7 +29,7 @@ backend = backend.new("locales")
 The GNU project's implementation of Gettext
 ```crystal
 backend = Gettext::MOBackend.new("locales")
-catalogue_hash = backend.parse() # => LanguageCode|| Filename => Catalogue 
+catalogue_hash = backend.create() # => LanguageCode|| Filename => Catalogue 
 catalogue = catalogue_hash["en_US"]
 ```
 
