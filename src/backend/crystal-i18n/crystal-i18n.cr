@@ -3,17 +3,16 @@ require "../../helpers/plural-rules/*"
 
 # Namespace for logic relating to the crystal-i18n format.
 #
-# This is a reimplementation of the crystal-i18n format, which is inspired by ruby-i18n,
-# from the following projects:
+# This is a reimplementation of the crystal-i18n format from the following projects:
 # * [TechMagister/i18n.cr](https://github.com/TechMagister/i18n)
 # * [crystal-i18n/i18n](https://github.com/crystal-i18n/i18n)
+# * [mattetti/i18n](https://github.com/mattetti/i18n)
 #
-# and all of the other implementations of crystal-i18n the community has made.
+# and any of the other similar implementations the community has made.
 #
 # Note that this is still experimental, mainly in regards to plural-forms. Other than that, it should be
 # fully usable and accurate.
 #
-# TODO: write usage documentation
 @[Experimental]
 module CrystalI18n
   # Backend for the crystal-i18n format. This class contains methods to parse and interact with them
@@ -24,6 +23,11 @@ module CrystalI18n
   # TODO: write usage documentation
   @[Experimental]
   class I18n
+    # Creates a new crystal-i18n instance that reads from the given locale directory path.
+    #
+    # ```
+    # CrystalI18n::I18n.new("locales")
+    # ```
     def initialize(locale_directory_path : String, reference_locale : String = "en")
       @_source = {} of String => Hash(String, YAML::Any)
 
@@ -47,6 +51,29 @@ module CrystalI18n
       @lang_state = reference_locale
     end
 
+    # Fetches a translation from the selected locale with the given path (key).
+    #
+    # Basic usage is this:
+    # ```
+    # catalogue = CrystalI18n::I18n.new("locales")
+    # catalogue.translate("en", "translation") # => "Translated Message"
+    # ```
+    #
+    # This method can also translate plural-forms through the count argument.
+    # ```
+    # catalogue.translate("en", "processions.fruits.apples", 50) # => "I have 50 apples"
+    # catalogue.translate("en", "processions.fruits.apples", 1)  # => "I have 1 apple"
+    # ```
+    #
+    # Interpolation can be done through kwargs.
+    # ```
+    # # message is 'Hello there, my name is %{name} and I'm a %{profession}`.
+    # result = catalogue.translate("en", "introduction.messages", name: "Steve", profession: "programmer")
+    # result # => "Hello there, my name is Steve and I'm a programmer"
+    # ```
+    #
+    # When a translation is not found `LensExceptions::MissingTranslation` would be raised.
+    #
     def translate(locale : String, key : String, count : Int | Float? = nil, **kwargs)
       self.internal_translate(locale, key, count, **kwargs)
     rescue ex : KeyError | Exception
