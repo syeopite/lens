@@ -12,12 +12,12 @@ module PluralRulesCollection
     # Any plural-forms that are repeated, such as in germanic languages, would get defined via macro below.
     "ar" => ->(n : Int32 | Int64 | Float64) {
       case
-      when n == 0             then "zero"
-      when n == 1             then "one"
-      when n == 2             then "two"
-      when 3..10 === n % 100  then "few"
-      when 11..99 === n % 100 then "many"
-      else                         "other"
+      when n == 0               then "zero"
+      when n == 1               then "one"
+      when n == 2               then "two"
+      when (3..10) === n % 100  then "few"
+      when (11..99) === n % 100 then "many"
+      else                           "other"
       end
     },
 
@@ -52,21 +52,21 @@ module PluralRulesCollection
 
     "ga" => ->(n : Int32 | Int64 | Float64) {
       case n
-      when 1     then "one"
-      when 2     then "two"
-      when 3..6  then "few"
-      when 7..10 then "many"
-      else            "other"
+      when 1       then "one"
+      when 2       then "two"
+      when (3..6)  then "few"
+      when (7..10) then "many"
+      else              "other"
       end
     },
 
     "gd" => ->(n : Int32 | Int64 | Float64) {
       case n
-      when 1, 11  then "one"
-      when 2, 12  then "two"
-      when 3..10  then "few"
-      when 13..19 then "few"
-      else             "other"
+      when 1, 11    then "one"
+      when 2, 12    then "two"
+      when (3..10)  then "few"
+      when (13..19) then "few"
+      else               "other"
       end
     },
 
@@ -139,10 +139,10 @@ module PluralRulesCollection
 
     "mt" => ->(n : Int32 | Int64 | Float64) {
       case {n, n % 100}
-      when {1, _}      then "one"
-      when {0, 2..10}  then "few"
-      when {_, 11..19} then "many"
-      else                  "other"
+      when {1, _}        then "one"
+      when {0, (2..10)}  then "few"
+      when {_, (11..19)} then "many"
+      else                    "other"
       end
     },
 
@@ -151,18 +151,18 @@ module PluralRulesCollection
       mod100 = n % 100
 
       case
-      when n == 1                                                                  then "one"
-      when {2, 3, 4}.includes?(mod10) && !{12, 13, 14}.includes?(mod100)           then "few"
-      when ((0 <= mod10 <= 1) || 5..9 === mod10) || {12, 13, 14}.includes?(mod100) then "many"
-      else                                                                              "other"
+      when n == 1                                                                    then "one"
+      when {2, 3, 4}.includes?(mod10) && !{12, 13, 14}.includes?(mod100)             then "few"
+      when ((0 <= mod10 <= 1) || (5..9) === mod10) || {12, 13, 14}.includes?(mod100) then "many"
+      else                                                                                "other"
       end
     },
 
     "ro" => ->(n : Int32 | Int64 | Float64) {
       case {n, n % 100}
-      when {1, _}     then "one"
-      when {0, 1..19} then "few"
-      else                 "other"
+      when {1, _}       then "one"
+      when {0, (1..19)} then "few"
+      else                   "other"
       end
     },
 
@@ -177,8 +177,8 @@ module PluralRulesCollection
 
     "tzm" => ->(n : Int32 | Int64 | Float64) {
       case
-      when ((0 <= n <= 1) && 11..99 === n) then "one"
-      else                                      "other"
+      when ((0 <= n <= 1) && (11..99) === n) then "one"
+      else                                        "other"
       end
     },
   }
@@ -192,8 +192,8 @@ module PluralRulesCollection
 
       case
       when (mod10 == 1) && (mod100 != 11) then "one"
-      when (2..4 === mod10) && !(12..14 === mod100) then "few"
-      when (mod10 == 0 || 5..9 === mod10) && (11..14 === mod100) then "many"
+      when ((2..4) === mod10) && !((12..14) === mod100) then "few"
+      when (mod10 == 0 ||(5..9) === mod10) && ((11..14) === mod100) then "many"
       else "other"
       end
     }
@@ -204,7 +204,7 @@ module PluralRulesCollection
     Rules[{{lang_code}}] = ->(n : Int32 | Int64 | Float64) {
       case n
       when 1 then "one"
-      when 2..4 then "few"
+      when (2..4) then "few"
       else "other"
       end
     }
