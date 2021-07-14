@@ -139,8 +139,8 @@ module CrystalI18n
     end
 
     # Returns all defined CLDR plural rules.
-    def plural_rules(locale : String, value : Int32 | Int64 | Float64 -> String)
-      CrystalI18n.define_rule(locale, value)
+    def plural_rules : Hash(String, Int32 | Int64 | Float64 -> String)
+      return PluralRulesCollection::Rules
     end
 
     # Internal method for fetching and "decorating" translations.
