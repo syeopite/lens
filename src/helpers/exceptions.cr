@@ -26,4 +26,8 @@ module LensExceptions
   # Exception thrown when an error occurs during parsing
   class ParseError < Exception
   end
+
+  # Exception thrown when an translation is messing. Only applies to certain formats by default
+  class MissingTranslation < Exception
+  end
 end
