@@ -155,5 +155,5 @@ catalogue.translate("en", "items.foods", iter: 2) # => "Hamburger"
 
 ## Inspirations
 * [omarroth/gettext.cr](https://github.com/omarroth/gettext.cr)
-* [TechMagister/i18n.cr](https://github.com/TechMagister/i18n)
+* [TechMagister/i18n.cr](https://github.com/TechMagister/i18n.cr)
 * [crystal-i18n/i18n](https://github.com/crystal-i18n/i18n)
