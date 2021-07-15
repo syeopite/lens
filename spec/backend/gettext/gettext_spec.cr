@@ -1,31 +1,16 @@
-require "digest"
-require "../../../src/backend/gettext"
-
 describe Gettext do
-  describe "po" do
-    it "Able to tokenize po files" do
-      new_backend_instance = Gettext::POBackend.new("spec/backend/gettext/locales")
-      Digest::SHA256.hexdigest(new_backend_instance.scan["example.po"].to_s).should eq("5db58843791927dc46ed39427879a33ea659a566394aaf50c7692144e386125c")
-    end
+  po_backend = Gettext::POBackend.new("spec/backend/gettext/locales")
+  mo_backend = Gettext::MOBackend.new("spec/backend/gettext/locales")
 
-    it "Able to parse and use po files" do
-      new_backend_instance = Gettext::POBackend.new("spec/backend/gettext/locales")
-      c = new_backend_instance.parse(new_backend_instance.scan)["ar_SA"]
+  describe Gettext::POBackend do
+    tokens = po_backend.scan
 
-      c.gettext("%i line of file “%s” was not loaded correctly.").should eq("%i سطر ملف ““%s”” لم يتم تحميله بشكل صحيح.")
-      c.ngettext("%i line of file “%s” was not loaded correctly.", "%i lines of file “%s” were not loaded correctly.", 0).should eq("%i سطر ملف ““%s”” لم يتم تحميله بشكل صحيح.")
-      c.ngettext("%i line of file “%s” was not loaded correctly.", "%i lines of file “%s” were not loaded correctly.", 40).should eq("%i سطر الملف ““%s”” لم يتم تحميله بشكل صحيح.")
-      c.ngettext("%i line of file “%s” was not loaded correctly.", "%i lines of file “%s” were not loaded correctly.", 100).should eq("%i آسطر الملف ““%s”” لم يتم تحميله بشكل صحيح.")
-      c.pgettext("column/row header", "Needs Work").should eq("تحتاج عملًا")
+    describe "#scan" do
+      it "is able to tokenize first-level .po source files" do
+        Digest::SHA256.hexdigest(tokens["example.po"].to_s).should eq("5db58843791927dc46ed39427879a33ea659a566394aaf50c7692144e386125c")
+      end
 
-      c.headers["Plural-Forms"].should eq("nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);")
-    end
-
-    describe "nest" do
-      new_backend_instance = Gettext::POBackend.new("spec/backend/gettext/locales")
-      tokens = new_backend_instance.scan
-
-      it "Able to tokenize nested po files correctly" do
+      it "is able to tokenize nested .po source files" do
         scan_results = Set{
           Digest::SHA256.hexdigest(tokens["en.po"].to_s),
           Digest::SHA256.hexdigest(tokens["en.po2"].to_s),
@@ -38,55 +23,81 @@ describe Gettext do
           "01c162ca40618e69a967e60d0a712b94affdb432b1c96e7f8a99e49f64a54c01",
         })
       end
+    end
 
-      it "Able to parse and use nested po files" do
-        c = new_backend_instance.parse(tokens)["en_US"]
+    describe "#parse" do
+      it "#parse" do
+        hashed_results = Set(String).new(2)
+        po_backend.parse(tokens).values.each { |catalogues| hashed_results << Digest::SHA256.hexdigest(catalogues.contents.to_s) }
 
-        c.gettext("first").should eq("translated first")
-        c.gettext("second").should eq("translated second")
-        c.gettext("compound-message").should eq("12345")
-
-        # Did duplicate files get merged?
-        c.gettext("first-subfolder").should eq("first-subfolder-message")
-        c.gettext("second-subfolder").should eq("second-subfolder-message")
-
-        # Plurals
-        c.ngettext("I have %{count} apple", "I have %{count} apples", 0).should eq("Translated: I have %{count} apples")
-        c.ngettext("I have %{count} apple", "I have %{count} apples", 1).should eq("Translated: I have %{count} apple")
+        hashed_results.should eq Set{
+          "14a1b3c08a51ff9eaf1596d846a46412664d682f658f178cb6f13ace13b4f4cc",
+          "47b914b5b0b8506ecd09ad27903e9e10eedd268743b27b5c9f22a30a7b9af938",
+        }
       end
     end
   end
 
-  describe "mo" do
-    it "able to parse and use mo files" do
-      new_backend_instance = Gettext::MOBackend.new("spec/backend/gettext/locales")
-      c = new_backend_instance.parse["ar_SA"]
+  describe Gettext::MOBackend do
+    describe "#parse" do
+      it "#parse" do
+        hashed_results = Set(String).new(2)
+        mo_backend.parse.values.each { |catalogues| hashed_results << Digest::SHA256.hexdigest(catalogues.contents.to_s) }
 
-      c.gettext("%i line of file “%s” was not loaded correctly.").should eq("%i سطر ملف ““%s”” لم يتم تحميله بشكل صحيح.")
-      c.ngettext("%i line of file “%s” was not loaded correctly.", "%i lines of file “%s” were not loaded correctly.", 0).should eq("%i سطر ملف ““%s”” لم يتم تحميله بشكل صحيح.")
-      c.ngettext("%i line of file “%s” was not loaded correctly.", "%i lines of file “%s” were not loaded correctly.", 40).should eq("%i سطر الملف ““%s”” لم يتم تحميله بشكل صحيح.")
-      c.ngettext("%i line of file “%s” was not loaded correctly.", "%i lines of file “%s” were not loaded correctly.", 100).should eq("%i آسطر الملف ““%s”” لم يتم تحميله بشكل صحيح.")
-      c.pgettext("column/row header", "Needs Work").should eq("تحتاج عملًا")
+        # Order of strings is slightly different but should have no impact on the final result
+        hashed_results.should eq Set{
+          "07079054d4b59c25a46747925ccfe45fbccf65c01d80c86e1b5f014491b92d29",
+          "5cdf81a98852f00fedb22cf2bcb507455a63466ab5db4eaaabd61a810ef7645b",
+        }
+      end
+    end
+  end
 
-      c.headers["Plural-Forms"].should eq("nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);")
+  describe "Usage" do
+    mo_catalogue = Gettext::MOBackend.new("spec/backend/gettext/locales").create
+    po_catalogue = Gettext::POBackend.new("spec/backend/gettext/locales").create
+    test_methods = [{"Po", po_catalogue}, {"Mo", mo_catalogue}]
+
+    describe "Simple" do
+      test_methods.each do |method, catalogue|
+        describe method do
+          it "Can fetch message" do
+            catalogue["ar_SA"].gettext("%i line of file “%s” was not loaded correctly.").should eq("%i سطر ملف ““%s”” لم يتم تحميله بشكل صحيح.")
+            catalogue["en_US"].gettext("first").should eq("translated first")
+            catalogue["en_US"].gettext("second").should eq("translated second")
+          end
+
+          it "Can handle plurals" do
+            catalogue["en_US"].ngettext("I have %{count} apple", "I have %{count} apples", 0).should eq("Translated: I have %{count} apples")
+            catalogue["en_US"].ngettext("I have %{count} apple", "I have %{count} apples", 1).should eq("Translated: I have %{count} apple")
+          end
+
+          it "Has correct plural forms" do
+            catalogue["ar_SA"].headers["Plural-Forms"].should eq("nplurals=6; plural=(n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 && n%100<=99 ? 4 : 5);")
+            catalogue["en_US"].headers["Plural-Forms"].should eq("nplurals=2; plural=n != 1;")
+          end
+        end
+      end
     end
 
-    describe "nest" do
-      it "able to parse and use nested mo files" do
-        new_backend_instance = Gettext::MOBackend.new("spec/backend/gettext/locales")
-        c = new_backend_instance.parse["en_US"]
+    describe "Advanced" do
+      test_methods.each do |method, catalogue|
+        describe method do
+          it "Can handle complex plurals" do
+            catalogue["ar_SA"].ngettext("%i line of file “%s” was not loaded correctly.", "%i lines of file “%s” were not loaded correctly.", 0).should eq("%i سطر ملف ““%s”” لم يتم تحميله بشكل صحيح.")
+            catalogue["ar_SA"].ngettext("%i line of file “%s” was not loaded correctly.", "%i lines of file “%s” were not loaded correctly.", 40).should eq("%i سطر الملف ““%s”” لم يتم تحميله بشكل صحيح.")
+            catalogue["ar_SA"].ngettext("%i line of file “%s” was not loaded correctly.", "%i lines of file “%s” were not loaded correctly.", 100).should eq("%i آسطر الملف ““%s”” لم يتم تحميله بشكل صحيح.")
+          end
 
-        c.gettext("first").should eq("translated first")
-        c.gettext("second").should eq("translated second")
-        c.gettext("compound-message").should eq("12345")
+          it "Can handle nested structure with duplicate files" do
+            catalogue["en_US"].gettext("first-subfolder").should eq("first-subfolder-message")
+            catalogue["en_US"].gettext("second-subfolder").should eq("second-subfolder-message")
+          end
 
-        # Did duplicate files get merged?
-        c.gettext("first-subfolder").should eq("first-subfolder-message")
-        c.gettext("second-subfolder").should eq("second-subfolder-message")
-
-        # Plurals
-        c.ngettext("I have %{count} apple", "I have %{count} apples", 0).should eq("Translated: I have %{count} apples")
-        c.ngettext("I have %{count} apple", "I have %{count} apples", 1).should eq("Translated: I have %{count} apple")
+          it "Can handle messages constrainted by context" do
+            catalogue["ar_SA"].pgettext("column/row header", "Needs Work").should eq("تحتاج عملًا")
+          end
+        end
       end
     end
   end
