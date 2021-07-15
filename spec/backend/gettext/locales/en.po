@@ -1,0 +1,26 @@
+msgid ""
+msgstr ""
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+
+msgid "I have %{count} apple"
+msgid_plural "I have %{count} apples"
+msgstr[0] "Translated: I have %{count} apple"
+msgstr[1] "Translated: I have %{count} apples"
+
+msgid "first"
+msgstr "translated first"
+
+msgid "second"
+msgstr "translated second"
+
+msgid "compound-message"
+msgstr "1"
+"2"
+"3"
+"4"
+"5"
+

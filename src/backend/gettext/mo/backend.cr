@@ -19,9 +19,15 @@ module Gettext
       @had_error = false
       @_source = {} of String => File
 
-      Dir.glob("#{@locale_directory_path}/*.mo") do |gettext_file|
+      Dir.glob("#{@locale_directory_path}/**/*.mo") do |gettext_file|
         name = File.basename(gettext_file)
-        @_source[name] = File.open(gettext_file)
+        if @_source.has_key?(name)
+          # We're just going to use the end of transmission character to mark files with the same name. This is a major
+          # back and should be optimized in the future.
+          @_source[name + @_source.size.to_s] = File.open(gettext_file)
+        else
+          @_source[name] = File.open(gettext_file)
+        end
       end
     end
 
@@ -36,14 +42,11 @@ module Gettext
     # backend.parse # => Hash(String, Catalogue)
     # ```
     def parse : Hash(String, Catalogue)
-      if @_source.empty?
-        raise Exception.new("No locale files have been loaded yet. Did you forget to call
-                             the .load() method?")
-      end
-
       locale_catalogues = {} of String => Catalogue
+      preprocessed_messages = {} of String => Hash(String, Hash(Int8, String))
+
       @_source.each do |file_name, io|
-        catalogue = {} of String => Hash(Int8, String)
+        messages = {} of String => Hash(Int8, String)
         # Taken from omarroth's gettext.cr's MO parsing https://github.com/omarroth/gettext.cr/blob/master/src/gettext.cr#L374-L461
 
         case version = io.read_bytes(UInt32, IO::ByteFormat::LittleEndian)
@@ -85,19 +88,50 @@ module Gettext
             translated_hash = {} of Int8 => String
             tmsg.each_with_index { |msg, i| translated_hash[i.to_i8] = msg }
 
-            catalogue[msgid] = translated_hash
-            catalogue[plural_msgid] = translated_hash
+            messages[msgid] = translated_hash
+            messages[plural_msgid] = translated_hash
           else
-            catalogue[String.new(msg)] = {0.to_i8 => String.new(tmsg)}
+            messages[String.new(msg)] = {0.to_i8 => String.new(tmsg)}
           end
         end
 
-        catalogue = Catalogue.new(catalogue)
+        # During the init method we went ahead and added a suffix number
+        # to the end of the file name for locales with the same file name. (They're
+        # assumed to be the same language) Therefore we can't create a catalogue till we
+        # merged their contents. For now we'll just append everything to a preprocessed_messages hash.
+        preprocessed_messages[file_name] = messages
+      end
 
+      locale_catalogues = self.create_catalogues_and_merge_duplicate_files(preprocessed_messages)
+
+      return locale_catalogues
+    end
+
+    # Merge parsed contents of duplicate Gettext keys together and create catalogue objects
+    #
+    # OPTIMIZE
+    private def create_catalogues_and_merge_duplicate_files(preprocessed_messages)
+      locale_catalogues = {} of String => Catalogue
+
+      # First we'll select all of the initial files. (The first ones opened by IO before any duplicates)
+      initial_files = preprocessed_messages.keys.select! { |i| !i[-1].number? }
+
+      initial_files.each do |base_file_name|
+        base_messages = preprocessed_messages[base_file_name]
+
+        # Now we'll fetch all of the duplicate keys
+        duplicate_keys = preprocessed_messages.keys.select! { |i| i.starts_with?(base_file_name) }
+
+        # We're merge the values (parsed messages) of the duplicate keys, if any, with our base messages
+        # NOTE this would overwrite any existing keys.
+        duplicate_keys.each { |duplicate| base_messages.merge!(preprocessed_messages[duplicate]) }
+
+        # Finally we can create our catalogues
+        catalogue = Catalogue.new(base_messages)
         if lang = catalogue.headers["Language"]?
           locale_catalogues[lang] = catalogue
         else
-          locale_catalogues[file_name] = catalogue
+          locale_catalogues[base_file_name] = catalogue
         end
       end
 
