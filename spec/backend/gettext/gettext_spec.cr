@@ -26,9 +26,17 @@ describe Gettext do
       tokens = new_backend_instance.scan
 
       it "Able to tokenize nested po files correctly" do
-        Digest::SHA256.hexdigest(tokens["en.po"].to_s).should eq("826e1bc3bbc911681889585d6f8c8a5f7ddc8e919a026ba611e9a3a9a9224a69")
-        Digest::SHA256.hexdigest(tokens["en.po2"].to_s).should eq("c18638ea2c5b989b8b576f92300b98aa19114058dfa9a93d819dfc29d247e13a")
-        Digest::SHA256.hexdigest(tokens["en.po3"].to_s).should eq("01c162ca40618e69a967e60d0a712b94affdb432b1c96e7f8a99e49f64a54c01")
+        scan_results = Set{
+          Digest::SHA256.hexdigest(tokens["en.po"].to_s),
+          Digest::SHA256.hexdigest(tokens["en.po2"].to_s),
+          Digest::SHA256.hexdigest(tokens["en.po3"].to_s),
+        }
+
+        scan_results.should eq(Set{
+          "826e1bc3bbc911681889585d6f8c8a5f7ddc8e919a026ba611e9a3a9a9224a69",
+          "c18638ea2c5b989b8b576f92300b98aa19114058dfa9a93d819dfc29d247e13a",
+          "01c162ca40618e69a967e60d0a712b94affdb432b1c96e7f8a99e49f64a54c01",
+        })
       end
 
       it "Able to parse and use nested po files" do
