@@ -11,7 +11,7 @@ module Gettext
     # Returns a hash of the headers
     #
     # ```
-    # catalogue = Gettext::MOBackend.new("examples").create
+    # catalogue = Gettext::MOBackend.new("examples").create["en_US"]
     # catalogue.headers["Plural-Forms"] # => "nplurals=2; plural=(n != 1);"
     # ```
     getter headers : Hash(String, String)
@@ -46,7 +46,7 @@ module Gettext
     # Fetches the translated message for the specific ID. If none can be found the given ID is returned.
     #
     # ```
-    # catalogue = Gettext::MOBackend.new("examples").create
+    # catalogue = Gettext::MOBackend.new("examples").create["en_US"]
     # catalogue.gettext("A message")     # => "Translated message"
     # catalogue.gettext("I don't exist") # => "I don't exist"
     # ```
@@ -61,7 +61,7 @@ module Gettext
     # Fetches the translated message for the specific ID with the correct plural form. Returns either the singular or plural id if none can be found.
     #
     # ```
-    # catalogue = Gettext::MOBackend.new("examples").create
+    # catalogue = Gettext::MOBackend.new("examples").create["en_US"]
     # catalogue.ngettext("I have %d apple", "I have %d apples", 0) # => "Translated message with plural-form 1"
     # catalogue.ngettext("I have %d apple", "I have %d apples", 1) # => "Translated message with plural-form 0"
     #
@@ -88,7 +88,7 @@ module Gettext
     # Fetches the translated message for the specific ID that is bound by context. If none can be found the given ID is returned.
     #
     # ```
-    # catalogue = Gettext::MOBackend.new("examples").create
+    # catalogue = Gettext::MOBackend.new("examples").create["en_US"]
     #
     # catalogue.pgettext("CopyPasteMenu", "copy")          # => "Translated copy"
     # catalogue.pgettext("CopyPasteMenu", "I don't exist") # => "I don't exist"
@@ -104,7 +104,7 @@ module Gettext
     # Fetches the translated message for the specific ID that is bound by context with the correct plural form.
     #
     # ```
-    # catalogue = Gettext::MOBackend.new("examples").create
+    # catalogue = Gettext::MOBackend.new("examples").create["en_US"]
     # catalogue.npgettext("CopyPasteMenu", "Export %d file", "Export %d files", 0) # => "Translated message with plural-form 1"
     # catalogue.npgettext("CopyPasteMenu", "Export %d file", "Export %d files", 1) # => "Translated message with plural-form 0"
     #
