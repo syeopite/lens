@@ -17,6 +17,17 @@ module Gettext
     getter headers : Hash(String, String)
     @plural_interpreter : PluralForm::Interpreter?
 
+    # Returns all messages within the catalogue
+    #
+    # You should **never** have to deal with this method under normal circumstances.
+    # Please use the `#gettext` family of methods to translate your application instead.
+    #
+    # ```
+    # catalogue = Gettext::MOBackend.new("examples").create["en-US"]
+    # catalogue.contents # => {...}
+    # ```
+    getter contents : Hash(String, Hash(Int8, String))
+
     # Creates a message catalogue from parsed Gettext data
     def initialize(@contents : Hash(String, Hash(Int8, String)))
       @headers = {} of String => String
