@@ -25,6 +25,8 @@ Each backend can then be initialized with the locale directory
 backend = backend.new("locales")
 ```
 
+Each backend also supports nested directories and multiple files of the same language.
+
 ## GNU Gettext
 The GNU project's implementation of Gettext
 ```crystal
@@ -73,8 +75,6 @@ catalogue = CrystalI18n::I18n.new("locales")
 ```
 
 Each file should be named like `language-code.yml`
-
-Nested folders (use `**` syntax) and multiple locale files of the same type is also supported. See spec for example
 
 For detailed information regarding usage please refer to the actual API documentation. A brief overview of the functionality is present below.
 

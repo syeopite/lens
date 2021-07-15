@@ -28,7 +28,7 @@ module CrystalI18n
     def initialize(locale_directory_path : String, reference_locale : String = "en")
       @_source = {} of String => Hash(String, YAML::Any)
 
-      Dir.glob("#{locale_directory_path}/*.yml") do |yaml_file|
+      Dir.glob("#{locale_directory_path}/**/*.yml") do |yaml_file|
         name = File.basename(yaml_file, ".yml")
         begin
           contents = YAML.parse(File.read(yaml_file)).as_h

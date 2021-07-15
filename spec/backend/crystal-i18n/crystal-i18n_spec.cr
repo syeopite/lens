@@ -37,7 +37,7 @@ describe "crystal-i18n" do
     end
 
     it "handles subfolders" do
-      i18n_instance = CrystalI18n::I18n.new("spec/backend/crystal-i18n/locales/**")
+      i18n_instance = CrystalI18n::I18n.new("spec/backend/crystal-i18n/locales")
       i18n_instance.translate("en", "first-subfolder").should eq("first-subfolder-message")
       i18n_instance.translate("en", "second-subfolder").should eq("second-subfolder-message")
 
