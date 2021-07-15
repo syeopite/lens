@@ -11,11 +11,13 @@ describe Gettext do
       end
 
       it "is able to tokenize nested .po source files" do
-        scan_results = Set{
-          Digest::SHA256.hexdigest(tokens["en.po"].to_s),
-          Digest::SHA256.hexdigest(tokens["en.po2"].to_s),
-          Digest::SHA256.hexdigest(tokens["en.po3"].to_s),
-        }
+        scan_results = Set(String).new(3)
+
+        # As the digit signifying a duplicate file is uncertain, we'll have to
+        # compute it.
+        tokens.keys.select! { |i| i.starts_with?("en.po") }.each do |k|
+          scan_results << Digest::SHA256.hexdigest(tokens[k].to_s)
+        end
 
         scan_results.should eq(Set{
           "826e1bc3bbc911681889585d6f8c8a5f7ddc8e919a026ba611e9a3a9a9224a69",
