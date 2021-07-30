@@ -5,6 +5,6 @@ description: A multiformat internationalization (i18n) shard for Crystal.
 authors:
   - syeopite <syeopite@syeopite.dev>
 
-crystal: ">= 1.0.0, < 2.0.0"
+crystal: ">= 1.0, < 2.0"
 
 license: MIT
