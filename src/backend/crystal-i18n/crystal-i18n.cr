@@ -148,6 +148,14 @@ module CrystalI18n
       return PluralRulesCollection::Rules
     end
 
+    # Returns self | Here for compatibility with `Gettext::MOBackend` and `Gettext::POBackend`
+    #
+    # catalogue = CrystalI18n::I18n.new("locales")
+    # catalogue == catalogue.create() # => true
+    def create
+      return self
+    end
+
     # Internal method for fetching and "decorating" translations.
     private def internal_translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil, **kwargs)
       # Traversal through nested structure is done by stating paths separated by "."s
