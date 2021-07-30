@@ -6,23 +6,17 @@ There is no doubt that the crystal community lacks many essential features that 
 
 ## Getting started 
 Lens supports numerous different formats:
-* GNU Gettext
+* GNU Gettext (`Gettext::POBackend`, `Gettext::MOBackend `)
     * You can use both .po and .mo
-* Crystal-i18n
+* Crystal-i18n (`CrystalI18n::I18n`)
     * Stored under .yml
 * More coming soon
 
 To get started, you should select one that fits your needs the best. [See here for information regarding them.](https://docs.weblate.org/en/latest/formats.html#l)
 
-``` crystal
-  require "lens"
-
-  backend = Lens.fetch_backend(Lens::Formats::GettextMO) # => Gettext::MOBackend
-```
-
 Each backend can then be initialized with the locale directory
 ```crystal
-backend = backend.new("locales")
+backend = Gettext::MOBackend.new("locales")
 ```
 
 Each backend also supports nested directories and multiple files of the same language.

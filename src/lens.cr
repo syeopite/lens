@@ -9,6 +9,8 @@ module Lens
   # `Gettext::POBackend`
   # `Gettext::MOBackend`
   # `CrystalI18n::I18n`
+  #
+  # @[Deprecated("Please just call the respective backends instead of using this enum!")]
   enum Formats
     GettextPO
     GettextMO
@@ -22,10 +24,12 @@ module Lens
   # ```
   # require "lens"
   #
-  # Lens.fetch_backend(Lens::Formats::GettextPO)       # => Gettext::POBackend
-  # Lens.fetch_backend(Lens::Formats::GettextMO)       # => Gettext::MOBackend
-  # Lens.fetch_backend(Lens::Formats::CrystalI18nYAML) # => CrystalI18n::I18n
+  # Lens.fetch_backend(Lens::Formats::GettextPO).as(Gettext::POBackend.class)      # => Gettext::POBackend
+  # Lens.fetch_backend(Lens::Formats::GettextMO).as(Gettext::MOBackend.class)      # => Gettext::MOBackend
+  # Lens.fetch_backend(Lens::Formats::CrystalI18nYAML).as(CrystalI18n::I18n.class) # => CrystalI18n::I18n
   # ```
+  #
+  @[Deprecated("Please just call the respective backends instead!")]
   def self.fetch_backend(fmt : Formats)
     case fmt
     when .gettext_po?        then Gettext::POBackend
