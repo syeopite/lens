@@ -10,7 +10,7 @@ module Lens
   # `Gettext::MOBackend`
   # `CrystalI18n::I18n`
   #
-  # @[Deprecated("Please just call the respective backends instead of using this enum!")]
+  @[Deprecated("Please just call the respective backends instead of using this enum!")]
   enum Formats
     GettextPO
     GettextMO
