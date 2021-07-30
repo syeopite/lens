@@ -193,7 +193,7 @@ module PluralRulesCollection
       case
       when (mod10 == 1) && (mod100 != 11) then "one"
       when ((2..4) === mod10) && !((12..14) === mod100) then "few"
-      when (mod10 == 0 ||(5..9) === mod10) && ((11..14) === mod100) then "many"
+      when (mod10 == 0 ||(5..9) === mod10) || ((11..14) === mod100) then "many"
       else "other"
       end
     }
