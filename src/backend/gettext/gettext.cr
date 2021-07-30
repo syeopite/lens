@@ -1,5 +1,13 @@
 require "./**"
 
+# Namespace for logic relating to the [GNU Gettext](https://www.gnu.org/software/gettext/) format
+#
+# Gettext is typically separated into two files: `.po` and `.mo`. Both of these formats are fully supported
+# by Lens with either the `Gettext::MOBackend` or `Gettext::POBackend` backends.
+#
+# For more information, please see their respective documentations.
+#
+# All functionality (except flags) of Gettext are implemented.
 module Gettext
   extend self
 

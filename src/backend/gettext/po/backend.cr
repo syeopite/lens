@@ -20,8 +20,8 @@ module Gettext
       Dir.glob("#{@locale_directory_path}/**/*.po") do |gettext_file|
         name = File.basename(gettext_file)
         if @_source.has_key?(name)
-          # We're just going to use the end of transmission character to mark files with the same name. This is a major
-          # back and should be optimized in the future.
+          # We're just going to use the size of the locale hash to mark files with the same name. This is a major
+          # hack and should be optimized in the future.
           @_source[name + @_source.size.to_s] = File.read(gettext_file)
         else
           @_source[name] = File.read(gettext_file)
