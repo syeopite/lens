@@ -11,8 +11,6 @@ module Gettext
     #
     # [Based on this parser from crafting interpreters](https://www.craftinginterpreters.com/parsing-expressions.html)
     class Parser
-      @tokens : Array(Token)
-      @token_iter : Iterator(Token)
       @previous_token : Token? = nil
       @current_token : Token? = nil
 
@@ -23,8 +21,8 @@ module Gettext
       # tokens = plural_form_scanner.scan
       # plural_form_parser = Gettext::PluralForm::Parser.new(tokens)
       # ```
-      def initialize(@tokens)
-        @token_iter = @tokens.each
+      def initialize(source : String)
+        @token_iter = Scanner(Token).new(source)
       end
 
       # Parse an plural-form expression into AST trees
@@ -163,7 +161,7 @@ module Gettext
         @previous_token = @current_token
         char = @token_iter.next
 
-        if char.is_a? Iterator::Stop
+        if char.is_a? Iterator::Stop || char.token_type == TokenTypes::EOF
           raise LensExceptions::ParseError.new("Unexpected end of token iteration when parsing 'Plural-Forms' at" \
                                                " Column #{@current_token.not_nil!.column}\n" \
                                                "Perhaps you've forgotten an ';'?\n"
@@ -177,7 +175,12 @@ module Gettext
 
       # Yields a token from the token array
       private def token_reader
-        @token_iter.each do |token|
+        while true
+          token = @token_iter.next
+          if token.is_a? Iterator::Stop
+            break
+          end
+
           @current_token = token
           yield token
           @previous_token = @current_token

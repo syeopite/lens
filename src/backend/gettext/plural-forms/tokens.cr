@@ -31,10 +31,11 @@ module Gettext
 
       IDENTIFIER
       NUMBER
+      EOF
     end
 
     # Object representing a token from the grammar of gettext po files
-    private struct Token
+    struct Token
       getter literal : String | Int32 | Int64 | Float64
       getter column : Int32 | Int64
       getter token_type : TokenTypes

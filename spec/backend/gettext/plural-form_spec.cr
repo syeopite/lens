@@ -1,35 +1,33 @@
 require "digest"
 require "../../../src/backend/gettext/plural-forms/*"
+require "benchmark"
 
 describe Gettext::PluralForm do
   describe Gettext::PluralForm::Scanner do
     it "is able to tokenize a simple plural form expression" do
-      plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
+      plural_form_scanner = Gettext::PluralForm::Scanner(Gettext::PluralForm::Token).new("nplurals=2; plural=(n > 1);")
       Digest::SHA256.hexdigest(plural_form_scanner.scan.to_s).should eq "bdf1aa90c05da1887d5eb4d43083abfc4107f623e4a05fdbbf8ea804c12c026e"
     end
 
     it "is able to tokenize a complex plural form expressions" do
-      plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);")
+      plural_form_scanner = Gettext::PluralForm::Scanner(Gettext::PluralForm::Token).new("nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);")
       Digest::SHA256.hexdigest(plural_form_scanner.scan.to_s).should eq "286a6c1a2856720d784d4630696fe8aadbfbdc5c1d29ec84a7738d00a69dd85b"
     end
   end
 
   describe Gettext::PluralForm::Parser do
     it "is able to parse a simple plural form expression" do
-      plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
-      Gettext::PluralForm::Parser.new(plural_form_scanner.scan).parse
+      expressions = Gettext::PluralForm::Parser.new("nplurals=2; plural=(n > 1);").parse
     end
 
     it "is able to parse a complex plural form expression" do
-      plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);")
-      Gettext::PluralForm::Parser.new(plural_form_scanner.scan).parse
+      expressions = Gettext::PluralForm::Parser.new("nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);").parse
     end
   end
 
   describe Gettext::PluralForm::Interpreter do
     it "is able to interpret a simple plural form expression" do
-      plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
-      expressions = Gettext::PluralForm::Parser.new(plural_form_scanner.scan).parse
+      expressions = Gettext::PluralForm::Parser.new("nplurals=2; plural=(n > 1);").parse
       interpreter = Gettext::PluralForm::Interpreter.new(expressions)
 
       [0, 1, -3288923893892389238].each { |i| interpreter.interpret(i).should eq 0 }
@@ -40,8 +38,7 @@ describe Gettext::PluralForm do
     end
 
     it "is able to interpret a complex plural form expression" do
-      plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);")
-      expressions = Gettext::PluralForm::Parser.new(plural_form_scanner.scan).parse
+      expressions = Gettext::PluralForm::Parser.new("nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);").parse
       interpreter = Gettext::PluralForm::Interpreter.new(expressions)
 
       # https://unicode-org.github.io/cldr-staging/charts/37/supplemental/language_plural_rules.html

@@ -1,3 +1,5 @@
+require "./ast.cr"
+
 module Gettext
   extend self
 
@@ -15,16 +17,21 @@ module Gettext
 
     # A scanner to tokenize a subset of C's grammar
     #
+    # Takes a Type (Token) to make the compiler happy
+    #
     # Based on https://www.craftinginterpreters.com/scanning.html
-    class Scanner
+    class Scanner(T)
+      include Iterator(T)
+
+      @token : Token?
+
       # Creates a new scanner instance with the given source
       #
       # ```
       # plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
       # ```
       def initialize(@source : String)
-        @tokens = [] of Token
-
+        @token = nil
         @reader = Char::Reader.new(@source)
         @io = IO::Memory.new
       end
@@ -32,19 +39,42 @@ module Gettext
       # Tokenizes the subset of C's grammar needed for parsing plural-forms
       #
       # ```
-      # plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=2; plural=(n > 1);")
+      # plural_form_scanner = Gettext::PluralForm::Scanner(Token).new("nplurals=2; plural=(n > 1);")
       # tokens = plural_form_scanner.scan # => Array(Tokens)
       # ```
       def scan
+        tokens = [] of Token
+
         while !self.at_end_of_source?
           self.scan_token
+          next if @token.nil?
+          tokens << @token.not_nil!
         end
 
-        return @tokens
+        return tokens
+      end
+
+      # Iterates through the given C expression and return a Token on each run
+      #
+      # ```
+      # plural_form_scanner = Gettext::PluralForm::Scanner(Token).new("nplurals=2; plural=(n > 1);")
+      # plural_form_scanner.next # => Token
+      # ...
+      # plural_form_scanner.next # => Iterator::Stop::INSTANCE
+      # ```
+      def next
+        if !self.at_end_of_source?
+          self.scan_token
+          return self.next if @token.nil?
+          return @token.not_nil!
+        end
+
+        return Iterator::Stop::INSTANCE
       end
 
       # Scans a token from the given source
       private def scan_token
+        @token = nil
         character = @reader.current_char
         @reader.next_char
 
@@ -150,7 +180,7 @@ module Gettext
 
       # Appends a token to the final token list
       private def add_token(token_type, literal = "")
-        @tokens << Token.new(token_type, literal, @reader.pos)
+        @token = Token.new(token_type, literal, @reader.pos)
       end
     end
   end
