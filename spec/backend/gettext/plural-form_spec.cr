@@ -1,6 +1,5 @@
 require "digest"
 require "../../../src/backend/gettext/plural-forms/*"
-require "benchmark"
 
 describe Gettext::PluralForm do
   describe Gettext::PluralForm::Scanner do
