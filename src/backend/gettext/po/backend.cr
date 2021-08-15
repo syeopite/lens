@@ -23,7 +23,7 @@ module Gettext
     #
     # ```
     # backend = Gettext::POBackend.new("locales")
-    # backend.parse(backend.scan) # => Hash(String, Catalogue)
+    # backend.parse # => Hash(String, Catalogue)
     # ```
     def parse : Hash(String, Catalogue)
       preprocessed_messages = {} of String => Hash(String, Hash(Int8, String))
