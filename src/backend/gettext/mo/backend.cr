@@ -3,7 +3,7 @@ module Gettext
 
   # The backend for Gettext's MO files. This class contains methods to parse and interact with them.
   #
-  # Similar to the Gettext module from Python, feel free to subclass and override the `#parse` method
+  # Similar to the Gettext module from Python, feel free to subclass and override the internal `#parse_` method
   # to create a backend for other .mo files. However, please consider opening a PR and adding it directly
   # to lens instead!
   struct MOBackend
@@ -16,19 +16,6 @@ module Gettext
     # Gettext::MOBackend.new("locales")
     # ```
     def initialize(@locale_directory_path : String)
-      @had_error = false
-      @_source = {} of String => File
-
-      Dir.glob("#{@locale_directory_path}/**/*.mo") do |gettext_file|
-        name = File.basename(gettext_file)
-        if @_source.has_key?(name)
-          # We're just going to use the size of the locale hash to mark files with the same name. This is a major
-          # hack and should be optimized in the future.
-          @_source[name + @_source.size.to_s] = File.open(gettext_file)
-        else
-          @_source[name] = File.open(gettext_file)
-        end
-      end
     end
 
     # Parse gettext mo files into message catalogues.
@@ -42,100 +29,85 @@ module Gettext
     # backend.parse # => Hash(String, Catalogue)
     # ```
     def parse : Hash(String, Catalogue)
-      locale_catalogues = {} of String => Catalogue
       preprocessed_messages = {} of String => Hash(String, Hash(Int8, String))
 
-      @_source.each do |file_name, io|
-        messages = {} of String => Hash(Int8, String)
-        # Taken from omarroth's gettext.cr's MO parsing https://github.com/omarroth/gettext.cr/blob/master/src/gettext.cr#L374-L461
-
-        case version = io.read_bytes(UInt32, IO::ByteFormat::LittleEndian)
-        when LE_MAGIC
-          endianness = IO::ByteFormat::LittleEndian
-        when BE_MAGIC
-          endianness = IO::ByteFormat::BigEndian
+      Dir.glob("#{@locale_directory_path}/**/*.mo") do |gettext_file|
+        name = File.basename(gettext_file)
+        if preprocessed_messages.has_key?(name)
+          # We're just going to use the size of the locale hash to mark files with the same name. This is a major
+          # hack and should be optimized in the future.
+          preprocessed_messages[name].merge! self.parse_(File.open(gettext_file))
         else
-          raise "Invalid magic"
+          preprocessed_messages[name] = self.parse_(File.open(gettext_file))
         end
-
-        # Fetches version, number of strings, offset to raw strings, offset to translated strings
-        version, msgcount, raw_offset, trans_offset = Array.new(4) { |i| io.read_bytes(UInt32, endianness) }
-        if !{0, 1}.includes? version >> 16
-          raise "Unsupported version"
-        end
-
-        msgcount.times do |i|
-          io.seek(raw_offset + i * 8)
-          mlen, moff = Array.new(2) { |i| io.read_bytes(UInt32, endianness) }
-          io.seek(trans_offset + i * 8)
-          tlen, toff = Array.new(2) { |i| io.read_bytes(UInt32, endianness) }
-          # The reference implementation https://github.com/python/cpython/blob/3.7/Lib/gettext.py
-          # checks that msg and tmsg are bounded within the buffer, which we skip here
-
-          io.seek(moff)
-          msg = Bytes.new(mlen)
-          io.read_utf8(msg)
-
-          io.seek(toff)
-          tmsg = Bytes.new(tlen)
-          io.read_utf8(tmsg)
-
-          # Plural messages
-          if msg.includes? 0x00
-            msgid, plural_msgid = String.new(msg).split("\u0000")
-            tmsg = String.new(tmsg).split("\u0000")
-
-            translated_hash = {} of Int8 => String
-            tmsg.each_with_index { |msg, i| translated_hash[i.to_i8] = msg }
-
-            messages[msgid] = translated_hash
-            messages[plural_msgid] = translated_hash
-          else
-            messages[String.new(msg)] = {0.to_i8 => String.new(tmsg)}
-          end
-        end
-
-        # During the init method we went ahead and added a suffix number
-        # to the end of the file name for locales with the same file name. (They're
-        # assumed to be the same language) Therefore we can't create a catalogue till we
-        # merged their contents. For now we'll just append everything to a preprocessed_messages hash.
-        preprocessed_messages[file_name] = messages
       end
 
-      locale_catalogues = self.create_catalogues_and_merge_duplicate_files(preprocessed_messages)
+      locale_catalogues = {} of String => Catalogue
+      preprocessed_messages.each do |name, translations|
+        catalogue = Catalogue.new(translations)
+        if lang = catalogue.headers["Language"]?
+          locale_catalogues[lang] = catalogue
+        else
+          locale_catalogues[name] = catalogue
+        end
+      end
 
       return locale_catalogues
     end
 
-    # Merge parsed contents of duplicate Gettext keys together and create catalogue objects
-    #
-    # OPTIMIZE
-    private def create_catalogues_and_merge_duplicate_files(preprocessed_messages)
-      locale_catalogues = {} of String => Catalogue
+    # Internal parse method. Reads bytes from IO to produce messages from Gettext's mo
+    private def parse_(io : IO) : Hash(String, Hash(Int8, String))
+      messages = {} of String => Hash(Int8, String)
+      # Taken from omarroth's gettext.cr's MO parsing https://github.com/omarroth/gettext.cr/blob/master/src/gettext.cr#L374-L461
 
-      # First we'll select all of the initial files. (The first ones opened by IO before any duplicates)
-      initial_files = preprocessed_messages.keys.select! { |i| !i[-1].number? }
+      case version = io.read_bytes(UInt32, IO::ByteFormat::LittleEndian)
+      when LE_MAGIC
+        endianness = IO::ByteFormat::LittleEndian
+      when BE_MAGIC
+        endianness = IO::ByteFormat::BigEndian
+      else
+        raise "Invalid magic"
+      end
 
-      initial_files.each do |base_file_name|
-        base_messages = preprocessed_messages[base_file_name]
+      # Fetches version, number of strings, offset to raw strings, offset to translated strings
+      version, msgcount, raw_offset, trans_offset = Array.new(4) { |i| io.read_bytes(UInt32, endianness) }
+      if !{0, 1}.includes? version >> 16
+        raise "Unsupported version"
+      end
 
-        # Now we'll fetch all of the duplicate keys
-        duplicate_keys = preprocessed_messages.keys.select! { |i| i.starts_with?(base_file_name) }
+      msgcount.times do |i|
+        io.seek(raw_offset + i * 8)
+        mlen, moff = Array.new(2) { |i| io.read_bytes(UInt32, endianness) }
+        io.seek(trans_offset + i * 8)
+        tlen, toff = Array.new(2) { |i| io.read_bytes(UInt32, endianness) }
 
-        # We're merge the values (parsed messages) of the duplicate keys, if any, with our base messages
-        # NOTE this would overwrite any existing keys.
-        duplicate_keys.each { |duplicate| base_messages.merge!(preprocessed_messages[duplicate]) }
+        # The reference implementation https://github.com/python/cpython/blob/3.7/Lib/gettext.py
+        # checks that msg and tmsg are bounded within the buffer, which we skip here
 
-        # Finally we can create our catalogues
-        catalogue = Catalogue.new(base_messages)
-        if lang = catalogue.headers["Language"]?
-          locale_catalogues[lang] = catalogue
+        io.seek(moff)
+        msg = Bytes.new(mlen)
+        io.read_utf8(msg)
+
+        io.seek(toff)
+        tmsg = Bytes.new(tlen)
+        io.read_utf8(tmsg)
+
+        # Plural messages
+        if msg.includes? 0x00
+          msgid, plural_msgid = String.new(msg).split("\u0000")
+          tmsg = String.new(tmsg).split("\u0000")
+
+          translated_hash = {} of Int8 => String
+          tmsg.each_with_index { |msg, i| translated_hash[i.to_i8] = msg }
+
+          messages[msgid] = translated_hash
+          messages[plural_msgid] = translated_hash
         else
-          locale_catalogues[base_file_name] = catalogue
+          messages[String.new(msg)] = {0.to_i8 => String.new(tmsg)}
         end
       end
 
-      return locale_catalogues
+      return messages
     end
 
     # Create message catalogue from the loaded locale files.
