@@ -131,6 +131,7 @@ catalogue.translate("en", "items.foods", iter: 2) # => "Hamburger"
    dependencies:
      lens:
        github: syeopite/lens
+       version: ~> 0.1.0
    ```
 
 2. Run `shards install`
