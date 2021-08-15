@@ -9,16 +9,8 @@ require "../../helpers/plural-rules/*"
 #
 # and any of the other similar implementations the community has made.
 #
-# Note that this is still experimental, mainly in regards to plural-forms. Other than that, it should be
-# fully usable and accurate.
-#
-@[Experimental]
 module CrystalI18n
   # Backend for the crystal-i18n format. This class contains methods to parse and interact with them
-  #
-  # Note that this is still experimental, mainly in regards to plural-forms. Other than that, it should be
-  # fully usable and accurate.
-  @[Experimental]
   class I18n
     # Creates a new crystal-i18n instance that reads from the given locale directory path.
     #
