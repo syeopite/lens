@@ -2,12 +2,7 @@ require "../../../helpers/*"
 
 module Gettext
   # A scanner to tokenize the grammar of gettext po files.
-  private class POScanner(T)
-    include Iterator(T)
-
-    @error_column : Int32?
-    @token : Token?
-
+  private class POScanner(T) < Lens::Base::Lexer(T)
     # Creates a new scanner instance that scans from the given contents of a Gettext file (.po).
     #
     # ```
@@ -15,11 +10,7 @@ module Gettext
     # Gettext::POScanner.new(source)
     # ```
     def initialize(@file_name : String, @source : String)
-      @token = nil
-
-      @reader = Char::Reader.new(@source)
-      @io = IO::Memory.new
-
+      super(@source)
       # Positional markers. Mainly used for error handling
       @line = 1
       @column = 0
@@ -28,43 +19,6 @@ module Gettext
       # Latches onto all characters on the current line to display
       # in case of error.
       @line_accumulator = IO::Memory.new
-    end
-
-    # Tokenize the grammar of gettext files (.po version) into tokens for parsing
-    #
-    # ```
-    # source = "msgid \"Hello There\"\nmsgstr \"Translation\""
-    # scanner = Gettext::POScanner::new(source)
-    # scanner.scan # => Array(Token)
-    # ```
-    def scan
-      tokens = [] of Token
-
-      while !self.at_end_of_source?
-        self.scan_token
-        next if @token.nil?
-        tokens << @token.not_nil!
-      end
-
-      return tokens
-    end
-
-    # Iterates through the given PO File and return a Token on each run
-    #
-    # ```
-    # scanner = Gettext::Scanner(Token).new(po_file)
-    # scanner.next # => Token
-    # ...
-    # scanner.next # => Iterator::Stop::INSTANCE
-    # ```
-    def next
-      if !self.at_end_of_source?
-        self.scan_token
-        return self.next if @token.nil?
-        return @token.not_nil!
-      end
-
-      return Iterator::Stop::INSTANCE
     end
 
     # Scans a token from the contents of the gettext file
@@ -208,31 +162,12 @@ module Gettext
       end
     end
 
-    private def at_end_of_source?
-      if !@reader.has_next?
-        return true
-      else
-        return false
-      end
-    end
-
     # Advance reader by one character
     private def advance
       @reader.next_char
       @column += 1
 
       return @reader.current_char
-    end
-
-    # Advance reader by one character and store in IO
-    private def advance_and_store
-      @io << @reader.current_char
-      self.advance
-    end
-
-    # Appends a token to the final token list
-    private def add_token(token_type, literal = "")
-      @token = Token.new(token_type, literal, @line)
     end
   end
 end
