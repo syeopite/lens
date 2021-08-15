@@ -3,16 +3,14 @@ module Gettext
 
   # Parser for generating a hash of translation expressions out of lexed tokens for Gettext PO files.
   private class POParser
-    @token_iter : Iterator(Token)
-
     # Dummy variables
     @previous_token : Token = Token.new(POTokens::DUMMY, nil, 0)
     @current_token : Token = Token.new(POTokens::DUMMY, nil, 0)
 
     # Creates a new parser instance from the given array of tokens
-    def initialize(@tokens : Array(Token))
-      @token_iter = @tokens.each
+    def initialize(@file_name : String, source : String)
       @contents = {} of String => Hash(Int8, String)
+      @token_iter = POScanner(Token).new(file_name, source)
     end
 
     # Parse a full translation block (msgid, msgid_plural, msgstr, etc) and appends the result to the catalogue
@@ -126,13 +124,12 @@ module Gettext
     # Advance token iterator by one and returns the result
     private def advance_token_iterator
       @previous_token = @current_token
-      char = @token_iter.next
+      token = @token_iter.next
 
-      if char.is_a? Iterator::Stop
-        # Theoretically unreachable.
-        raise Exception.new("Unreachable")
+      if token.is_a? Iterator::Stop
+        @current_token = Token.new(POTokens::EOF, nil, 0)
       else
-        @current_token = char
+        @current_token = token
       end
 
       return @current_token

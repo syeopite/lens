@@ -3,34 +3,10 @@ describe Gettext do
   mo_backend = Gettext::MOBackend.new("spec/backend/gettext/locales")
 
   describe Gettext::POBackend do
-    tokens = po_backend.scan
-
-    describe "#scan" do
-      it "is able to tokenize first-level .po source files" do
-        Digest::SHA256.hexdigest(tokens["example.po"].to_s).should eq("5db58843791927dc46ed39427879a33ea659a566394aaf50c7692144e386125c")
-      end
-
-      it "is able to tokenize nested .po source files" do
-        scan_results = Set(String).new(3)
-
-        # As the digit signifying a duplicate file is uncertain, we'll have to
-        # compute it.
-        tokens.keys.select! { |i| i.starts_with?("en.po") }.each do |k|
-          scan_results << Digest::SHA256.hexdigest(tokens[k].to_s)
-        end
-
-        scan_results.should eq(Set{
-          "826e1bc3bbc911681889585d6f8c8a5f7ddc8e919a026ba611e9a3a9a9224a69",
-          "c18638ea2c5b989b8b576f92300b98aa19114058dfa9a93d819dfc29d247e13a",
-          "01c162ca40618e69a967e60d0a712b94affdb432b1c96e7f8a99e49f64a54c01",
-        })
-      end
-    end
-
     describe "#parse" do
       it "#parse" do
         hashed_results = Set(String).new(2)
-        po_backend.parse(tokens).values.each { |catalogues| hashed_results << Digest::SHA256.hexdigest(catalogues.contents.to_s) }
+        po_backend.parse.values.each { |catalogues| hashed_results << Digest::SHA256.hexdigest(catalogues.contents.to_s) }
 
         hashed_results.should eq Set{
           "14a1b3c08a51ff9eaf1596d846a46412664d682f658f178cb6f13ace13b4f4cc",

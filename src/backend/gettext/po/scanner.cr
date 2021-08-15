@@ -2,8 +2,11 @@ require "../../../helpers/*"
 
 module Gettext
   # A scanner to tokenize the grammar of gettext po files.
-  private class POScanner
+  private class POScanner(T)
+    include Iterator(T)
+
     @error_column : Int32?
+    @token : Token?
 
     # Creates a new scanner instance that scans from the given contents of a Gettext file (.po).
     #
@@ -12,7 +15,7 @@ module Gettext
     # Gettext::POScanner.new(source)
     # ```
     def initialize(@file_name : String, @source : String)
-      @tokens = [] of Token
+      @token = nil
 
       @reader = Char::Reader.new(@source)
       @io = IO::Memory.new
@@ -35,12 +38,33 @@ module Gettext
     # scanner.scan # => Array(Token)
     # ```
     def scan
+      tokens = [] of Token
+
       while !self.at_end_of_source?
         self.scan_token
+        next if @token.nil?
+        tokens << @token.not_nil!
       end
 
-      self.add_token(POTokens::EOF)
-      return @tokens
+      return tokens
+    end
+
+    # Iterates through the given PO File and return a Token on each run
+    #
+    # ```
+    # scanner = Gettext::Scanner(Token).new(po_file)
+    # scanner.next # => Token
+    # ...
+    # scanner.next # => Iterator::Stop::INSTANCE
+    # ```
+    def next
+      if !self.at_end_of_source?
+        self.scan_token
+        return self.next if @token.nil?
+        return @token.not_nil!
+      end
+
+      return Iterator::Stop::INSTANCE
     end
 
     # Scans a token from the contents of the gettext file
@@ -49,6 +73,7 @@ module Gettext
     private def scan_token
       character = @reader.current_char
       @line_accumulator << character
+      @token = nil
       self.advance
 
       case character
@@ -207,7 +232,7 @@ module Gettext
 
     # Appends a token to the final token list
     private def add_token(token_type, literal = "")
-      @tokens << Token.new(token_type, literal, @line)
+      @token = Token.new(token_type, literal, @line)
     end
   end
 end
