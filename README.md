@@ -75,6 +75,7 @@ For detailed information regarding usage please refer to the actual API document
 #### Basic usage
 ```crystal
 catalogue.translate("en", "translation") # => "Translated Message"
+catalogue.translate("en", "I don't exist!") # raises LensExceptions::MissingTranslation
 ```
 
 Nested keys can be accessed by separating routes with `.`
