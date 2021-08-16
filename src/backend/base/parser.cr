@@ -6,7 +6,6 @@ abstract class Lens::Base::Parser(TOKEN, TOKEN_TYPE, SCANNER)
 
   # Creates a new parser instance from the given array of tokens
   def initialize(source : String)
-    @contents = {} of String => Hash(Int8, String)
     @token_iter = SCANNER.new(source)
   end
 
