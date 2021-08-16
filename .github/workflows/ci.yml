@@ -49,7 +49,7 @@ jobs:
             shards install
           fi
       - name: Run tests
-        run: crystal spec
+        run: crystal spec --error-trace
 
       - name: Run lint
         run: |
