@@ -1,12 +1,9 @@
+require "./tokens"
+require "./scanner"
+
 module Gettext
-  extend self
-
   # Parser for generating a hash of translation expressions out of lexed tokens for Gettext PO files.
-  private class POParser
-    # Dummy variables
-    @previous_token : Token = Token.new(POTokens::DUMMY, nil, 0)
-    @current_token : Token = Token.new(POTokens::DUMMY, nil, 0)
-
+  private class POParser < Lens::Base::Parser(Token, POTokens, POScanner(Token))
     # Creates a new parser instance from the given array of tokens
     def initialize(@file_name : String, source : String)
       @contents = {} of String => Hash(Int8, String)
@@ -85,54 +82,6 @@ module Gettext
       end
 
       return str
-    end
-
-    # Checks to see if the current_token is any of the given types. If so consumes the token.
-    private def match(*token_types)
-      token_types.each do |type|
-        if self.check(type)
-          self.advance_token_iterator
-          return true
-        end
-      end
-    end
-
-    # Checks to see if the current token is the given type
-    private def check(token_type)
-      if !self.is_at_end?
-        return @current_token.not_nil!.token_type == token_type
-      end
-    end
-
-    # Consumes the next token if it's of the given type. Raises otherwise.
-    private def consume(token_type, error_message)
-      if self.check(token_type)
-        return self.advance_token_iterator
-      else
-        raise LensExceptions::ParseError.new(error_message)
-      end
-    end
-
-    # Checks to see if we're at the end of the token iterator
-    private def is_at_end?
-      if @current_token.token_type == POTokens::EOF
-        return true
-      end
-      return false
-    end
-
-    # Advance token iterator by one and returns the result
-    private def advance_token_iterator
-      @previous_token = @current_token
-      token = @token_iter.next
-
-      if token.is_a? Iterator::Stop
-        @current_token = Token.new(POTokens::EOF, nil, 0)
-      else
-        @current_token = token
-      end
-
-      return @current_token
     end
 
     # Parse token list into hash of translation expressions

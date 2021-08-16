@@ -31,6 +31,7 @@ module Gettext
 
       IDENTIFIER
       NUMBER
+      DUMMY
       EOF
     end
 
