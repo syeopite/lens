@@ -1,4 +1,4 @@
-require "../../base/lexer"
+require "../../../helpers/base/lexer"
 require "../../../helpers/*"
 require "./tokens"
 

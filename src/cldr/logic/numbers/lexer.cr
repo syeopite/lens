@@ -1,4 +1,4 @@
-require "../../../backend/base/lexer"
+require "../../../helpers/base/lexer"
 require "./tokens"
 
 # Module containing methods to handle CLDR number patterns

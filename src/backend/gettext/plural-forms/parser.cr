@@ -1,4 +1,4 @@
-require "../../base/parser"
+require "../../../helpers/base/parser"
 require "../plural-forms/tokens"
 require "./lexer"
 require "./tokens"
