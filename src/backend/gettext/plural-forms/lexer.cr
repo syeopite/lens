@@ -1,4 +1,5 @@
 require "./ast.cr"
+require "./tokens"
 
 module Gettext
   extend self
@@ -20,9 +21,7 @@ module Gettext
     # Takes a Type (Token) to make the compiler happy
     #
     # Based on https://www.craftinginterpreters.com/scanning.html
-    class Scanner(T) < Lens::Base::Lexer(T)
-      include Iterator(T)
-
+    class Scanner < Lens::Base::Lexer(Token)
       # Creates a new scanner instance with the given source
       #
       # ```

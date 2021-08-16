@@ -1,8 +1,9 @@
 require "../../../helpers/*"
+require "./tokens"
 
 module Gettext
   # A scanner to tokenize the grammar of gettext po files.
-  private class POScanner(T) < Lens::Base::Lexer(T)
+  private class POScanner < Lens::Base::Lexer(Token)
     # Creates a new scanner instance that scans from the given contents of a Gettext file (.po).
     #
     # ```

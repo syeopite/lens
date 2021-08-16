@@ -3,11 +3,11 @@ require "./scanner"
 
 module Gettext
   # Parser for generating a hash of translation expressions out of lexed tokens for Gettext PO files.
-  private class POParser < Lens::Base::Parser(Token, POTokens, POScanner(Token))
+  private class POParser < Lens::Base::Parser(Token, POTokens, POScanner)
     # Creates a new parser instance from the given array of tokens
     def initialize(@file_name : String, source : String)
       @contents = {} of String => Hash(Int8, String)
-      @token_iter = POScanner(Token).new(file_name, source)
+      @token_iter = POScanner.new(file_name, source)
     end
 
     # Parse a full translation block (msgid, msgid_plural, msgstr, etc) and appends the result to the catalogue

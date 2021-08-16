@@ -12,7 +12,7 @@ module Gettext
     #
     #
     # [Based on this parser from crafting interpreters](https://www.craftinginterpreters.com/parsing-expressions.html)
-    class Parser < Lens::Base::Parser(Token, TokenTypes, Scanner(Token))
+    class Parser < Lens::Base::Parser(Token, TokenTypes, Scanner)
       # Parse an plural-form expression into AST trees
       #
       # ```
