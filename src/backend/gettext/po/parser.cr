@@ -1,3 +1,4 @@
+require "../../base/parser"
 require "./tokens"
 require "./scanner"
 

@@ -1,3 +1,4 @@
+require "../../base/lexer"
 require "./ast.cr"
 require "./tokens"
 
