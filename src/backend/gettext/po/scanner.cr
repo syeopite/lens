@@ -154,22 +154,10 @@ module Gettext
       @io.clear
     end
 
-    private def consume_till(till, store = false)
-      while true
-        if self.at_end_of_source? || @reader.current_char == till
-          break
-        end
-
-        store ? self.advance_and_store : self.advance
-      end
-    end
-
     # Advance reader by one character
     private def advance
-      @reader.next_char
       @column += 1
-
-      return @reader.current_char
+      return super()
     end
   end
 end
