@@ -75,6 +75,17 @@ abstract class Lens::Base::Lexer(T)
     end
   end
 
+  # Converse of `#consume_till`, continually consumes a token while it matches the given char.
+  private def consume_while(match, store = false)
+    while true
+      if self.at_end_of_source? || @reader.current_char != match
+        break
+      end
+
+      store ? self.advance_and_store : self.advance
+    end
+  end
+
   # Advance reader by one character
   private def advance
     @reader.next_char
