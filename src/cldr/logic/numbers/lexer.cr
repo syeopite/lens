@@ -13,7 +13,7 @@ module CLDR::Numbers
       case character
       when '0'                                         then self.add_token(TokenTypes::DigitPlaceholder)
       when '1', '2', '3', '4', '5', '6', '7', '8', '9' then self.add_token(TokenTypes::RoundingSignifier)
-      when '@'                                         then self.add_token(TokenTypes::SignificantDigitSignifier)
+      when '@'                                         then self.process_significant_figure_token
       when '#'                                         then self.add_token(TokenTypes::DigitPlaceholderNoFrontBackZeros)
       when '.'                                         then self.add_token(TokenTypes::DecimalSeparator)
       when '-'                                         then self.add_token(TokenTypes::MinusSign)
@@ -53,6 +53,11 @@ module CLDR::Numbers
 
       self.add_token(TokenTypes::StringLiteral, @io.to_s.strip("'"))
       @io.clear
+    end
+
+    private def process_significant_figure_token
+      consume_while('@', store: true)
+      self.add_token(TokenTypes::SignificantDigitSignifier, @io.to_s.size + 1)
     end
   end
 end
