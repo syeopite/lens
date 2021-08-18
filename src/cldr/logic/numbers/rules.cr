@@ -4,6 +4,8 @@ module CLDR::Numbers
     end
 
     struct InjectSymbol < Rules
+      getter character
+
       def initialize(@character : TokenTypes)
       end
     end
