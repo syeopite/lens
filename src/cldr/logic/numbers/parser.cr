@@ -3,6 +3,8 @@ require "./tokens"
 require "./rules"
 
 module CLDR::Numbers
+  # EXPERIMENTAL
+  # TODO Write documentation
   class PatternParser < Lens::Base::Parser(Token, TokenTypes, PatternLexer)
     def initialize(source : String)
       super(source)

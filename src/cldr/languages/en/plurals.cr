@@ -1,5 +1,3 @@
-require "../language"
-
 module CLDR
   module Languages
     module EN

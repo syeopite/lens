@@ -2,7 +2,11 @@ require "../../../helpers/base/lexer"
 require "./tokens"
 
 # Module containing methods to handle CLDR number patterns
+# EXPERIMENTAL
+# TODO Write documentation
 module CLDR::Numbers
+  # EXPERIMENTAL
+  # TODO Write documentation
   class PatternLexer < Lens::Base::Lexer(Token)
     # Scans a token from the source number pattern
     def scan_token

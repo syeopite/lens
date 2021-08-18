@@ -1,4 +1,6 @@
 module CLDR::Numbers
+  # EXPERIMENTAL
+  # TODO Write documentation
   class PatternFormatter(Lang)
     @instructions : Array(Rules::Rules)
     @fractional_instructions : Array(Rules::Rules)
