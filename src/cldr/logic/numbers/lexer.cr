@@ -24,9 +24,11 @@ module CLDR::Numbers
       when '‰'                                         then self.add_token(TokenTypes::PerMilleSign)
       when ';'                                         then self.add_token(TokenTypes::SubPatternBoundary)
       when '¤'                                         then self.add_token(TokenTypes::CurrencySymbol)
-      when '*'                                         then self.add_token(TokenTypes::PaddingSignifier)
-      when '\''                                        then self.process_string_token
-      else                                                  self.add_token(TokenTypes::Character, character.to_s)
+      when '*'
+        self.add_token(TokenTypes::PaddingSignifier, @reader.current_char.to_s)
+        @reader.next_char
+      when '\'' then self.process_string_token
+      else           self.add_token(TokenTypes::Character, character.to_s)
       end
     end
 
