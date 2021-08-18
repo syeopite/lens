@@ -40,9 +40,9 @@ Now we'll select a format!
 
 | Format | Backend|  Documentation |
 |:--------:|:--------:|:----------------:|
-| Gettext PO | `Gettext::POBackend` | [Here](/backends/gettext)
-| Gettext MO | `Gettext::MOBackend` | [Here](/backends/gettext)
-| Ruby YAML | `CrystalI18n::I18n` | [Here](/backends/ruby-yaml)
+| GNU Gettext PO | `Gettext::POBackend` | [Here](/formats/gettext)
+| GNU Gettext MO | `Gettext::MOBackend` | [Here](/formats/gettext)
+| Ruby YAML | `CrystalI18n::I18n` | [Here](/formats/ruby-yaml)
 
 
 For this simple illustration lets use `Gettext::MOBackend`.
