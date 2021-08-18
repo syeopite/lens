@@ -17,11 +17,14 @@ module CLDR::Numbers
     StringLiteral                    # 'x'
 
     Character # Any
+
+    DUMMY
+    EOF
   end
 
   # Object representing a token from the grammar of CLDR number patterns
   struct Token
-    getter literal : String?
+    getter literal : (String | Int32)?
     getter column : Int32 | Int64
     getter token_type : TokenTypes
 
