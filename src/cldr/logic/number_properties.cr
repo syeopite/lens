@@ -1,3 +1,10 @@
+# :nodoc:
+#
+# EXPERIMENTAL: This entire module is a WIP. Nothing is guaranteed to be stable!
+#
+# NOTE: This is the module that'll eventually replace the current CLDR plurals
+# implementation and add all of the other niceties, such as number localization, that
+# comes with CLDR.
 module CLDR
   module Plurals
     alias Number = Int32 | Int64 | Float64
