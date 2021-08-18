@@ -1,6 +1,8 @@
+require "../language"
+
 module CLDR
-  module Pluralization
-    class EN
+  module Languages
+    module EN
       def self.cardinal_plural(number : Int32 | Int64 | Float64)
         n = CLDR::Plurals.get_n(number)
         if n == 1

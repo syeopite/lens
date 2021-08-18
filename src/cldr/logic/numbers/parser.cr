@@ -7,6 +7,7 @@ module CLDR::Numbers
     def initialize(source : String)
       super(source)
       @rules = [] of Rules::Rules
+      @fractional_rules = [] of Rules::Rules
       @metadata = Metadata.new
     end
 
@@ -133,7 +134,7 @@ module CLDR::Numbers
         end
       end
 
-      @rules += fractional_rules
+      @fractional_rules += fractional_rules
       self.suffix
     end
 
@@ -158,7 +159,7 @@ module CLDR::Numbers
         self.decimal_format
       end
 
-      return @rules, @metadata
+      return @rules, @fractional_rules, @metadata
     end
   end
 end

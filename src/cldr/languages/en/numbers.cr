@@ -1,6 +1,8 @@
+require "../language"
+
 module CLDR
-  module Numbers
-    class EN
+  module Languages
+    module EN
       DecimalSymbol                = "."
       GroupSymbol                  = ","
       List                         = ";"
