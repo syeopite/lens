@@ -71,7 +71,7 @@ describe CLDR::Numbers::PatternParser do
     metadata.minimum_significant_figures.should(eq(nil))
 
     Digest::SHA256.hexdigest(rules.to_s).should(eq("4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"))
-    Digest::SHA256.hexdigest(fractional_rules.to_s).should(eq("ca9d0899f300a54b7f8c82a7353dc4c02328feea6304bf12958cf6337d9787cb"))
+    Digest::SHA256.hexdigest(fractional_rules.to_s).should(eq("a6cc89f0edb84aeea108beacb2d843b69b0b571093c05a7e3ea9c0dca7f2529c"))
   end
 
   it "Can parse pattern '#,##0.00 ¤'" do
@@ -85,7 +85,7 @@ describe CLDR::Numbers::PatternParser do
     metadata.minimum_significant_figures.should(eq(nil))
 
     Digest::SHA256.hexdigest(rules.to_s).should(eq("d5e330e30ef614845533058658802ee95fe8197461b7f1441b00f16318f5e9c8"))
-    Digest::SHA256.hexdigest(fractional_rules.to_s).should(eq("8fac78f821064f26dd10152feb3a8047abd158a6e78385b48d260c13806a75d1"))
+    Digest::SHA256.hexdigest(fractional_rules.to_s).should(eq("5cdfd9594341dc8a00de80afd39a31a73f85a24469fed17e112cf0bb950958b6"))
   end
 
   it "Can parse pattern '*x #,##,##0.###'" do

@@ -125,7 +125,7 @@ module CLDR::Numbers
           fractional_count += 1
         end
 
-        if self.check(TokenTypes::DigitPlaceholder)
+        if @previous_token.token_type == TokenTypes::DigitPlaceholder
           trailing_zero = true
         end
 
