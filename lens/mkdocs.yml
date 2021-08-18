@@ -1,0 +1,11 @@
+site_name: Lens Documentation
+theme:
+  name: material
+  palette:
+    primary: black
+    accent: blue
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.magiclink
+  - pymdownx.superfences
