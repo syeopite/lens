@@ -15,12 +15,12 @@ Lens is written in *pure* crystal and without any external dependencies besides 
 
 ```YAML
 dependencies:
-    lens:
+  lens:
     github: syeopite/lens
     version: ~> 0.1.0
 ```
 
-After which, you just run `shards install` and Lens would be installed! 
+After which, you just run `shards install` and Lens would be installed.
 
 ## Usage
 
@@ -33,8 +33,10 @@ require  "lens"
 Now we'll select a format!
 
 
-!!! info hi inline end
+!!! info inline end
     [See here for information regarding each format.](https://docs.weblate.org/en/latest/formats.html#translation-types-capabilities)
+    !!! tip inline 
+        Ruby YAML is the typical format seen in Crystal's internationalization ecosystem.
 
 | Format | Backend|  Documentation |
 |:--------:|:--------:|:----------------:|
@@ -61,12 +63,19 @@ catalogue = catalogue_hash["en_US"]
 ```
 
 !!! danger Note
-    The API and behaviors for each backend **are different**! This is to **preserve** how the format typically handles stuff. For instance:
+    The API and behaviors for each backend **are different**! This is to **preserve** how the format typically handles stuff. 
 
+    API differences:
     ```crystal
+    
+    # The Gettext backends requires a #create method. This returns an Hash of 
+    # language code (or file name when the corresponding header isn't defined) 
+    # to Catalogue objects
     gettext_catalogue_hash = Gettext::MOBackend.new("locales").create 
     gettext_catalogue = gettext_catalogue["en_US"]
 
+    # The backend for ruby-yaml on the other hand is directly the catalogue.
+    # No need for an additional #create. And naturally, it's also not a hash.
     yaml_catalogue = CrystalI18n::I18n.new("locales")
 
     # Gettext
@@ -78,13 +87,13 @@ catalogue = catalogue_hash["en_US"]
     catalogue.translate("en", "possessions.fruits.apples", 50) # => "I have 50 apples"
     ```
 
-    What happens on a missing translation is also different:
+    Behavior differences:
     ```crystal
     yaml_catalogue.translate("en", "I don't exist") # => raises LensExceptions::MissingTranslation
     gettext_catalogue.gettext( "I don't exist")     # =>  "I don't exist"
     ```
 
-    In the future there would be a `chain` backend, and an configuration option will be provided to migrate behavior differences. However, **the API for individual backends would always be different.** 
+    In the future there would be a `chain` backend, and a configuration option will be provided to migrate behavior differences. However, **the API for individual backends would always be different.** 
 
     Keep all of this in mind using Lens!
 
