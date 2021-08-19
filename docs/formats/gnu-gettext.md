@@ -25,7 +25,7 @@ gettext_backend = Gettext::MOBackend.new("locales")
 Locale files are searched with the `**` glob, so feel free to nest in as many levels as you'd like.
 
 !!! Tip inline end
-    There are API/behavior differences between the `po` and `mo` varieties. Anything that is shown to apply to one would also apply to the other.
+    There are no API/behavior differences between the `po` and `mo` varieties. Anything that is shown to apply to one would also apply to the other.
 
 Now you'll just need to call the `#create` method:
 
