@@ -123,7 +123,7 @@ catalogue.translate("en", "items.foods", iter: 2) # => "Hamburger"
 ```
 
 ## API documentation
-[Here](https://syeopite.github.io/lens/index.html)
+[Here](https://syeopite.github.io/lens/api/)
 
 ## Installation
 1. Add the dependency to your `shard.yml`:
