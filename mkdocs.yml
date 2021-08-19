@@ -1,9 +1,13 @@
 site_name: Lens Documentation
+repo_url: https://github.com/syeopite/lens
 theme:
   name: material
   palette:
     primary: black
     accent: blue
+  icon:
+    repo: fontawesome/brands/github
+    
 markdown_extensions:
   - admonition
   - pymdownx.highlight
