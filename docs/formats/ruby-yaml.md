@@ -10,9 +10,9 @@ Ruby YAML has support for plurals, defined with CLDR data. This means that it *c
 ## Using Ruby YAML
 
 !!! Info inline end "Fun Fact" 
-    `CrystalI18n::I18n` was chosen as the name due to the fact that all internationalization libraries in Crystal are based off of this format. 
+     The name: `CrystalI18n::I18n`, was chosen since all internationalization shards in Crystal prior to Lens, were based off of this format. 
     
-    Though it's likely that this backend would get renamed in the future.
+    This backend will likely get renamed in the future.
 
 The Ruby YAML backend is the `CrystalI18n::I18n`. To initialize, simply pass in the locale directory:\
 
