@@ -1,13 +1,20 @@
 # Taken from the Invidious project
-# more specifically from this PR: https://github.com/iv-org/invidious/pull/2264
 name: Lens CI
 
 on:
+  schedule:
+    - cron: "0 0 * * *" # Every day at 00:00
   push:
     branches:
       - "master"
   pull_request:
     branches: "*"
+    paths-ignore:
+      - "*.md"
+      - LICENCE
+      - .git*
+      - .editorconfig
+      - .github/ISSUE_TEMPLATE/*
 
 jobs:
   build:
@@ -48,6 +55,7 @@ jobs:
           if ! shards check; then
             shards install
           fi
+
       - name: Run tests
         run: crystal spec --error-trace
 
@@ -58,5 +66,6 @@ jobs:
             git diff
             exit 1
           fi
+
       - name: Build
         run: crystal build --warnings all --error-on-warnings --error-trace src/lens.cr
