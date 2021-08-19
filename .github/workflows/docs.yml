@@ -22,7 +22,7 @@ jobs:
           python-version: 3.x
       - run: pip install mkdocs-material 
       - name: "Deploy documentation"
-        run: mkdocs gh-deploy --force
+        run: mkdocs gh-deploy --dirty
 
       - name: Checkout master to build API docs
         uses: actions/checkout@v2
@@ -50,8 +50,9 @@ jobs:
 
       - name: Build API docs
         run: crystal docs --output=api
+
       - name: Deploy API docs
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        if: github.ref == 'refs/heads/master'
         uses: JamesIves/github-pages-deploy-action@4.1.4
         with:
           branch: gh-pages
