@@ -1,3 +1,5 @@
+name: Generate documentation
+
 on:
   push:
     branches:
@@ -12,14 +14,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: docs
       - uses: actions/setup-python@v2
         with:
           python-version: 3.x
       - run: pip install mkdocs-material 
-      - run: mkdocs gh-deploy --force
+      - name: "Deploy documentation"
+        run: mkdocs gh-deploy --force
 
+      - name: Checkout master to build API docs
+        uses: actions/checkout@v2
+        with:
+          ref: master
 
-      - name: Build docs
+      - name: Build API docs
         run: crystal docs --output=api
       - name: Deploy API docs
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
