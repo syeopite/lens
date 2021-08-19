@@ -6,7 +6,7 @@ A multi-format internationalization (i18n) shard for Crystal.
 Lens is designed to be fast, versatile and simple to use! Supports the likes of Gettext, Ruby YAML and more.
 
 
-### Why use Lens?
+## Why use Lens?
 Lens was conceived due to various problems within crystal's internationalization ecosystem. As such, Lens aspires to overcome those issues. With lens:
 
 * Support of **multiple** different formats
