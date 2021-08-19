@@ -1,6 +1,7 @@
 name: lens
 version: 0.1.0
-description: A multiformat internationalization (i18n) shard for Crystal.
+description: A multiformat internationalization (i18n) shard for Crystal. Supports Gettext, Ruby YAML, etc.
+documentation: https://syeopite.github.io/lens/
 
 authors:
   - syeopite <syeopite@syeopite.dev>
