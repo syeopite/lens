@@ -28,6 +28,25 @@ jobs:
         with:
           ref: master
 
+      - name: Install Crystal
+        uses: oprypin/install-crystal@v1.2.4
+        with:
+          crystal: ${{ matrix.crystal }}
+
+      - name: Cache Shards
+        uses: actions/cache@v2
+        with:
+          path: ./lib
+          key: shards-${{ hashFiles('shard.lock') }}
+
+      - name: Install Shards
+        run: |
+          if ! shards check; then
+            shards install
+          fi
+      - name: Run tests
+        run: crystal spec --error-trace
+
       - name: Build API docs
         run: crystal docs --output=api
       - name: Deploy API docs
