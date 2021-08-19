@@ -55,3 +55,5 @@ jobs:
         with:
           branch: gh-pages
           folder: api
+          target-folder: api
+          clean: false
