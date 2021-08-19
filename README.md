@@ -47,7 +47,7 @@ catalogue.npgettext("CopyPasteMenu", "Export %d file", "Export %d files", 1) # =
 
 Note that each backend has a slightly different API.
 
-[See Getting Started for more information](https://syeopite.github.io/lens/formats/getting-started)
+[See Getting Started for more information](https://syeopite.github.io/lens/getting-started)
 
 
 ## Installation
