@@ -5,6 +5,7 @@ on:
     branches:
       - "master"
       - "docs"
+  workflow_dispatch:
 
 jobs:
   documentation:
