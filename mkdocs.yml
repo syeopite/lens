@@ -1,5 +1,8 @@
 site_name: Lens Documentation
 repo_url: https://github.com/syeopite/lens
+edit_uri: https://github.com/syeopite/lens/tree/docs/docs
+site_url: https://syeopite.github.io/lens/
+
 theme:
   name: material
   palette:
