@@ -19,8 +19,6 @@ module Gettext
 
     # A scanner to tokenize a subset of C's grammar
     #
-    # Takes a Type (Token) to make the compiler happy
-    #
     # Based on https://www.craftinginterpreters.com/scanning.html
     class Scanner < Lens::Base::Lexer(Token)
       # Creates a new scanner instance with the given source
