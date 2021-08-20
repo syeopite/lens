@@ -43,13 +43,14 @@ module Gettext
       when BE_MAGIC
         endianness = IO::ByteFormat::BigEndian
       else
-        raise "Invalid magic"
+        raise LensExceptions::ParseError.new("Invalid magic detected when parsing '#{file_name}'")
       end
 
       # Fetches version, number of strings, offset to raw strings, offset to translated strings
       version, msgcount, raw_offset, trans_offset = Array.new(4) { |i| io.read_bytes(UInt32, endianness) }
       if !{0, 1}.includes? version >> 16
-        raise "Unsupported version"
+        raise LensExceptions::ParseError.new("'#{file_name}' is encoded in revision '#{version >> 16}' of Gettext." \
+                                             "an **unsupported** version!")
       end
 
       msgcount.times do |i|
