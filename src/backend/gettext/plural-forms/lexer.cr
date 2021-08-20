@@ -36,7 +36,6 @@ module Gettext
       private def scan_token
         @token = nil
         character = @reader.current_char
-        @line_accumulator << character
         self.advance
 
         case character
@@ -77,9 +76,6 @@ module Gettext
         end
 
         number = @io.to_s
-        # First character is already present within line_accumulator
-        @line_accumulator << number[1..]
-
         if number.includes? "."
           self.add_token(TokenTypes::NUMBER, number.to_f)
         else
@@ -96,8 +92,6 @@ module Gettext
         end
 
         id = @io.to_s
-        # First character is already present within line_accumulator
-        @line_accumulator << id[1..]
         self.add_token(TokenTypes::IDENTIFIER, id)
         @io.clear
       end
@@ -107,7 +101,6 @@ module Gettext
         return false if at_end_of_source?
         if @reader.current_char == expected
           self.advance
-          @line_accumulator << @reader.current_char
           return true
         end
       end

@@ -7,24 +7,14 @@
 abstract class Lens::Base::Lexer(T)
   include Iterator(T)
   @token : T?
-  @error_column : Int32?
 
   def initialize(@source : String)
     @token = nil
     @reader = Char::Reader.new(@source)
     @io = IO::Memory.new
-
-    # Positional markers. Mainly used for error handling
-    @line = 1
-    @column = 0
-    @error_column = nil
-
-    # Latches onto all characters on the current line to display
-    # in case of error.
-    @line_accumulator = IO::Memory.new
   end
 
-  # Tokenizes the source fully and return an array of tokens.
+  # Tokenize the source fully and return an array of tokens.
   #
   # Assume we have a `Scanner`
   # ```
@@ -98,16 +88,58 @@ abstract class Lens::Base::Lexer(T)
 
   # Advance reader by one character
   private def advance
-    @column += 1
     @reader.next_char
     return @reader.current_char
   end
 
   # Stores current character in IO and advance reader
   private def advance_and_store
-    @column += 1
     @io << @reader.current_char
     @reader.next_char
+  end
+
+  # Raise unexpected character error
+  private def unexpected_character(name)
+    raise LensExceptions::LexError.new(name, "Unexpected character", @source, 1, @reader.pos - 1)
+  end
+
+  # Appends a token to the final token list
+  private def add_token(token_type, literal = "")
+    @token = T.new(token_type, literal, @reader.pos)
+  end
+end
+
+# Modified version of `Lens::Base::Lexer` for multi-line files.
+abstract class Lens::Base::MultiLineLexer(T) < Lens::Base::Lexer(T)
+  include Iterator(T)
+  @token : T?
+  @error_column : Int32?
+
+  def initialize(@file_name : String, @source : String)
+    @token = nil
+    @reader = Char::Reader.new(@source)
+    @io = IO::Memory.new
+
+    # Positional markers. Mainly used for error handling
+    @line = 1
+    @column = 0
+    @error_column = nil
+
+    # Latches onto all characters on the current line to display
+    # in case of error.
+    @line_accumulator = IO::Memory.new
+  end
+
+  # Advance reader by one character
+  private def advance
+    @column += 1
+    return super
+  end
+
+  # Stores current character in IO and advance reader
+  private def advance_and_store
+    @column += 1
+    return super
   end
 
   # Raise unexpected character error
@@ -132,6 +164,6 @@ abstract class Lens::Base::Lexer(T)
 
   # Appends a token to the final token list
   private def add_token(token_type, literal = "")
-    @token = T.new(token_type, literal, @reader.pos)
+    @token = T.new(token_type, literal, @line)
   end
 end

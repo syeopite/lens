@@ -4,7 +4,7 @@ require "./tokens"
 
 module Gettext
   # A scanner to tokenize the grammar of gettext po files.
-  private class POScanner < Lens::Base::Lexer(Token)
+  private class POScanner < Lens::Base::MultiLineLexer(Token)
     # Creates a new scanner instance that scans from the given contents of a Gettext file (.po).
     #
     # ```
@@ -12,7 +12,7 @@ module Gettext
     # Gettext::POScanner.new(source)
     # ```
     def initialize(@file_name : String, @source : String)
-      super(@source)
+      super
     end
 
     # Scans a token from the contents of the gettext file
