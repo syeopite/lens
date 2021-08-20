@@ -34,7 +34,7 @@ module Gettext
           # Extract header information to compare language code
           header = extract_headers(contents)
 
-          if lang = header["Language"]?
+          if (lang = header["Language"]?) && (!lang.empty?)
             if preprocessed_messages.has_key?(lang)
               preprocessed_messages[lang].merge!(contents)
             else
@@ -53,7 +53,7 @@ module Gettext
         locale_catalogues = {} of String => Catalogue
         preprocessed_messages.each do |name, translations|
           catalogue = Catalogue.new(translations)
-          if lang = catalogue.headers["Language"]?
+          if (lang = catalogue.headers["Language"]?) && (!lang.empty?)
             locale_catalogues[lang] = catalogue
           else
             locale_catalogues[name] = catalogue
