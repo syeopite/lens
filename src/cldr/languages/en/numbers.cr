@@ -138,8 +138,8 @@ module CLDR
         },
 
         "100000000000000": {
-          "one":    "000 trillion",
-          "other:": "000 trillion",
+          "one":    "000T",
+          "other:": "000T",
         },
       }
 
