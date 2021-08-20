@@ -1,5 +1,3 @@
-require "./**"
-
 # Namespace for logic relating to the [GNU Gettext](https://www.gnu.org/software/gettext/) format
 #
 # Gettext is typically separated into two files: `.po` and `.mo`. Both of these formats are fully supported
@@ -9,7 +7,81 @@ require "./**"
 #
 # All functionality (except flags) of Gettext are implemented.
 module Gettext
-  extend self
+  # Base backend all Gettext backends inherits from.
+  private abstract struct Backend
+    # Define public API to interact with internal `#parse_` method and create Catalogue objects out of the results.
+    #
+    # The method in question uses the @locale_directory_path to glob for files ending with the given
+    # ext. Afterwards, it is opened as an IO and passed into the internal #parse_ method. The results of which,
+    # is a `Hash(String, Hash(Int8, String))`. A mapping of the msgid to a hash of the plural-form (default 0) to
+    # the translated variant.
+    #
+    # After which, the results would be merged within the preprocessed_messages hash in order to allow for multiple
+    # files for the same language. The key of which depends on whether or not the Language header is defined. If not,
+    # the file name will be used as the key.
+    macro define_public_parse_function(file_ext)
+      def parse : Hash(String, Catalogue)
+        # Language Code / File name => {Translations, processed headers}
+        preprocessed_messages = {} of String => Hash(String, Hash(Int8, String))
+
+        Dir.glob("#{@locale_directory_path}/**/*.#{ {{file_ext}} }") do | gettext_file |
+          name = File.basename(gettext_file)
+
+          contents = File.open(gettext_file) do |file|
+            self.parse_(name, io: file)
+          end
+
+          # Extract header information to compare language code
+          header = extract_headers(contents)
+
+          if lang = header["Language"]?
+            if preprocessed_messages.has_key?(lang)
+              preprocessed_messages[lang].merge!(contents)
+            else
+              preprocessed_messages[lang] = contents
+            end
+          else
+            if preprocessed_messages.has_key?(name)
+              preprocessed_messages[name].merge!(contents)
+            else
+              preprocessed_messages[name] = contents
+            end
+          end
+        end
+
+        # Create catalogue from preprocessed messages
+        locale_catalogues = {} of String => Catalogue
+        preprocessed_messages.each do |name, translations|
+          catalogue = Catalogue.new(translations)
+          if lang = catalogue.headers["Language"]?
+            locale_catalogues[lang] = catalogue
+          else
+            locale_catalogues[name] = catalogue
+          end
+        end
+
+        return locale_catalogues
+      end
+    end
+
+    abstract def parse
+    private abstract def parse_(file_name, io : IO)
+
+    private def extract_headers(contents)
+      headers = {} of String => String
+
+      header_fields = [] of String
+      contents[""]?.try &.[0].split("\n") { |v| header_fields << v if !v.empty? } || nil
+
+      header_fields.each do |h|
+        header = h.split(":", limit: 2)
+        next if header.size <= 1
+        headers[header[0]] = header[1].strip
+      end
+
+      return headers
+    end
+  end
 
   # Gettext message catalogue. Contains methods for handling translations
   #

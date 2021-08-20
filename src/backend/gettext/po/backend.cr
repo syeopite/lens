@@ -2,12 +2,8 @@ module Gettext
   extend self
 
   # The backend for Gettext's PO files. This class contains methods to parse and interact with them.
-  struct POBackend
+  struct POBackend < Backend
     # Create a new PO backend instance that reads from the given locale directory path
-    #
-    # NOTE
-    # Any files that has the same name is assumed to be apart of the same locale since we don't know the
-    # specific language header for them yet.
     #
     # ```
     # Gettext::POBackend.new("locales")
@@ -25,33 +21,11 @@ module Gettext
     # backend = Gettext::POBackend.new("locales")
     # backend.parse # => Hash(String, Catalogue)
     # ```
-    def parse : Hash(String, Catalogue)
-      preprocessed_messages = {} of String => Hash(String, Hash(Int8, String))
+    define_public_parse_function("po")
 
-      Dir.glob("#{@locale_directory_path}/**/*.po") do |gettext_file|
-        name = File.basename(gettext_file)
-        contents = POParser.new(name, File.read(gettext_file)).parse
-
-        if preprocessed_messages.has_key?(name)
-          # We're just going to use the size of the locale hash to mark files with the same name. This is a major
-          # hack and should be optimized in the future.
-          preprocessed_messages[name].merge!(contents)
-        else
-          preprocessed_messages[name] = contents
-        end
-      end
-
-      locale_catalogues = {} of String => Catalogue
-      preprocessed_messages.each do |name, translations|
-        catalogue = Catalogue.new(translations)
-        if lang = catalogue.headers["Language"]?
-          locale_catalogues[lang] = catalogue
-        else
-          locale_catalogues[name] = catalogue
-        end
-      end
-
-      return locale_catalogues
+    # Internal parse method.
+    private def parse_(file_name, io : IO)
+      return POParser.new(file_name, io.gets_to_end).parse
     end
 
     # Create message catalogue from the loaded locale files

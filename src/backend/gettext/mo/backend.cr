@@ -1,3 +1,5 @@
+require "../gettext.cr"
+
 module Gettext
   extend self
 
@@ -6,7 +8,7 @@ module Gettext
   # Similar to the Gettext module from Python, feel free to subclass and override the internal `#parse_` method
   # to create a backend for other .mo files. However, please consider opening a PR and adding it directly
   # to lens instead!
-  struct MOBackend
+  struct MOBackend < Backend
     LE_MAGIC = 0x950412de
     BE_MAGIC = 0xde120495
 
@@ -28,35 +30,10 @@ module Gettext
     # backend = Gettext::MOBackend.new("locales")
     # backend.parse # => Hash(String, Catalogue)
     # ```
-    def parse : Hash(String, Catalogue)
-      preprocessed_messages = {} of String => Hash(String, Hash(Int8, String))
-
-      Dir.glob("#{@locale_directory_path}/**/*.mo") do |gettext_file|
-        name = File.basename(gettext_file)
-        if preprocessed_messages.has_key?(name)
-          # We're just going to use the size of the locale hash to mark files with the same name. This is a major
-          # hack and should be optimized in the future.
-          preprocessed_messages[name].merge! self.parse_(File.open(gettext_file))
-        else
-          preprocessed_messages[name] = self.parse_(File.open(gettext_file))
-        end
-      end
-
-      locale_catalogues = {} of String => Catalogue
-      preprocessed_messages.each do |name, translations|
-        catalogue = Catalogue.new(translations)
-        if lang = catalogue.headers["Language"]?
-          locale_catalogues[lang] = catalogue
-        else
-          locale_catalogues[name] = catalogue
-        end
-      end
-
-      return locale_catalogues
-    end
+    define_public_parse_function("mo")
 
     # Internal parse method. Reads bytes from IO to produce messages from Gettext's mo
-    private def parse_(io : IO) : Hash(String, Hash(Int8, String))
+    private def parse_(file_name, io : IO) : Hash(String, Hash(Int8, String))
       messages = {} of String => Hash(Int8, String)
       # Taken from omarroth's gettext.cr's MO parsing https://github.com/omarroth/gettext.cr/blob/master/src/gettext.cr#L374-L461
 
