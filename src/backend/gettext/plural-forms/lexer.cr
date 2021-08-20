@@ -36,65 +36,50 @@ module Gettext
       private def scan_token
         @token = nil
         character = @reader.current_char
-        @reader.next_char
+        @line_accumulator << character
+        self.advance
 
         case character
         # Single character tokens
-        when '('
-          self.add_token(TokenTypes::LEFT_PAREN)
-        when ')'
-          self.add_token(TokenTypes::RIGHT_PAREN)
-        when '*'
-          self.add_token(TokenTypes::STAR)
-        when '/'
-          self.add_token(TokenTypes::SLASH)
-        when '%'
-          self.add_token(TokenTypes::MOD)
-        when '+'
-          self.add_token(TokenTypes::PLUS)
-        when '-'
-          self.add_token(TokenTypes::MINUS)
-        when '?'
-          self.add_token(TokenTypes::QUESTION)
-        when ':'
-          self.add_token(TokenTypes::COLON)
-        when ';'
-          self.add_token(TokenTypes::SEMICOLON)
+        when '(' then self.add_token(TokenTypes::LEFT_PAREN)
+        when ')' then self.add_token(TokenTypes::RIGHT_PAREN)
+        when '*' then self.add_token(TokenTypes::STAR)
+        when '/' then self.add_token(TokenTypes::SLASH)
+        when '%' then self.add_token(TokenTypes::MOD)
+        when '+' then self.add_token(TokenTypes::PLUS)
+        when '-' then self.add_token(TokenTypes::MINUS)
+        when '?' then self.add_token(TokenTypes::QUESTION)
+        when ':' then self.add_token(TokenTypes::COLON)
+        when ';' then self.add_token(TokenTypes::SEMICOLON)
           # Two character tokens
-        when '<'
-          self.match('=') ? self.add_token(TokenTypes::LESS_EQUAL) : self.add_token(TokenTypes::LESS)
-        when '>'
-          self.match('=') ? self.add_token(TokenTypes::GREATER_EQUAL) : self.add_token(TokenTypes::GREATER)
-        when '='
-          self.match('=') ? self.add_token(TokenTypes::EQUAL_EQUAL) : self.add_token(TokenTypes::EQUAL)
-        when '!'
-          self.match('=') ? self.add_token(TokenTypes::NOT_EQUAL) : self.add_token(TokenTypes::NOT)
-        when '&'
-          self.match('&') ? self.add_token(TokenTypes::AND) : nil
-        when '|'
-          self.match('|') ? self.add_token(TokenTypes::OR) : nil
-          # Ignore spaces
-        when ' '
+        when '<' then self.match('=') ? self.add_token(TokenTypes::LESS_EQUAL) : self.add_token(TokenTypes::LESS)
+        when '>' then self.match('=') ? self.add_token(TokenTypes::GREATER_EQUAL) : self.add_token(TokenTypes::GREATER)
+        when '=' then self.match('=') ? self.add_token(TokenTypes::EQUAL_EQUAL) : self.add_token(TokenTypes::EQUAL)
+        when '!' then self.match('=') ? self.add_token(TokenTypes::NOT_EQUAL) : self.add_token(TokenTypes::NOT)
+        when '&' then self.match('&') ? self.add_token(TokenTypes::AND) : nil
+        when '|' then self.match('|') ? self.add_token(TokenTypes::OR) : nil
+        when ' ' # Ignore spaces
         when .number?
           @io << character
           self.handle_number
+        when .alphanumeric?
+          @io << character
+          self.handle_identifier
         else
-          if character.alphanumeric?
-            @io << character
-            self.handle_identifier
-          else
-            raise LensExceptions::LexError.new("Plural-Forms", "Unexpected character", @source, 1, @reader.pos - 1)
-          end
+          self.unexpected_character("Plural-Forms")
         end
       end
 
-      # Proceses a number token
+      # Processes a number token
       private def handle_number
         while !self.at_end_of_source? && @reader.current_char.number?
           self.advance_and_store
         end
 
         number = @io.to_s
+        # First character is already present within line_accumulator
+        @line_accumulator << number[1..]
+
         if number.includes? "."
           self.add_token(TokenTypes::NUMBER, number.to_f)
         else
@@ -110,7 +95,10 @@ module Gettext
           self.advance_and_store
         end
 
-        self.add_token(TokenTypes::IDENTIFIER, @io.to_s)
+        id = @io.to_s
+        # First character is already present within line_accumulator
+        @line_accumulator << id[1..]
+        self.add_token(TokenTypes::IDENTIFIER, id)
         @io.clear
       end
 
@@ -118,7 +106,8 @@ module Gettext
       private def match(expected)
         return false if at_end_of_source?
         if @reader.current_char == expected
-          @reader.next_char
+          self.advance
+          @line_accumulator << @reader.current_char
           return true
         end
       end

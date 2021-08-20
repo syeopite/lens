@@ -13,14 +13,6 @@ module Gettext
     # ```
     def initialize(@file_name : String, @source : String)
       super(@source)
-      # Positional markers. Mainly used for error handling
-      @line = 1
-      @column = 0
-      @error_column = nil
-
-      # Latches onto all characters on the current line to display
-      # in case of error.
-      @line_accumulator = IO::Memory.new
     end
 
     # Scans a token from the contents of the gettext file
@@ -33,87 +25,52 @@ module Gettext
       self.advance
 
       case character
-      when '"'
-        @io << character
-        self.process_string_token
+      when '"' then self.process_string_token
       when 'm'
         @io << character
         self.process_potential_keyword
-      when '['
-        self.process_plural_form
-      when '#'
-        self.process_hashed_character
+      when '[' then self.process_plural_form
+      when '#' then self.process_hashed_character
       when ' '
-      when '\n'
-        return if !@error_column.nil?
-        @column = 0
-        @line_accumulator.clear
-        @line += 1
-      else
-        @error_column = @column - 1
-        consume_till('\n', store = true)
-        @line_accumulator << @io.to_s
-
-        raise LensExceptions::LexError.new(@file_name, "Unexpected character", @line_accumulator.to_s, @line, @error_column.not_nil!)
+      when '\n' then self.reset_line_accumulator_state
+      else           self.unexpected_character(@file_name)
       end
     end
 
-    # Proccesses Gettext comments.
+    # Processes Gettext comments.
     #
-    # All of these is currently uneeded. However, if the future says that these are required
+    # All of these is currently unnecessary. However, if the future says that these are required
     # the infrastructure is here to easily tokenize them.
     private def process_hashed_character
       case @reader.current_char
-      when "."
-        self.consume_till('\n')
-      when ":"
-        self.consume_till('\n')
-      when ","
-        self.consume_till('\n')
-      when "|"
-        self.consume_till('\n')
-      else
-        self.consume_till('\n')
+      when "." then self.consume_till('\n')
+      when ":" then self.consume_till('\n')
+      when "," then self.consume_till('\n')
+      when "|" then self.consume_till('\n')
+      else          self.consume_till('\n')
       end
     end
 
     private def process_string_token
       while true
-        current_char = @reader.current_char
-        if current_char == '"' || self.at_end_of_source?
-          break
-        elsif current_char == '\n'
-          @line_accumulator << @io.to_s.lstrip("\"") # Remove the extra " added before calling current method
-          @error_column = @column
-          raise LensExceptions::LexError.new(@file_name, "Unterminated string", @line_accumulator.to_s, @line, @error_column.not_nil!)
-        end
-
-        # Handle escapes
-        if current_char == '\\'
+        case @reader.current_char
+        when '"' then break self.advance # consumes '"'
+        when '\n' then self.unterminated_string
+        when '\\'
           case self.advance
-          when 'n'
-            @io << "\n"
-          else
-            @io << @reader.current_char
+          when 'n' then @io << "\n"
+          else          @io << @reader.current_char
           end
 
-          self.advance
-          next
+          next self.advance
         end
 
+        return self.unterminated_string if self.at_end_of_source?
         self.advance_and_store
       end
 
-      @line_accumulator << @io.to_s.lstrip("\"") # Remove the extra " added before calling current method
-
-      if self.at_end_of_source?
-        @error_column = @column
-        raise LensExceptions::LexError.new(@file_name, "Unterminated string", @line_accumulator.to_s, @line, @error_column.not_nil!)
-      end
-
-      self.advance_and_store
-
-      self.add_token(POTokens::STRING, @io.to_s.strip("\""))
+      @line_accumulator << "#{@io}\""
+      self.add_token(POTokens::STRING, @io.to_s)
       @io.clear
     end
 
@@ -128,7 +85,9 @@ module Gettext
         self.advance_and_store
       end
 
-      @line_accumulator << @io.to_s.lstrip("m") # Remove the extra m added before calling current method
+      # We added an additional 'm' to the IO before calling this method. However, the line accumulator already
+      # contains one at the start so we'll just go ahead and strip that one.
+      @line_accumulator << @io.to_s[1..]
       begin
         kw = POTokens.parse(@io.to_s.upcase)
         self.add_token(kw)
@@ -142,8 +101,7 @@ module Gettext
       while true
         current_char = @reader.current_char
         if current_char == ']' || self.at_end_of_source?
-          self.advance
-          break
+          break self.advance # Consume '['
         end
 
         self.advance_and_store
@@ -154,10 +112,10 @@ module Gettext
       @io.clear
     end
 
-    # Advance reader by one character
-    private def advance
-      @column += 1
-      return super()
+    private def unterminated_string
+      @line_accumulator << @io.to_s
+      @error_column = @column
+      raise LensExceptions::LexError.new(@file_name, "Unterminated string", @line_accumulator.to_s, @line, @error_column.not_nil!)
     end
   end
 end

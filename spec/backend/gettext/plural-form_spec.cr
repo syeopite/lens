@@ -12,6 +12,20 @@ describe Gettext::PluralForm do
       plural_form_scanner = Gettext::PluralForm::Scanner.new("nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);")
       Digest::SHA256.hexdigest(plural_form_scanner.scan.to_s).should eq "286a6c1a2856720d784d4630696fe8aadbfbdc5c1d29ec84a7738d00a69dd85b"
     end
+
+    it "is able to handle invalid expressions" do
+      begin
+        Gettext::PluralForm::Scanner.new("nplurals=3; plural=($n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);").scan
+      rescue ex : LensExceptions::LexError
+        ex.message.should eq <<-Error
+        An error occurred when scanning 'Plural-Forms' at Line 1:
+        nplurals=3; plural=($n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);
+                            ^
+        Unexpected character: 'n' at column 21
+
+        Error
+      end
+    end
   end
 
   describe Gettext::PluralForm::Parser do

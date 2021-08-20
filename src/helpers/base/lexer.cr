@@ -7,11 +7,21 @@
 abstract class Lens::Base::Lexer(T)
   include Iterator(T)
   @token : T?
+  @error_column : Int32?
 
   def initialize(@source : String)
     @token = nil
     @reader = Char::Reader.new(@source)
     @io = IO::Memory.new
+
+    # Positional markers. Mainly used for error handling
+    @line = 1
+    @column = 0
+    @error_column = nil
+
+    # Latches onto all characters on the current line to display
+    # in case of error.
+    @line_accumulator = IO::Memory.new
   end
 
   # Tokenizes the source fully and return an array of tokens.
@@ -88,14 +98,36 @@ abstract class Lens::Base::Lexer(T)
 
   # Advance reader by one character
   private def advance
+    @column += 1
     @reader.next_char
     return @reader.current_char
   end
 
   # Stores current character in IO and advance reader
   private def advance_and_store
+    @column += 1
     @io << @reader.current_char
     @reader.next_char
+  end
+
+  # Raise unexpected character error
+  private def unexpected_character(name)
+    # We don't need the @column variable in this case as the Plural Form expression isn't expected to be multiple lines
+    @error_column = @column
+    consume_till('\n', store = true)
+    @line_accumulator << @io.to_s
+    raise LensExceptions::LexError.new(name, "Unexpected character", @line_accumulator.to_s, @line, @error_column.not_nil!)
+  end
+
+  # Reset the state of line accumulator. This should be ran on every new line.
+  #
+  # If an error column is set then that means the line accumulator is currently consuming
+  # till '\n' for error reporting. Thus we'll skip it.
+  private def reset_line_accumulator_state
+    return if !@error_column.nil?
+    @column = 0
+    @line_accumulator.clear
+    @line += 1
   end
 
   # Appends a token to the final token list
