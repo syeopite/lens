@@ -83,8 +83,8 @@ module CrystalI18n
     #
     # Functionality is the same as `CrystalI18n::I18n.translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil)`
     # but with the first argument removed
-    def translate(key : String, count : Int | Float? = nil, iter : Int? = nil, **kwargs)
-      self.translate(@lang_state, key, count, iter, **kwargs)
+    def translate(key : String, count : Int | Float? = nil, iter : Int? = nil, scope : (Indexable(String) | String)? = nil, **kwargs)
+      self.translate(@lang_state, key, count, iter, scope, **kwargs)
     end
 
     # Fetches a translation from the *given* locale with the given path (key).
@@ -114,9 +114,18 @@ module CrystalI18n
     # catalogue.translate("en", "items.foods", iter: 2) # => "Hamburger"
     # ```
     #
+    # A scope, the area from which the key-path should traverse from, can also be specified. For instance, a scope of `possessions.fruits`
+    # would allow the key to just be `apples`.
+    # ```
+    # catalogue.translate("en", "possessions", 1, scope : {"possessions", "fruits"})  # => "I have 1 apple"
+    #
+    # # Strings also work!
+    # catalogue.translate("en", "possessions", 1, scope : "possessions.fruits")  # => "I have 1 apple"
+    # ```
+    #
     # When a translation is not found `LensExceptions::MissingTranslation` would be raised.
     #
-    def translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil, **kwargs)
+    def translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil, scope : (Indexable(String) | String)? = nil, **kwargs)
       self.internal_translate(locale, key, count, iter, **kwargs)
     rescue ex : KeyError | Exception
       if ex.is_a? KeyError
@@ -183,9 +192,18 @@ module CrystalI18n
     end
 
     # Internal method for fetching and "decorating" translations.
-    private def internal_translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil, **kwargs)
+    private def internal_translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil, scope : (Indexable(String) | String)? = nil, **kwargs)
       # Traversal through nested structure is done by stating paths separated by "."s
       keys = key.split(".")
+
+      # However, if we've been given a scope then the selected keys should come after that.
+      # Thus'll we'll append to scope data to the start of the keys array for digging.
+      keys = case scope
+             when Indexable(String) then scope + keys
+             when String            then scope.split(".") + keys
+             else                        keys
+             end
+
       if keys.size > 1
         translation = @_source[locale].dig(keys[0], keys[1..])
       else
