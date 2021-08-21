@@ -129,6 +129,40 @@ module CrystalI18n
       end
     end
 
+    # Localize a date object with correspondence to a specific format
+    def localize(locale : String, time : Time, format : String)
+      format = @_source[locale].dig?("date", "formats", format)
+
+      if !format
+        raise LensExceptions::MissingTranslation.new("Missing format pattern: '#{format}', for time localization")
+      end
+
+      return self.internal_localize_time(locale, format, time)
+    end
+
+    # Internal time localization method
+    #
+    # Format usage is almost equivalent to the typical time formatting operators, except the month and
+    # day names are using their localized equivalents
+    private def internal_localize_time(locale : String, format : YAML::Any?, time : Time)
+      # Only the following are supported.
+      # https://github.com/ruby-i18n/i18n/blob/0888807ab2fe4f4c8a4b780f5654a8175df61feb/lib/i18n/backend/base.rb#L260
+      localized_format = format.as_s.gsub(/%(|\^)[aAbBpP]/) do |match|
+        case match
+        when "%a"  then self.translate(locale, "date.formats.abbr_day_names").as(Array(YAML::Any))[time.day_of_week.value % 7].as_s
+        when "%^a" then self.translate(locale, "date.formats.abbr_day_names").as(Array(YAML::Any))[time.day_of_week.value % 7].as_s.upcase
+        when "%A"  then self.translate(locale, "date.formats.day_names").as(Array(YAML::Any))[time.day_of_week.value % 7].as_s
+        when "%^A" then self.translate(locale, "date.formats.day_names").as(Array(YAML::Any))[time.day_of_week.value % 7].as_s.upcase
+        when "%b"  then self.translate(locale, "date.formats.abbr_month_names").as(Array(YAML::Any))[time.month - 1].as_s
+        when "%^b" then self.translate(locale, "date.formats.abbr_month_names").as(Array(YAML::Any))[time.month - 1].as_s.upcase
+        when "%B"  then self.translate(locale, "date.formats.month_names").as(Array(YAML::Any))[time.month - 1].as_s
+        when "%^B" then self.translate(locale, "date.formats.month_names").as(Array(YAML::Any))[time.month - 1].as_s.upcase
+        end
+      end
+
+      return Time::Format.new(localized_format).format(time)
+    end
+
     # Set pluralization rules for the given locale.
     # See `CrystalI18n.define_rule` for more information
     def define_rule(locale : String, value : Int32 | Int64 | Float64 -> String)

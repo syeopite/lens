@@ -74,6 +74,13 @@ describe "crystal-i18n" do
         i18n_instance.translate("en", "items.foods", iter: index).should eq(item)
       end
     end
+
+    it "is able to localize time" do
+      date = Time.unix(1629520612)
+      i18n_instance.localize("en", date, format: "default").should eq("2021-08-21")
+      i18n_instance.localize("en", date, format: "long").should eq("July 21, 2021")
+      i18n_instance.localize("en", date, format: "short").should eq("Jul 21")
+    end
   end
 
   describe "monolingual usage" do

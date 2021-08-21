@@ -38,3 +38,18 @@ new_messages:
 
 items:
   foods: ["Cake", "Pie", "Hamburger", "French Fries"]
+
+date:
+  formats:
+    # https://github.com/rails/rails/blob/main/activesupport/lib/active_support/locale/en.yml
+    # Use a subset of the strftime parameters for formats.
+    default: "%Y-%m-%d"
+    short: "%b %d"
+    long: "%B %d, %Y"
+
+    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+
+    # Don't forget the nil at the beginning; there's no such thing as a 0th month
+    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
