@@ -158,8 +158,12 @@ module CrystalI18n
         translation = @_source[locale][keys[0]]
       end
 
-      if iter && translation.as_a?
-        translation = translation[iter]
+      if translation.as_a?
+        if iter
+          translation = translation[iter]
+        else
+          return translation.as_a
+        end
       end
 
       if count
