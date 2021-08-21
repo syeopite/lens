@@ -67,8 +67,7 @@ module CrystalI18n
     # catalogue.select("example")
     # catalogue.translate("translation") # => "Some message in another language"
     #
-    # catalogue.select("doesn'texist")
-    # catalogue.translate("translation") # => "Some message in another language"
+    # catalogue.select("doesn't exist") # raises KeyError
     # ```
     #
     def select(locale)
