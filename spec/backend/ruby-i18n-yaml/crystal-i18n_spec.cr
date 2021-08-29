@@ -1,12 +1,12 @@
-require "../../../src/backend/crystal-i18n"
+require "../../../src/backend/ruby-i18n-yaml"
 
-describe "crystal-i18n" do
+describe "ruby-i18n-yaml" do
   it "able to parse locale files" do
-    i18n_instance = CrystalI18n::I18n.new("spec/backend/crystal-i18n/locales")
+    i18n_instance = RubyI18n::Yaml.new("spec/backend/ruby-i18n-yaml/locales")
   end
 
   describe "simple usage" do
-    i18n_instance = CrystalI18n::I18n.new("spec/backend/crystal-i18n/locales")
+    i18n_instance = RubyI18n::Yaml.new("spec/backend/ruby-i18n-yaml/locales")
 
     it "fetches nested messages" do
       i18n_instance.translate("en", "nested_key.forth.forth-third.forth-third-fifth.4344").should eq("4344-message-in-nest")
@@ -26,7 +26,7 @@ describe "crystal-i18n" do
   end
 
   describe "complex usage" do
-    i18n_instance = CrystalI18n::I18n.new("spec/backend/crystal-i18n/locales")
+    i18n_instance = RubyI18n::Yaml.new("spec/backend/ruby-i18n-yaml/locales")
 
     # Credit https://github.com/TechMagister/i18n.cr/blob/master/spec/locales/ru.yml
     it "handles language with 'complex' plurals" do
@@ -37,7 +37,7 @@ describe "crystal-i18n" do
     end
 
     it "handles subfolders" do
-      i18n_instance = CrystalI18n::I18n.new("spec/backend/crystal-i18n/locales")
+      i18n_instance = RubyI18n::Yaml.new("spec/backend/ruby-i18n-yaml/locales")
       i18n_instance.translate("en", "first-subfolder").should eq("first-subfolder-message")
       i18n_instance.translate("en", "second-subfolder").should eq("second-subfolder-message")
 
@@ -45,7 +45,7 @@ describe "crystal-i18n" do
     end
 
     it "overwritten plurals" do
-      i18n_instance = CrystalI18n::I18n.new("spec/backend/crystal-i18n/locales")
+      i18n_instance = RubyI18n::Yaml.new("spec/backend/ruby-i18n-yaml/locales")
 
       # Default
       i18n_instance.translate("en", "possessions.fruits.unknown", 0, fruit: "pear").should eq("I have 0 pears")
@@ -85,7 +85,7 @@ describe "crystal-i18n" do
 
   describe "monolingual usage" do
     it "handles switching languages" do
-      i18n_instance = CrystalI18n::I18n.new("spec/backend/crystal-i18n/locales")
+      i18n_instance = RubyI18n::Yaml.new("spec/backend/ruby-i18n-yaml/locales")
       i18n_instance.translate("new_messages", 0).should eq("you have 0 messages")
       i18n_instance.translate("new_messages", 1).should eq("you have 1 message")
 

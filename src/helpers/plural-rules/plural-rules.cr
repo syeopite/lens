@@ -4,7 +4,7 @@
 # NOTE: This will be replaced with a proper CLDR implementation that supports
 # differing plural rules based on the shape of the floating point number too.
 #
-# This is mainly used for certain formats such as crystal-i18n
+# This is mainly used for certain formats such as ruby-i18n YAML
 module PluralRulesCollection
   # :nodoc:
   # Language code mapping to plural-rules

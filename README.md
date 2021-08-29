@@ -24,7 +24,7 @@ Lens supports numerous different formats:
 |:--------:|:--------:|:----------------:|
 | GNU Gettext PO | `Gettext::POBackend` | [Here](https://syeopite.github.io/lens/formats/gnu-gettext)
 | GNU Gettext MO | `Gettext::MOBackend` | [Here](https://syeopite.github.io/lens/formats/gnu-gettext)
-| Ruby YAML | `CrystalI18n::I18n` | [Here](https://syeopite.github.io/lens/formats/ruby-yaml)
+| Ruby YAML | `RubyI18n::Yaml` | [Here](https://syeopite.github.io/lens/formats/ruby-yaml)
 
 To get started, simply initialize a backend: 
 ```crystal
