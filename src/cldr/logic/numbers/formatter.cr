@@ -9,9 +9,16 @@ module CLDR::Numbers
     @integer : String
     @fractional : String
 
-    def initialize(@instructions, @fractional_instructions, @metadata, number : Int32 | Float64)
+    def initialize(@instructions, @fractional_instructions, @metadata, number : Float64)
       # The formatted number shall be constructed in reverse
       @integer, @fractional = number.to_s.split "."
+      @integer_reader = Char::Reader.new(@integer.reverse)
+    end
+
+    def initialize(@instructions, @fractional_instructions, @metadata, number : Int32)
+      # The formatted number shall be constructed in reverse
+      @fractional = ""
+      @integer = number.to_s
 
       @integer_reader = Char::Reader.new(@integer.reverse)
     end
@@ -116,6 +123,9 @@ module CLDR::Numbers
       end
 
       formatted_fractional = String.build do |str|
+        if @fractional.empty?
+          break
+        end
         @fractional_instructions.each do |rule|
           case rule
           when Rules::InjectSymbol then self.inject_symbol(str, rule)
