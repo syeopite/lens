@@ -1,29 +1,11 @@
-require "yaml"
-require "../../helpers/plural-rules/*"
+# Compiler doesn't give off warnings on deprecation to types
+# See https://github.com/crystal-lang/crystal/issues/11043
 
-# Namespace for logic relating to ruby-i18n's YAML format.
-#
-# This is a reimplementation of the ruby-i18n YAML format from [the ruby-i18n project](https://github.com/ruby-i18n/i18n).
-#
-# In crystal, this is often adapted into the crystal-i18n format seen in the following projects:
-# * [TechMagister/i18n.cr](https://github.com/TechMagister/i18n)
-# * [crystal-i18n/i18n](https://github.com/crystal-i18n/i18n)
-# * [crimson-knight/i18n.cr](https://github.com/crimson-knight/i18n.cr/)
-#
-# and any of the other implementations the community has made.
-#
-# TODO: replace link to documentation once written.
-# Each of the variants in Crystal has some slight variations compared with the original ruby-i18n. Minor alternations are needed
-# to be compatible with Lens. [See the usage documentation for more information](https://example.com)
-#
-module RubyI18n
-  # Backend for the ruby-i18n format. This class contains methods to parse and interact with them
-  class Yaml
-    # Creates a new ruby-i18n YAML instance that reads from the given locale directory path.
-    #
-    # ```
-    # RubyI18n::Yaml.new("locales")
-    # ```
+@[Deprecated("CrystalI18n has been renamed to `RubyI18n` ")]
+module CrystalI18n
+  @[Deprecated("CrystalI18n::I18n has been renamed to `RubyI18n::Yaml` ")]
+  class I18n
+    @[Deprecated("CrystalI18n::I18n has been renamed to `RubyI18n::Yaml` ")]
     def initialize(locale_directory_path : String, reference_locale : String = "en")
       @_source = {} of String => Hash(String, YAML::Any)
 
@@ -55,28 +37,7 @@ module RubyI18n
       @lang_state = reference_locale
     end
 
-    # Selects a locale to use for translations
-    #
-    # Raises a KeyError when the selected locale isn't found.
-    #
-    # If your application is monolingual then this along with `#translate(key, count, iter)` is your friend.
-    # However, if you need to switch languages on the fly then this method should be ignored.
-    #
-    # Instead, you should use the `#translate(locale, key, count, iter)` overload, which allows for fetching
-    # messages from any locales without changing the state of the instance.
-    #
-    # ```
-    # catalogue = RubyI18n::Yaml.new("locales")
-    #
-    # catalogue.select("en")
-    # catalogue.translate("translation") # => "Translated Message"
-    #
-    # catalogue.select("example")
-    # catalogue.translate("translation") # => "Some message in another language"
-    #
-    # catalogue.select("doesn't exist") # raises KeyError
-    # ```
-    #
+    @[Deprecated("CrystalI18n::I18n has been renamed to `RubyI18n::Yaml` ")]
     def select(locale)
       if @_source.has_key?(locale)
         @lang_state = locale
@@ -85,52 +46,12 @@ module RubyI18n
       end
     end
 
-    # Fetches a translation from the *selected* locale with the given path (key).
-    #
-    # Functionality is the same as `RubyI18n::Yaml.translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil)`
-    # but with the first argument removed
+    @[Deprecated("CrystalI18n::I18n has been renamed to `RubyI18n::Yaml` ")]
     def translate(key : String, count : Int | Float? = nil, iter : Int? = nil, scope : (Indexable(String) | String)? = nil, **kwargs)
       self.translate(@lang_state, key, count, iter, scope, **kwargs)
     end
 
-    # Fetches a translation from the *given* locale with the given path (key).
-    #
-    # Basic usage is this:
-    # ```
-    # catalogue = RubyI18n::Yaml.new("locales")
-    # catalogue.translate("en", "translation") # => "Translated Message"
-    # ```
-    #
-    # This method can also translate plural-forms through the count argument.
-    # ```
-    # catalogue.translate("en", "possessions.fruits.apples", 50) # => "I have 50 apples"
-    # catalogue.translate("en", "possessions.fruits.apples", 1)  # => "I have 1 apple"
-    # ```
-    #
-    # Interpolation can be done through kwargs.
-    # ```
-    # # message is 'Hello there, my name is %{name} and I'm a %{profession}`.
-    # result = catalogue.translate("en", "introduction.messages", name: "Steve", profession: "programmer")
-    # result # => "Hello there, my name is Steve and I'm a programmer"
-    # ```
-    #
-    # If the value at the given path (key) turns out to be an array then you can pass in the iter argument
-    # to select a specific value at the given index
-    # ```
-    # catalogue.translate("en", "items.foods", iter: 2) # => "Hamburger"
-    # ```
-    #
-    # A scope, the area from which the key-path should traverse from, can also be specified. For instance, a scope of `possessions.fruits`
-    # would allow the key to just be `apples`.
-    # ```
-    # catalogue.translate("en", "possessions", 1, scope : {"possessions", "fruits"})  # => "I have 1 apple"
-    #
-    # # Strings also work!
-    # catalogue.translate("en", "possessions", 1, scope : "possessions.fruits")  # => "I have 1 apple"
-    # ```
-    #
-    # When a translation is not found `LensExceptions::MissingTranslation` would be raised.
-    #
+    @[Deprecated("CrystalI18n::I18n has been renamed to `RubyI18n::Yaml` ")]
     def translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil, scope : (Indexable(String) | String)? = nil, **kwargs)
       self.internal_translate(locale, key, count, iter, **kwargs)
     rescue ex : KeyError | Exception
@@ -144,7 +65,7 @@ module RubyI18n
       end
     end
 
-    # Localize a date object with correspondence to a specific format
+    @[Deprecated("CrystalI18n::I18n has been renamed to `RubyI18n::Yaml` ")]
     def localize(locale : String, time : Time, format : String)
       format = @_source[locale].dig?("date", "formats", format)
 
@@ -178,21 +99,17 @@ module RubyI18n
       return Time::Format.new(localized_format).format(time)
     end
 
-    # Set pluralization rules for the given locale.
-    # See `RubyI18n.define_rule` for more information
+    @[Deprecated("CrystalI18n::I18n has been renamed to `RubyI18n::Yaml` ")]
     def define_rule(locale : String, value : Int32 | Int64 | Float64 -> String)
       RubyI18n.define_rule(locale, value)
     end
 
-    # Returns all defined CLDR plural rules.
+    @[Deprecated("CrystalI18n::I18n has been renamed to `RubyI18n::Yaml` ")]
     def plural_rules : Hash(String, Int32 | Int64 | Float64 -> String)
       return PluralRulesCollection::Rules
     end
 
-    # Returns self | Here for compatibility with `Gettext::MOBackend` and `Gettext::POBackend`
-    #
-    # catalogue = RubyI18n::Yaml.new("locales")
-    # catalogue == catalogue.create() # => true
+    @[Deprecated("CrystalI18n::I18n has been renamed to `RubyI18n::Yaml` ")]
     def create
       return self
     end
@@ -255,31 +172,5 @@ module RubyI18n
 
       return output
     end
-  end
-
-  # Set pluralization rules for the given locale
-  #
-  # This allows you to overwrite or even define new pluralization rules
-  # for whatever locale you desire.
-  #
-  # ```
-  # RubyI18n.define_rule("ar", ->(n : Int32 | Int64 | Float64) {
-  #   case
-  #   when n == 0             then "zero"
-  #   when n == 1             then "one"
-  #   when n == 2             then "two"
-  #   when 3..10 === n % 100  then "few"
-  #   when 11..99 === n % 100 then "many"
-  #   else                         "other"
-  #   end
-  # })
-  # ```
-  def self.define_rule(locale : String, value : Int32 | Int64 | Float64 -> String)
-    PluralRulesCollection::Rules[locale] = value
-  end
-
-  # Returns all defined CLDR plural rules
-  def self.plural_rules : Hash(String, Int32 | Int64 | Float64 -> String)
-    return PluralRulesCollection::Rules
   end
 end
