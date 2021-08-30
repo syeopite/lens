@@ -6,8 +6,19 @@ site_url: https://syeopite.github.io/lens/
 theme:
   name: material
   palette:
-    primary: black
-    accent: blue
+  - media: "(prefers-color-scheme: light)"
+    scheme: default
+    toggle:
+      icon: material/weather-night
+      name: Switch to dark mode
+  - media: "(prefers-color-scheme: dark)"
+    scheme: slate
+    accent: light blue
+    toggle:
+      icon: material/weather-sunny
+      name: Switch to light mode
+
+
   icon:
     repo: fontawesome/brands/github
     
@@ -15,3 +26,12 @@ markdown_extensions:
   - admonition
   - pymdownx.highlight
   - pymdownx.superfences
+  - footnotes
+  - pymdownx.details
+
+extra:
+  version:
+    provider: mike
+
+extra_css:
+  - stylesheets/extra.css

@@ -1,20 +1,13 @@
 # Ruby YAML
-Is the YAML format [used by ruby-i18n](https://github.com/ruby-i18n/i18n) and the format all of the internationalization libraries in Crystal prior to Lens. [See here for more information regarding the format.](https://guides.rubyonrails.org/i18n.html)
+Is the YAML format [used by ruby-i18n](https://github.com/ruby-i18n/i18n) and the format implemented by all of the internationalization libraries in Crystal prior to Lens. [See here for more information regarding the format.](https://guides.rubyonrails.org/i18n.html)
 
-Ruby YAML has support for plurals, defined with CLDR data. This means that it *can* handle plural forms of both Integers and floating point numbers. 
+Ruby YAML has support for plurals, defined with CLDR data. This means that it *can* handle plural forms of both Integers and floating point numbers. However, this has **not** been added to Lens as of writing. Expect to see it in either `v0.2.0` or `v0.3.0`.
 
-!!! Note 
-    At the time of writing Lens does not support plural form calculation with floats unfortunately. Though, except this to be added in version `0.2.0` or `0.3.0`!
 
 
 ## Using Ruby YAML
 
-!!! Info inline end "Fun Fact" 
-     The name: `CrystalI18n::I18n`, was chosen since all internationalization shards in Crystal prior to Lens, were based off of this format. 
-    
-    This backend will likely get renamed in the future.
-
-The Ruby YAML backend is the `CrystalI18n::I18n`. To initialize, simply pass in the locale directory:\
+The Ruby YAML backend is the `CrystalI18n::I18n`[^1]. To initialize, simply pass in the locale directory:
 
 ```crystal
 catalogue = CrystalI18n::I18n.new("locales")
@@ -85,3 +78,5 @@ If the value at the given path (key) turns out to be an array then you can pass 
 ```crystal
 catalogue.translate("en", "items.foods", iter: 2) # => "Hamburger"
 ```
+
+[^1]: `CrystalI18n::I18n` really isn't a good name. It was mainly just choosen since all internationalization shards prior to Lens were based off of that format. This will get renamed in `v0.2.0`.

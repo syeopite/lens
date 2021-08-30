@@ -35,14 +35,12 @@ Now we'll select a format!
 
 !!! info inline end
     [See here for information regarding each format.](https://docs.weblate.org/en/latest/formats.html#translation-types-capabilities)
-    !!! tip inline 
-        Ruby YAML is the typical format seen in Crystal's internationalization ecosystem.
 
 | Format | Backend|  Documentation |
 |:--------:|:--------:|:----------------:|
 | GNU Gettext PO | `Gettext::POBackend` | [Here](/lens/formats/gnu-gettext)
 | GNU Gettext MO | `Gettext::MOBackend` | [Here](/lens/formats/gnu-gettext)
-| Ruby YAML | `CrystalI18n::I18n` | [Here](/lens/formats/ruby-yaml)
+| Ruby YAML | `CrystalI18n::I18n`[^1] | [Here](/lens/formats/ruby-yaml)
 
 
 For this simple illustration lets use `Gettext::MOBackend`.
@@ -62,7 +60,8 @@ catalogue_hash # => Hash(String, Catalogue) or LanguageCode | Filename => Catalo
 catalogue = catalogue_hash["en_US"]
 ```
 
-!!! danger Note
+
+???+ danger note
     The API and behaviors for each backend **are different**! This is to **preserve** how the format typically handles stuff. 
 
     API differences:
@@ -111,3 +110,4 @@ catalogue.npgettext("CopyPasteMenu", "Export %d file", "Export %d files", 1) # =
 ```
 
 
+[^1]: Ruby YAML is the typical format seen in Crystal's internationalization ecosystem. However, each implementation often comes with minor adjustments tailored to their own APIs. Lens' version personally leans more towards the original RubyI18n version. 
