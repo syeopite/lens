@@ -70,6 +70,13 @@ number:
     # If set, the zeros after the decimal separator will always be stripped (e.g.: 1.200 will be 1.2)
     strip_insignificant_zeros: false
 
+  percentage:
+    format:
+      delimiter: ""
+      precision: 2
+      strip_insignificant_zeros: true
+      format: "%n%"
+
   human:
     format:
       # These six are to override number.format and are optional

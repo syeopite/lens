@@ -114,6 +114,21 @@ describe "ruby-i18n-yaml" do
       i18n_instance.localize("en", 10_250_500_000_000, type: "humanize").should eq("10.3 Trillion")
       i18n_instance.localize("en", 10_200_500_000_000, type: "humanize", format: "").should eq("10.2 Trillion")
     end
+
+    it "is able to humanize percentages" do
+      i18n_instance.localize("en", 0.2528, type: "percentage").should eq("0.252%")
+      i18n_instance.localize("en", 4.528, type: "percentage").should eq("4.53%")
+      i18n_instance.localize("en", 3.528, type: "percentage").should eq("3.53%")
+
+      i18n_instance.localize("en", 1, type: "percentage").should eq("1%")
+      i18n_instance.localize("en", 1.2434, type: "percentage").should eq("1.24%")
+
+      i18n_instance.localize("en", 100, type: "percentage").should eq("100%")
+      i18n_instance.localize("en", 120, type: "percentage").should eq("120%")
+      i18n_instance.localize("en", 102, type: "percentage", format: "blahblahblah").should eq("102%")
+
+      i18n_instance.localize("en", 102.528, type: "percentage").should eq("102.53%")
+    end
   end
 
   describe "monolingual usage" do

@@ -160,7 +160,6 @@ module RubyI18n
     # Currently, Lens supports 3 localization types for numbers in the ruby-i18n YAML format.
     #
     # * Humanize
-    # * Precision
     # * Percentage
     # * Currency
     #
@@ -175,6 +174,8 @@ module RubyI18n
       case type.downcase
       when "human", "humanize"
         self.internal_localize_human(locale, number, format || "decimal_units")
+      when "percentage", "percent"
+        self.internal_localize_percentage(locale, number)
       end
     end
 
@@ -201,7 +202,7 @@ module RubyI18n
       return Time::Format.new(localized_format).format(time)
     end
 
-    # Internal number (humanize format) method.
+    # Internal number (humanize format) localization method.
     #
     # Transforms a number into the localized human readable variant. Supports special format types of bytes and decimal units.
     private def internal_localize_human(locale : String, number : Int32 | Int64 | Float64, format : String? = nil)
@@ -295,6 +296,34 @@ module RubyI18n
       end
 
       return formatted
+    end
+
+    # Internal number (percentage) localization method.
+    #
+    # Transforms a number into a localized human-readable percentage.
+    private def internal_localize_percentage(locale : String, number : Int32 | Int64 | Float64)
+      properties = self.get_properties_for_format_type(locale, "percentage")
+      format_pattern = @_source[locale].dig?("number", "percentage", "format", "format").try &.as_s || "%n%"
+
+      formatted = number.humanize(
+        precision: properties["precision"].as_i,
+        separator: properties["separator"].as_s,
+        delimiter: properties["delimiter"].as_s,
+        significant: properties["significant"].as_bool,
+        prefixes: { {'\0'}, {'\0'} }
+      ).rstrip('\0')
+
+      if properties["strip_insignificant_zeros"]
+        escaped_separator = Regex.escape(properties["separator"].as_s)
+        formatted = formatted.sub(/(#{escaped_separator})(\d*[1-9])?0+\z/, "")
+      end
+
+      formatted = format_pattern.gsub("%n", formatted)
+      if 0 < number < 1
+        return "0#{properties["separator"]}#{formatted}"
+      else
+        formatted
+      end
     end
 
     # Retrieves format properties for the given format type
