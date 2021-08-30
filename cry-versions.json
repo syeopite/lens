@@ -1,0 +1,6 @@
+{
+  "versions": [
+    {"name": "nightly", "url": "/api/master/", "released": false},
+    {"name": "v0.1.0", "url": "/api/v0.1.0/"}
+  ]
+}
