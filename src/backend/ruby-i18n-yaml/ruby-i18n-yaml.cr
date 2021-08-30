@@ -176,6 +176,10 @@ module RubyI18n
         self.internal_localize_human(locale, number, format || "decimal_units")
       when "percentage", "percent"
         self.internal_localize_percentage(locale, number)
+      when "currency", "money"
+        self.internal_localize_currency(locale, number)
+      else
+        self.internal_localize_human(locale, number, format || "decimal_units")
       end
     end
 
@@ -323,6 +327,55 @@ module RubyI18n
         return "0#{properties["separator"]}#{formatted}"
       else
         formatted
+      end
+    end
+
+    # Internal number (currency) localization method.
+    #
+    # Transforms a currency into a localized human-readable currency amount expression.
+    private def internal_localize_currency(locale : String, number : Int32 | Int64 | Float64)
+      properties = self.get_properties_for_format_type(locale, "currency")
+      format_pattern = @_source[locale].dig?("number", "currency", "format", "format").try &.as_s
+
+      if format_pattern.nil?
+        if locale == "en"
+          format_pattern = "%u%n"
+        else
+          raise LensExceptions::MissingTranslation.new("Missing pattern for localizing currency in locale '#{locale}'!")
+        end
+      end
+
+      unit = @_source[locale].dig?("number", "percentage", "format", "unit").try &.as_s
+      if !unit
+        if locale == "en"
+          unit = '$'
+        else
+          raise LensExceptions::MissingTranslation.new("Missing currency symbol for localizing currency in locale '#{locale}'!")
+        end
+      end
+
+      formatted = number.humanize(
+        precision: properties["precision"].as_i,
+        separator: properties["separator"].as_s,
+        delimiter: properties["delimiter"].as_s,
+        significant: properties["significant"].as_bool,
+        prefixes: { {'\0'}, {'\0'} }
+      ).rstrip('\0')
+
+      if properties["strip_insignificant_zeros"]
+        escaped_separator = Regex.escape(properties["separator"].as_s)
+        formatted = formatted.sub(/(#{escaped_separator})(\d*[1-9])?0+\z/, "")
+      end
+
+      if 0 < number < 1
+        formatted = "0#{properties["separator"]}#{formatted}"
+        format_pattern.gsub("%n", formatted).gsub("%u", unit)
+      elsif -1 < number < 0
+        formatted = formatted.lstrip('-')
+        formatted = "0#{properties["separator"]}#{formatted}"
+        return "-#{format_pattern.gsub("%n", formatted).gsub("%u", unit)}"
+      else
+        return format_pattern.gsub("%n", formatted).gsub("%u", unit)
       end
     end
 

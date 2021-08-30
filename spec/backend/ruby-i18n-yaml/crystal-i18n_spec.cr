@@ -80,7 +80,7 @@ describe "ruby-i18n-yaml" do
       i18n_instance.localize("en", date, format: "short").should eq("Jul 21")
     end
 
-    it "is able to humanize bytes" do
+    it "is able to localize bytes" do
       i18n_instance.localize("en", 1000, type: "humanize", format: "storage_units").should eq("1 KB")
       i18n_instance.localize("en", 1500, type: "humanize", format: "storage").should eq("1.5 KB")
 
@@ -93,7 +93,7 @@ describe "ruby-i18n-yaml" do
       i18n_instance.localize("en", 102_500_000_00, type: "humanize", format: "byte size").should eq("10.2 GB")
     end
 
-    it "is able to humanize decimals" do
+    it "is able to localize decimals" do
       i18n_instance.localize("en", 1000, type: "humanize", format: "decimal").should eq("1 Thousand")
       i18n_instance.localize("en", 1500, type: "humanize", format: "decimal").should eq("1.5 Thousand")
       i18n_instance.localize("en", 2000, type: "humanize", format: "decimal").should eq("2 Thousand")
@@ -115,7 +115,7 @@ describe "ruby-i18n-yaml" do
       i18n_instance.localize("en", 10_200_500_000_000, type: "humanize", format: "").should eq("10.2 Trillion")
     end
 
-    it "is able to humanize percentages" do
+    it "is able to localize percentages" do
       i18n_instance.localize("en", 0.2528, type: "percentage").should eq("0.252%")
       i18n_instance.localize("en", 4.528, type: "percentage").should eq("4.53%")
       i18n_instance.localize("en", 3.528, type: "percentage").should eq("3.53%")
@@ -128,6 +128,22 @@ describe "ruby-i18n-yaml" do
       i18n_instance.localize("en", 102, type: "percentage", format: "blahblahblah").should eq("102%")
 
       i18n_instance.localize("en", 102.528, type: "percentage").should eq("102.53%")
+    end
+
+    it "is able to localize currency" do
+      i18n_instance.localize("en", -0.2528, type: "currency").should eq("-$0.252")
+      i18n_instance.localize("en", 0.2528, type: "currency").should eq("$0.252")
+      i18n_instance.localize("en", 4.528, type: "currency").should eq("$4.528")
+      i18n_instance.localize("en", 3.528, type: "currency").should eq("$3.528")
+
+      i18n_instance.localize("en", 1, type: "currency").should eq("$1")
+      i18n_instance.localize("en", 1.2434, type: "money").should eq("$1.243")
+
+      i18n_instance.localize("en", 100, type: "money").should eq("$100")
+      i18n_instance.localize("en", 120, type: "currency").should eq("$120")
+      i18n_instance.localize("en", 102, type: "currency", format: "blahblahblah").should eq("$102")
+
+      i18n_instance.localize("en", 102.528, type: "currency").should eq("$102.528")
     end
   end
 
