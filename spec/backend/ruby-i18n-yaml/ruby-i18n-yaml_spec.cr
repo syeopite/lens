@@ -83,14 +83,17 @@ describe "ruby-i18n-yaml" do
     it "is able to localize bytes" do
       i18n_instance.localize("en", 1000, type: "humanize", format: "storage_units").should eq("1 KB")
       i18n_instance.localize("en", 1500, type: "humanize", format: "storage").should eq("1.5 KB")
+      i18n_instance.localize("en", -1500, type: "humanize", format: "storage").should eq("-1.5 KB")
 
       i18n_instance.localize("en", 100_000, type: "humanize", format: "storage").should eq("100 KB")
       i18n_instance.localize("en", 120_000, type: "humanize", format: "storage").should eq("120 KB")
       i18n_instance.localize("en", 102_000, type: "humanize", format: "storage").should eq("102 KB")
+      i18n_instance.localize("en", -102_000, type: "humanize", format: "storage").should eq("-102 KB")
 
       i18n_instance.localize("en", 102_500_000_00, type: "humanize", format: "storage").should eq("10.2 GB")
       i18n_instance.localize("en", 102_500_000_00, type: "humanize", format: "bytes").should eq("10.2 GB")
       i18n_instance.localize("en", 102_500_000_00, type: "humanize", format: "byte size").should eq("10.2 GB")
+      i18n_instance.localize("en", -102_500_000_00, type: "humanize", format: "byte size").should eq("-10.2 GB")
     end
 
     it "is able to localize decimals" do

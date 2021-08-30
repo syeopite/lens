@@ -414,7 +414,7 @@ module RubyI18n
         # Now we calculate the units
         unit = case selected_format
                when 1
-                 exp = (Math.log(number) / Math.log(1000)).to_i
+                 exp = (Math.log(number.abs) / Math.log(1000)).to_i
                  # Reduce down to number of exp units.
                  number = number / (1000_i64 ** exp) if exp != 0
 
