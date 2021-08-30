@@ -15,7 +15,7 @@ Lens was conceived due to various problems within crystal's internationalization
 
 In short, Lens is packed full of features and designed for internationalization.
 
-**Note: Documentation below is for Master. [For the stable release version, please see v0.1.0.](https://github.com/syeopite/lens/tree/0.1.0)**
+**Note: Documentation below is for Master. [For the stable release version, please see v0.1.0.](https://syeopite.github.io/lens/getting-started)**
 
 
 ## Getting started 
