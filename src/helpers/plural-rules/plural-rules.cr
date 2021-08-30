@@ -135,7 +135,7 @@ module PluralRulesCollection
     "mo" => ->(n : Int32 | Int64 | Float64) {
       case {n, n % 100}
       when {1, _}       then "one"
-      when {0, (1..19)} then :fwe
+      when {0, (1..19)} then "few"
       else                   "other"
       end
     },
