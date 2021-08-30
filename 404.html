@@ -7,21 +7,7 @@
     <meta http-equiv="refresh" content="1; url=latest/" />
   </noscript>
   <script>
-    if (window.location.pathname.startsWith("/api/latest") || window.location.pathname.startsWith("/lens/api/latest")) {
-      window.location.replace(window.location.pathname.replace("/latest", "/v0.1.0"));
-    } 
-    else if (window.location.pathname.startsWith("/getting-started") || window.location.pathname.startsWith("/lens/getting-started")) {
-      window.location.replace(window.location.pathname.replace("/getting-started", "/latest/getting-started"));
-    }
-    else if (window.location.pathname.startsWith("/formats/gnu-gettext") || window.location.pathname.startsWith("/lens/formats/gnu-gettext")) {
-      window.location.replace(window.location.pathname.replace("/formats/gnu-gettext", "/latest/formats/gnu-gettext"));
-    }
-    else if (window.location.pathname.startsWith("/formats/ruby-yaml") || window.location.pathname.startsWith("/lens/formats/ruby-yaml")) {
-      window.location.replace(window.location.pathname.replace("/formats/ruby-yaml", "/latest/formats/ruby-yaml"));
-    }
-    else {
-      window.location.replace("/lens/latest/404.html");
-    };
+    window.location.replace("/lens/latest/404.html");
   </script>
 </head>
 <body>
