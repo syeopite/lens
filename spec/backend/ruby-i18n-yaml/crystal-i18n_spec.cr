@@ -5,9 +5,10 @@ describe "ruby-i18n-yaml" do
     i18n_instance = RubyI18n::Yaml.new("spec/backend/ruby-i18n-yaml/locales")
   end
 
-  describe "simple usage" do
-    i18n_instance = RubyI18n::Yaml.new("spec/backend/ruby-i18n-yaml/locales")
+  # We can reuse a instance for the rest of the specs
+  i18n_instance = RubyI18n::Yaml.new("spec/backend/ruby-i18n-yaml/locales")
 
+  describe "simple usage" do
     it "fetches nested messages" do
       i18n_instance.translate("en", "nested_key.forth.forth-third.forth-third-fifth.4344").should eq("4344-message-in-nest")
     end
@@ -26,8 +27,6 @@ describe "ruby-i18n-yaml" do
   end
 
   describe "complex usage" do
-    i18n_instance = RubyI18n::Yaml.new("spec/backend/ruby-i18n-yaml/locales")
-
     # Credit https://github.com/TechMagister/i18n.cr/blob/master/spec/locales/ru.yml
     it "handles language with 'complex' plurals" do
       i18n_instance.translate("ru", "new_message", 0).should eq("у вас 0 сообщений")
@@ -37,7 +36,6 @@ describe "ruby-i18n-yaml" do
     end
 
     it "handles subfolders" do
-      i18n_instance = RubyI18n::Yaml.new("spec/backend/ruby-i18n-yaml/locales")
       i18n_instance.translate("en", "first-subfolder").should eq("first-subfolder-message")
       i18n_instance.translate("en", "second-subfolder").should eq("second-subfolder-message")
 
@@ -45,8 +43,6 @@ describe "ruby-i18n-yaml" do
     end
 
     it "overwritten plurals" do
-      i18n_instance = RubyI18n::Yaml.new("spec/backend/ruby-i18n-yaml/locales")
-
       # Default
       i18n_instance.translate("en", "possessions.fruits.unknown", 0, fruit: "pear").should eq("I have 0 pears")
       i18n_instance.translate("en", "possessions.fruits.unknown", 1, fruit: "pear").should eq("I have 1 pear")
@@ -74,12 +70,25 @@ describe "ruby-i18n-yaml" do
         i18n_instance.translate("en", "items.foods", iter: index).should eq(item)
       end
     end
+  end
 
+  describe "localization" do
     it "is able to localize time" do
       date = Time.unix(1629520612)
       i18n_instance.localize("en", date, format: "default").should eq("2021-08-21")
       i18n_instance.localize("en", date, format: "long").should eq("July 21, 2021")
       i18n_instance.localize("en", date, format: "short").should eq("Jul 21")
+    end
+
+    it "is able to humanize bytes" do
+      i18n_instance.localize("en", 1000, type: "humanize", format: "storage_units").should eq("1.0 KB")
+      i18n_instance.localize("en", 1500, type: "humanize", format: "storage").should eq("1.5 KB")
+
+      i18n_instance.localize("en", 100_000, type: "humanize", format: "storage").should eq("100 KB")
+      i18n_instance.localize("en", 120_000, type: "humanize", format: "storage").should eq("120 KB")
+      i18n_instance.localize("en", 102_000, type: "humanize", format: "storage").should eq("102 KB")
+
+      i18n_instance.localize("en", 102_500_000_00, type: "humanize", format: "storage").should eq("10.2 GB")
     end
   end
 

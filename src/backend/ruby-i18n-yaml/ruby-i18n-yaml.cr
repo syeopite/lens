@@ -155,6 +155,28 @@ module RubyI18n
       return self.internal_localize_time(locale, format, time)
     end
 
+    # Localize a number with correspondence to a specific type.
+    #
+    # Currently, Lens supports 3 localization types for numbers in the ruby-i18n YAML format.
+    #
+    # * Humanize
+    # * Precision
+    # * Percentage
+    # * Currency
+    #
+    # Two different formats are available in humanize.
+    # - Byte Size
+    #    - Provides humanized byte size. IE 100000 bytes -> 1mb
+    # - Decimal
+    #
+    def localize(locale : String, number : Int32 | Int64 | Float64,
+                 type : String = "humanize", format : String? = nil)
+      case type
+      when "human", "humanize"
+        self.internal_localize_human(locale, number, format || "decimal_units")
+      end
+    end
+
     # Internal time localization method
     #
     # Format usage is almost equivalent to the typical time formatting operators, except the month and
@@ -176,6 +198,108 @@ module RubyI18n
       end
 
       return Time::Format.new(localized_format).format(time)
+    end
+
+    # Internal number (humanize format) method.
+    #
+    # Transforms a number into the localized human readable variant. Supports special format types of bytes and decimal units.
+    private def internal_localize_human(locale : String, number : Int32 | Int64 | Float64, format : String? = nil)
+      properties = self.get_properties_for_format_type(locale, "human")
+
+      if format
+        # First we fetch the selected format and some default basic patterns
+        format_pattern = case format
+                         when "storage_units", "storage", "bytes"
+                           selected_format = 1
+                           attributes_for_format = @_source[locale].dig?("number", "human", "storage_units")
+                           "%n %u"
+                         when "decimal_units"
+                           selected_format = 2
+                           attributes_for_format = @_source[locale].dig?("number", "human", "decimal_units")
+                           "%n %u"
+                         when "percentage"
+                           selected_format = 3
+                           attributes_for_format = @_source[locale].dig?("number", "human", "percentage")
+                           "%n%"
+                         else
+                           selected_format = 1
+                           attributes_for_format = {} of (YAML::Any | String) => YAML::Any
+                           nil
+                         end
+
+        if !attributes_for_format
+          attributes_for_format = {} of (YAML::Any | String) => YAML::Any
+        end
+
+        format_pattern = attributes_for_format["format"]?.try &.as_s || format_pattern
+
+        # Now we calculate the units
+        unit = case selected_format
+               when 1
+                 exp = (Math.log(number) / Math.log(1000)).to_i
+                 # Reduce down to number of exp units.
+                 number = number / (1000_i64 ** exp) if exp != 0
+
+                 plural_rule = PluralRulesCollection::Rules[locale].call(number)
+
+                 if locale == "en"
+                   if !attributes_for_format["units"]?
+                     exp = 5 if exp > 5
+                     name = {"digital-byte", "digital-kilobyte", "digital-megabyte", "digital-gigabyte", "digital-terabyte", "digital-petabyte"}[exp]
+                     CLDR::Languages::EN::Units::Short[name][plural_rule].lstrip("{0} ")
+                   else
+                     exp = 6 if exp > 6
+                     key = {"byte", "kb", "mb", "gb", "tb", "pb", "eb"}[exp]
+                     self.translate(locale, "number.human.storage_units.units.#{key}", count: number)
+                   end
+                 end
+               end
+      end
+
+      formatted = number.humanize(
+        precision: properties["precision"].as_i,
+        separator: properties["separator"].as_s,
+        delimiter: properties["delimiter"].as_s,
+        significant: properties["significant"].as_bool,
+        prefixes: { {'\0'}, {'\0'} }
+      ).rstrip('\0')
+
+      if format && format_pattern
+        formatted = format_pattern.gsub("%n", formatted).gsub("%u", unit)
+      end
+
+      return formatted
+    end
+
+    # Retrieves format properties for the given format type
+    private def get_properties_for_format_type(locale : String, type : String)
+      default_number_properties = @_source[locale].dig?("number", "format").try &.as_h
+      properties_for_type = @_source[locale].dig?("number", type, "format").try &.as_h
+
+      if !default_number_properties
+        default_number_properties = {} of (YAML::Any | String) => YAML::Any
+      end
+
+      if properties_for_type
+        properties = default_number_properties.merge(properties_for_type)
+      else
+        properties = {} of (YAML::Any | String) => YAML::Any
+      end
+
+      # Default values
+      if locale == "en"
+        properties = stringify_keys(properties)
+        properties.["separator"] ||= YAML::Any.new(CLDR::Languages::EN::DecimalSymbol)
+        properties.["delimiter"] ||= YAML::Any.new(CLDR::Languages::EN::GroupSymbol)
+
+        # The following is all typically denoted by the pattern but since we
+        # can't use that we'll just hardcode them.
+        properties.["precision"] ||= YAML::Any.new(3_i64)
+        properties.["significant"] ||= YAML::Any.new(false)
+        properties.["strip_insignificant_zeros"] ||= YAML::Any.new(false)
+      end
+
+      return properties
     end
 
     # Set pluralization rules for the given locale.
