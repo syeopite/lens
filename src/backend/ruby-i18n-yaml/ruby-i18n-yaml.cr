@@ -146,13 +146,23 @@ module RubyI18n
 
     # Localize a date object with correspondence to a specific format
     def localize(locale : String, time : Time, format : String)
-      format = @_source[locale].dig?("date", "formats", format)
+      pattern = @_source[locale].dig?("date", "formats", format)
 
-      if !format
-        raise LensExceptions::MissingTranslation.new("Missing format pattern: '#{format}', for time localization")
+      if pattern.nil?
+        if locale == "en"
+          pattern = case format
+                    when "default" then "%Y-%m-%d"
+                    when "short"   then "%b %d"
+                    when "long"    then "%B %d, %Y"
+                    end
+        else
+          raise LensExceptions::MissingTranslation.new("The selected format: '#{format}' for time localization, does not exist!")
+        end
+      else
+        pattern = pattern.as_s
       end
 
-      return self.internal_localize_time(locale, format, time)
+      return self.internal_localize_time(locale, pattern.as(String), time)
     end
 
     # Localize a number with correspondence to a specific type.
@@ -187,10 +197,10 @@ module RubyI18n
     #
     # Format usage is almost equivalent to the typical time formatting operators, except the month and
     # day names are using their localized equivalents
-    private def internal_localize_time(locale : String, format : YAML::Any?, time : Time)
+    private def internal_localize_time(locale : String, format : String, time : Time)
       # Only the following are supported.
       # https://github.com/ruby-i18n/i18n/blob/0888807ab2fe4f4c8a4b780f5654a8175df61feb/lib/i18n/backend/base.rb#L260
-      localized_format = format.as_s.gsub(/%(|\^)[aAbBpP]/) do |match|
+      localized_format = format.gsub(/%(|\^)[aAbBpP]/) do |match|
         case match
         when "%a"  then self.translate(locale, "date.formats.abbr_day_names").as(Array(YAML::Any))[time.day_of_week.value % 7].as_s
         when "%^a" then self.translate(locale, "date.formats.abbr_day_names").as(Array(YAML::Any))[time.day_of_week.value % 7].as_s.upcase
@@ -224,7 +234,7 @@ module RubyI18n
                            attributes_for_format = @_source[locale].dig?("number", "human", "decimal_units")
                            "%n %u"
                          else
-                           selected_format = 1
+                           selected_format = 2
                            attributes_for_format = {} of (YAML::Any | String) => YAML::Any
                            nil
                          end
@@ -300,6 +310,15 @@ module RubyI18n
       end
 
       return formatted
+    rescue KeyError
+      if selected_format == 0
+        format = "bytes"
+      elsif selected_format = 1
+        format = "decimals"
+      end
+
+      raise LensExceptions::MissingTranslation.new("Unable to locate the formatting information required for humanizing **#{format}**. " \
+                                                   "\nPlease check the '#{locale}' locale and make sure it's defined in there.")
     end
 
     # Internal number (percentage) localization method.
@@ -307,7 +326,15 @@ module RubyI18n
     # Transforms a number into a localized human-readable percentage.
     private def internal_localize_percentage(locale : String, number : Int32 | Int64 | Float64)
       properties = self.get_properties_for_format_type(locale, "percentage")
-      format_pattern = @_source[locale].dig?("number", "percentage", "format", "format").try &.as_s || "%n%"
+      format_pattern = @_source[locale].dig?("number", "percentage", "format", "format").try &.as_s || nil
+
+      if format_pattern.nil?
+        if locale == "en"
+          format_pattern = "%n%"
+        else
+          raise LensExceptions::MissingTranslation.new("Missing pattern for localizing percentages in locale '#{locale}'!")
+        end
+      end
 
       formatted = number.humanize(
         precision: properties["precision"].as_i,
@@ -328,6 +355,9 @@ module RubyI18n
       else
         formatted
       end
+    rescue KeyError
+      raise LensExceptions::MissingTranslation.new("Unable to locate the formatting information required for localizing a **percentage**. " \
+                                                   "\nPlease check the '#{locale}' locale and make sure it's defined in there.")
     end
 
     # Internal number (currency) localization method.
@@ -377,6 +407,9 @@ module RubyI18n
       else
         return format_pattern.gsub("%n", formatted).gsub("%u", unit)
       end
+    rescue KeyError
+      raise LensExceptions::MissingTranslation.new("Unable to locate the formatting information required for localizing **currencies**. " \
+                                                   "\nPlease check the '#{locale}' locale and make sure it's defined in there.")
     end
 
     # Retrieves format properties for the given format type
