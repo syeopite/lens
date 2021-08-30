@@ -122,7 +122,7 @@ jobs:
       
       - name: Build API docs
         run: |
-          crystal docs --json-config-url=/cry-versions.json --output=api  --project-version=v0.2.0-dev --project-name=Lens \
+          crystal docs --json-config-url=/lens/cry-versions.json --output=api  --project-version=v0.2.0-dev --project-name=Lens \
           --canonical-base-url="https://syeopite.github.io/lens/api/latest" --source-url-pattern="https://github.com/syeopite/lens/blob/%{refname}/%{path}#L%{line}" \
           --source-refname=${GITHUB_SHA::8}
 
