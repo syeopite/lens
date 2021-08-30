@@ -226,9 +226,14 @@ module RubyI18n
 
       if count
         plural_rule = PluralRulesCollection::Rules[locale].call(count)
-        translation = translation[plural_rule]
 
-        translation = translation.as_s.gsub("%{count}", count)
+        # If the translation is just a string instead of a hash then we'll
+        # just ignore handling the plural forms for it.
+        if translation.as_h?
+          translation = translation[plural_rule].as_s.gsub("%{count}", count)
+        else
+          translation = translation.as_s
+        end
       else
         translation = translation.as_s
       end
