@@ -105,9 +105,9 @@ describe "ruby-i18n-yaml" do
       i18n_instance.localize("en", 10_250_000_000, type: "humanize", format: "decimal").should eq("10.2 Billion")
       i18n_instance.localize("en", 10_250_500_000, type: "humanize", format: "decimal").should eq("10.3 Billion")
 
-      i18n_instance.localize("en", 10_000_500_000_000, type: "humanize", format: "decimal").should eq("10 Trillion")
-      i18n_instance.localize("en", 10_250_500_000_000, type: "humanize", format: "decimal").should eq("10.3 Trillion")
-      i18n_instance.localize("en", 10_200_500_000_000, type: "humanize", format: "decimal").should eq("10.2 Trillion")
+      i18n_instance.localize("en", 10_000_500_000_000).should eq("10 Trillion")
+      i18n_instance.localize("en", 10_250_500_000_000).should eq("10.3 Trillion")
+      i18n_instance.localize("en", 10_200_500_000_000).should eq("10.2 Trillion")
 
       # Default value for humanize is decimal
       i18n_instance.localize("en", 10_000_500_000_000, type: "humanize", format: "decimal").should eq("10 Trillion")

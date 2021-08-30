@@ -144,7 +144,22 @@ module RubyI18n
       end
     end
 
-    # Localize a date object with correspondence to a specific format
+    # Localize a date object with correspondence to a specific format.
+    #
+    # Raises `LensExceptions::MissingTranslation` when the selected format doesn't exist.
+    #
+    # NOTE: Default data is provided for the English locale.
+    #
+    # ```
+    # date = Time.unix(1629520612)
+    # catalogue.localize("en", date, format: "default") # => "2021-08-21"
+    # catalogue.localize("en", date, format: "long")    # => "July 21, 2021"
+    # catalogue.localize("en", date, format: "short")   # => "Jul 21"
+    #
+    # # Raises when the given format isn't defined.
+    # catalogue.localize("ru", date, format: "short") # LensExceptions::MissingTranslation
+    # ```
+    #
     def localize(locale : String, time : Time, format : String)
       pattern = @_source[locale].dig?("date", "formats", format)
 
@@ -167,7 +182,9 @@ module RubyI18n
 
     # Localize a number with correspondence to a specific type.
     #
-    # Currently, Lens supports 3 localization types for numbers in the ruby-i18n YAML format.
+    # Raises `LensExceptions::MissingTranslation` when attributes required for formatting are missing. [See usage docs for more information]()
+    #
+    # Currently, Lens supports 3 localization types for numbers, within the ruby-i18n YAML format.
     #
     # * Humanize
     # * Percentage
@@ -175,9 +192,41 @@ module RubyI18n
     #
     # Two different formats are available in humanize.
     # - Bytes
-    #    - Provides humanized byte size. IE 100000 bytes -> 1mb
+    #    - Provides humanized byte size. IE 100000 bytes -> 1 MB
     # - Decimal
     #    - Provides humanized positive numbers.
+    #
+    # NOTE: Default data is provided for the English locale.
+    #
+    #
+    # The most basic usage is humanizing a number. For instance:
+    # ```
+    # catalogue.localize("en", 1000)           # => "1 Thousand"
+    # catalogue.localize("en", 10_250_000_000) # => "10.2 Billion"
+    # ```
+    #
+    # Humanized bytes:
+    # ```
+    # catalogue.localize("en", 1000, type: "humanize", format: "storage_units" # => "1 KB"
+    # catalogue.localize("en", 1500, type: "humanize", format: "storage") # => "1.5 KB"
+    #
+    # catalogue.localize("en", 100_000, type: "humanize", format: "bytes") # => "100 KB"
+    # catalogue.localize("en", 120_000, type: "humanize", format: "storage") # => "120 KB"
+    # catalogue.localize("en", 102_000, type: "humanize", format: "storage") # => "102 KB"
+    # ```
+    #
+    # Localized percentages:
+    # ```
+    # catalogue.localize("en", 4.528, type: "percentage").should eq("4.53%")
+    # ```
+    #
+    # Localized currency:
+    # ```
+    # catalogue.localize("en", 4.528, type: "currency").should eq("$4.528")
+    # ```
+    #
+    # [For a more detailed explanation, please refer to the usage documentation.](https://example.com)
+    #
     #
     def localize(locale : String, number : Int32 | Int64 | Float64,
                  type : String = "humanize", format : String? = nil)
@@ -191,6 +240,123 @@ module RubyI18n
       else
         self.internal_localize_human(locale, number, format || "decimal_units")
       end
+    end
+
+    # Retrieves format properties for the given format type
+    private def get_properties_for_format_type(locale : String, type : String)
+      default_number_properties = @_source[locale].dig?("number", "format").try &.as_h
+      properties_for_type = @_source[locale].dig?("number", type, "format").try &.as_h
+
+      if !default_number_properties
+        default_number_properties = {} of (YAML::Any | String) => YAML::Any
+      end
+
+      if properties_for_type
+        properties = default_number_properties.merge(properties_for_type)
+      else
+        properties = {} of (YAML::Any | String) => YAML::Any
+      end
+
+      # Default values
+      if locale == "en"
+        properties = stringify_keys(properties)
+        properties.["separator"] ||= YAML::Any.new(CLDR::Languages::EN::DecimalSymbol)
+        properties.["delimiter"] ||= YAML::Any.new(CLDR::Languages::EN::GroupSymbol)
+
+        # The following is all typically denoted by the pattern but since we
+        # can't use that we'll just hardcode them.
+        properties.["precision"] ||= YAML::Any.new(3_i64)
+        properties.["significant"] ||= YAML::Any.new(false)
+        properties.["strip_insignificant_zeros"] ||= YAML::Any.new(false)
+      end
+
+      return properties
+    end
+
+    # Set pluralization rules for the given locale.
+    # See `RubyI18n.define_rule` for more information
+    def define_rule(locale : String, value : Int32 | Int64 | Float64 -> String)
+      RubyI18n.define_rule(locale, value)
+    end
+
+    # Returns all defined CLDR plural rules.
+    def plural_rules : Hash(String, Int32 | Int64 | Float64 -> String)
+      return PluralRulesCollection::Rules
+    end
+
+    # Returns self | Here for compatibility with `Gettext::MOBackend` and `Gettext::POBackend`
+    #
+    # ```
+    # catalogue = RubyI18n::Yaml.new("locales")
+    # catalogue == catalogue.create # => true
+    # ```
+    #
+    def create
+      return self
+    end
+
+    # Stringify all keys to allow for easy digging without type casting.
+    private def stringify_keys(yaml_contents)
+      output = {} of String => YAML::Any
+      yaml_contents.each do |k, v|
+        if nested_hash = v.as_h?
+          # This should be refactored
+          output[k.to_s] = YAML.parse(stringify_keys(nested_hash).to_yaml)
+        else
+          output[k.to_s] = v
+        end
+      end
+
+      return output
+    end
+
+    # Internal method for fetching and "decorating" translations.
+    private def internal_translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil, scope : (Indexable(String) | String)? = nil, **kwargs)
+      # Traversal through nested structure is done by stating paths separated by "."s
+      keys = key.split(".")
+
+      # However, if we've been given a scope then the selected keys should come after that.
+      # Thus'll we'll append to scope data to the start of the keys array for digging.
+      keys = case scope
+             when Indexable(String) then scope + keys
+             when String            then scope.split(".") + keys
+             else                        keys
+             end
+
+      if keys.size > 1
+        translation = @_source[locale].dig(keys[0], keys[1..])
+      else
+        translation = @_source[locale][keys[0]]
+      end
+
+      if translation.as_a?
+        if iter
+          translation = translation[iter]
+        else
+          return translation.as_a
+        end
+      end
+
+      if count
+        plural_rule = PluralRulesCollection::Rules[locale].call(count)
+
+        # If the translation is just a string instead of a hash then we'll
+        # just ignore handling the plural forms for it.
+        if translation.as_h?
+          translation = translation[plural_rule].as_s.gsub("%{count}", count)
+        else
+          translation = translation.as_s
+        end
+      else
+        translation = translation.as_s
+      end
+
+      # Handle interpolation
+      kwargs.each do |k, v|
+        translation = translation.gsub("%{#{k}}", v)
+      end
+
+      return translation
     end
 
     # Internal time localization method
@@ -410,120 +576,6 @@ module RubyI18n
     rescue KeyError
       raise LensExceptions::MissingTranslation.new("Unable to locate the formatting information required for localizing **currencies**. " \
                                                    "\nPlease check the '#{locale}' locale and make sure it's defined in there.")
-    end
-
-    # Retrieves format properties for the given format type
-    private def get_properties_for_format_type(locale : String, type : String)
-      default_number_properties = @_source[locale].dig?("number", "format").try &.as_h
-      properties_for_type = @_source[locale].dig?("number", type, "format").try &.as_h
-
-      if !default_number_properties
-        default_number_properties = {} of (YAML::Any | String) => YAML::Any
-      end
-
-      if properties_for_type
-        properties = default_number_properties.merge(properties_for_type)
-      else
-        properties = {} of (YAML::Any | String) => YAML::Any
-      end
-
-      # Default values
-      if locale == "en"
-        properties = stringify_keys(properties)
-        properties.["separator"] ||= YAML::Any.new(CLDR::Languages::EN::DecimalSymbol)
-        properties.["delimiter"] ||= YAML::Any.new(CLDR::Languages::EN::GroupSymbol)
-
-        # The following is all typically denoted by the pattern but since we
-        # can't use that we'll just hardcode them.
-        properties.["precision"] ||= YAML::Any.new(3_i64)
-        properties.["significant"] ||= YAML::Any.new(false)
-        properties.["strip_insignificant_zeros"] ||= YAML::Any.new(false)
-      end
-
-      return properties
-    end
-
-    # Set pluralization rules for the given locale.
-    # See `RubyI18n.define_rule` for more information
-    def define_rule(locale : String, value : Int32 | Int64 | Float64 -> String)
-      RubyI18n.define_rule(locale, value)
-    end
-
-    # Returns all defined CLDR plural rules.
-    def plural_rules : Hash(String, Int32 | Int64 | Float64 -> String)
-      return PluralRulesCollection::Rules
-    end
-
-    # Returns self | Here for compatibility with `Gettext::MOBackend` and `Gettext::POBackend`
-    #
-    # catalogue = RubyI18n::Yaml.new("locales")
-    # catalogue == catalogue.create() # => true
-    def create
-      return self
-    end
-
-    # Internal method for fetching and "decorating" translations.
-    private def internal_translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil, scope : (Indexable(String) | String)? = nil, **kwargs)
-      # Traversal through nested structure is done by stating paths separated by "."s
-      keys = key.split(".")
-
-      # However, if we've been given a scope then the selected keys should come after that.
-      # Thus'll we'll append to scope data to the start of the keys array for digging.
-      keys = case scope
-             when Indexable(String) then scope + keys
-             when String            then scope.split(".") + keys
-             else                        keys
-             end
-
-      if keys.size > 1
-        translation = @_source[locale].dig(keys[0], keys[1..])
-      else
-        translation = @_source[locale][keys[0]]
-      end
-
-      if translation.as_a?
-        if iter
-          translation = translation[iter]
-        else
-          return translation.as_a
-        end
-      end
-
-      if count
-        plural_rule = PluralRulesCollection::Rules[locale].call(count)
-
-        # If the translation is just a string instead of a hash then we'll
-        # just ignore handling the plural forms for it.
-        if translation.as_h?
-          translation = translation[plural_rule].as_s.gsub("%{count}", count)
-        else
-          translation = translation.as_s
-        end
-      else
-        translation = translation.as_s
-      end
-
-      # Handle interpolation
-      kwargs.each do |k, v|
-        translation = translation.gsub("%{#{k}}", v)
-      end
-
-      return translation
-    end
-
-    # Stringify all keys to allow for easy digging without type casting.
-    private def stringify_keys(yaml_contents)
-      output = {} of String => YAML::Any
-      yaml_contents.each do |k, v|
-        if nested_hash = v.as_h?
-          # This should be refactored
-          output[k.to_s] = YAML.parse(stringify_keys(nested_hash).to_yaml)
-        else
-          output[k.to_s] = v
-        end
-      end
-
-      return output
     end
   end
 
