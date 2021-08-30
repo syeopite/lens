@@ -171,7 +171,7 @@ module RubyI18n
     #
     def localize(locale : String, number : Int32 | Int64 | Float64,
                  type : String = "humanize", format : String? = nil)
-      case type
+      case type.downcase
       when "human", "humanize"
         self.internal_localize_human(locale, number, format || "decimal_units")
       end
@@ -208,19 +208,15 @@ module RubyI18n
 
       if format
         # First we fetch the selected format and some default basic patterns
-        format_pattern = case format
+        format_pattern = case format.downcase
                          when "storage_units", "storage", "bytes"
                            selected_format = 1
                            attributes_for_format = @_source[locale].dig?("number", "human", "storage_units")
                            "%n %u"
-                         when "decimal_units"
+                         when "decimal_units", "decimal"
                            selected_format = 2
                            attributes_for_format = @_source[locale].dig?("number", "human", "decimal_units")
                            "%n %u"
-                         when "percentage"
-                           selected_format = 3
-                           attributes_for_format = @_source[locale].dig?("number", "human", "percentage")
-                           "%n%"
                          else
                            selected_format = 1
                            attributes_for_format = {} of (YAML::Any | String) => YAML::Any
@@ -253,6 +249,30 @@ module RubyI18n
                      self.translate(locale, "number.human.storage_units.units.#{key}", count: number)
                    end
                  end
+               when 2
+                 exp = (number != 0 ? Math.log10(number.abs).floor : 0).to_i
+
+                 # Assume that numbers are grouped into three (this isn't accurate but it seems to be what upstream does)
+                 # and reduce to a multiple of it if it isn't.
+                 #
+                 # This is to allow numbers such as 100,000 to get interpreted as thousands.
+                 if exp > 3 && exp % 3 != 0
+                   while exp > 3 && exp % 3 != 0
+                     exp -= 1
+                   end
+                 end
+
+                 number = number / ("1#{"0" * exp}".to_i64) if exp != 0
+
+                 # https://github.com/rails/rails/blob/f95c0b7e96eb36bc3efc0c5beffbb9e84ea664e4/activesupport/lib/active_support/number_helper/number_to_human_converter.rb#L51
+                 if !attributes_for_format["units"]?
+                   plural_rule = PluralRulesCollection::Rules[locale].call(number)
+                   CLDR::Languages::EN::DecimalShortFormat["1#{"0"*exp}"][plural_rule].sub("00", " ")
+                 else
+                   # TODO refactor this
+                   key = {a0: "unit", a1: "ten", a2: "hundred", a3: "thousand", a6: "million", a9: "billion", a12: "trillion", a15: "quadrillion"}["a#{exp}"]
+                   self.translate(locale, "number.human.decimal_units.units.#{key}", count: number)
+                 end
                end
       end
 
@@ -263,6 +283,11 @@ module RubyI18n
         significant: properties["significant"].as_bool,
         prefixes: { {'\0'}, {'\0'} }
       ).rstrip('\0')
+
+      if properties["strip_insignificant_zeros"]
+        escaped_separator = Regex.escape(properties["separator"].as_s)
+        formatted = formatted.sub(/(#{escaped_separator})(\d*[1-9])?0+\z/, "")
+      end
 
       if format && format_pattern
         formatted = format_pattern.gsub("%n", formatted).gsub("%u", unit)

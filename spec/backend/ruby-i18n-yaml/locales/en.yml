@@ -54,8 +54,8 @@ date:
     month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
     abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
 
+# https://github.com/rails/rails/blob/main/activesupport/lib/active_support/locale/en.yml
 number:
-  # https://github.com/rails/rails/blob/main/activesupport/lib/active_support/locale/en.yml
   format:
     # Sets the separator between the units, for more precision (e.g. 1.0 / 2.0 == 0.5)
     separator: "."
@@ -94,3 +94,18 @@ number:
         tb: "TB"
         pb: "PB"
         eb: "EB"
+
+    decimal_units:
+      format: "%n %u"
+
+      units:
+        unit: ""
+        ten:
+          one: Ten
+          other: Tens
+        hundred: Hundred
+        thousand: Thousand
+        million: Million
+        billion: Billion
+        trillion: Trillion
+        quadrillion: Quadrillion

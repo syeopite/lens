@@ -81,7 +81,7 @@ describe "ruby-i18n-yaml" do
     end
 
     it "is able to humanize bytes" do
-      i18n_instance.localize("en", 1000, type: "humanize", format: "storage_units").should eq("1.0 KB")
+      i18n_instance.localize("en", 1000, type: "humanize", format: "storage_units").should eq("1 KB")
       i18n_instance.localize("en", 1500, type: "humanize", format: "storage").should eq("1.5 KB")
 
       i18n_instance.localize("en", 100_000, type: "humanize", format: "storage").should eq("100 KB")
@@ -89,6 +89,23 @@ describe "ruby-i18n-yaml" do
       i18n_instance.localize("en", 102_000, type: "humanize", format: "storage").should eq("102 KB")
 
       i18n_instance.localize("en", 102_500_000_00, type: "humanize", format: "storage").should eq("10.2 GB")
+    end
+
+    it "is able to humanize decimals" do
+      i18n_instance.localize("en", 1000, type: "humanize", format: "decimal").should eq("1 Thousand")
+      i18n_instance.localize("en", 1500, type: "humanize", format: "decimal").should eq("1.5 Thousand")
+      i18n_instance.localize("en", 2000, type: "humanize", format: "decimal").should eq("2 Thousand")
+
+      i18n_instance.localize("en", 100_000, type: "humanize", format: "decimal").should eq("100 Thousand")
+      i18n_instance.localize("en", 120_000, type: "humanize", format: "decimal").should eq("120 Thousand")
+      i18n_instance.localize("en", 102_000, type: "humanize", format: "decimal").should eq("102 Thousand")
+
+      i18n_instance.localize("en", 10_250_000_000, type: "humanize", format: "decimal").should eq("10.2 Billion")
+      i18n_instance.localize("en", 10_250_500_000, type: "humanize", format: "decimal").should eq("10.3 Billion")
+
+      i18n_instance.localize("en", 10_000_500_000_000, type: "humanize", format: "decimal").should eq("10 Trillion")
+      i18n_instance.localize("en", 10_250_500_000_000, type: "humanize", format: "decimal").should eq("10.3 Trillion")
+      i18n_instance.localize("en", 10_200_500_000_000, type: "humanize", format: "decimal").should eq("10.2 Trillion")
     end
   end
 
