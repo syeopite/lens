@@ -89,6 +89,8 @@ describe "ruby-i18n-yaml" do
       i18n_instance.localize("en", 102_000, type: "humanize", format: "storage").should eq("102 KB")
 
       i18n_instance.localize("en", 102_500_000_00, type: "humanize", format: "storage").should eq("10.2 GB")
+      i18n_instance.localize("en", 102_500_000_00, type: "humanize", format: "bytes").should eq("10.2 GB")
+      i18n_instance.localize("en", 102_500_000_00, type: "humanize", format: "byte size").should eq("10.2 GB")
     end
 
     it "is able to humanize decimals" do
@@ -106,6 +108,11 @@ describe "ruby-i18n-yaml" do
       i18n_instance.localize("en", 10_000_500_000_000, type: "humanize", format: "decimal").should eq("10 Trillion")
       i18n_instance.localize("en", 10_250_500_000_000, type: "humanize", format: "decimal").should eq("10.3 Trillion")
       i18n_instance.localize("en", 10_200_500_000_000, type: "humanize", format: "decimal").should eq("10.2 Trillion")
+
+      # Default value for humanize is decimal
+      i18n_instance.localize("en", 10_000_500_000_000, type: "humanize", format: "decimal").should eq("10 Trillion")
+      i18n_instance.localize("en", 10_250_500_000_000, type: "humanize").should eq("10.3 Trillion")
+      i18n_instance.localize("en", 10_200_500_000_000, type: "humanize", format: "").should eq("10.2 Trillion")
     end
   end
 

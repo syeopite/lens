@@ -165,9 +165,10 @@ module RubyI18n
     # * Currency
     #
     # Two different formats are available in humanize.
-    # - Byte Size
+    # - Bytes
     #    - Provides humanized byte size. IE 100000 bytes -> 1mb
     # - Decimal
+    #    - Provides humanized positive numbers.
     #
     def localize(locale : String, number : Int32 | Int64 | Float64,
                  type : String = "humanize", format : String? = nil)
@@ -208,12 +209,12 @@ module RubyI18n
 
       if format
         # First we fetch the selected format and some default basic patterns
-        format_pattern = case format.downcase
-                         when "storage_units", "storage", "bytes"
+        format_pattern = case format.try &.downcase
+                         when "storage_units", "storage", "bytes", "byte size"
                            selected_format = 1
                            attributes_for_format = @_source[locale].dig?("number", "human", "storage_units")
                            "%n %u"
-                         when "decimal_units", "decimal"
+                         when "decimal_units", "decimal", "", nil
                            selected_format = 2
                            attributes_for_format = @_source[locale].dig?("number", "human", "decimal_units")
                            "%n %u"
