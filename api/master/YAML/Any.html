@@ -10,13 +10,13 @@
   <meta name="crystal_docs.json_config_url" content="/cry-versions.json">
 
 
-    <link rel="canonical" href="https://syeopite.github.io/lens/api/latest/Gettext/PluralForm.html">
+    <link rel="canonical" href="https://syeopite.github.io/lens/api/latest/YAML/Any.html">
 
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="Lens">
-  <title>Gettext::PluralForm - Lens v0.2.0-dev</title>
+  <title>YAML::Any - Lens v0.2.0-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -69,7 +69,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="Lens/Gettext" data-name="gettext">
+  <li class="parent " data-id="Lens/Gettext" data-name="gettext">
       <a href="../Gettext.html">Gettext</a>
       
         <ul>
@@ -84,7 +84,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="Lens/Gettext/PluralForm" data-name="gettext::pluralform">
+  <li class="parent " data-id="Lens/Gettext/PluralForm" data-name="gettext::pluralform">
       <a href="../Gettext/PluralForm.html">PluralForm</a>
       
         <ul>
@@ -169,12 +169,12 @@
       
     </li>
   
-  <li class="parent " data-id="Lens/YAML" data-name="yaml">
+  <li class="parent open current" data-id="Lens/YAML" data-name="yaml">
       <a href="../YAML.html">YAML</a>
       
         <ul>
   
-  <li class=" " data-id="Lens/YAML/Any" data-name="yaml::any">
+  <li class=" current" data-id="Lens/YAML/Any" data-name="yaml::any">
       <a href="../YAML/Any.html">Any</a>
       
     </li>
@@ -193,10 +193,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">module</span> Gettext::PluralForm
+  <span class="kind">struct</span> YAML::Any
 
 </h1>
 
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../YAML/Any.html">YAML::Any</a></li><li class="superclass">Struct</li><li class="superclass">Value</li><li class="superclass">Object</li></ul>
 
 
 
@@ -210,32 +212,34 @@
     Overview
   </h2>
 
-  <p>Module for handling the plural-forms header used by Gettext</p>
-<p>You should <strong>never</strong> have to deal with this module. The Gettext backends automatically
-calls the required methods here for interpreting plural-forms.</p>
-<p><a href="https://www.craftinginterpreters.com/a-tree-walk-interpreter.html">Everything in here is based on the tree-walk interpreter from
-crafting interpreters</a></p>
-<p>Thanks Robert Nystrom!</p>
+  <p><code><a href="../YAML/Any.html">YAML::Any</a></code> is a convenient wrapper around all possible YAML core types
+(<code>YAML::Any::Type</code>) and can be used for traversing dynamic or
+unknown YAML structures.</p>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;yaml&quot;</span>
+
+data <span class="o">=</span> <span class="t">YAML</span>.parse <span class="s">&lt;&lt;-END</span>
+<span class="s">         ---
+         foo:
+           bar:
+             baz:
+               - qux
+               - fox
+         END</span>
+data[<span class="s">&quot;foo&quot;</span>][<span class="s">&quot;bar&quot;</span>][<span class="s">&quot;baz&quot;</span>][<span class="n">0</span>].as_s <span class="c"># =&gt; &quot;qux&quot;</span>
+data[<span class="s">&quot;foo&quot;</span>][<span class="s">&quot;bar&quot;</span>][<span class="s">&quot;baz&quot;</span>].as_a    <span class="c"># =&gt; [&quot;qux&quot;, &quot;fox&quot;]</span></code></pre>
+<p>Note that methods used to traverse a YAML structure, <code>#[]</code>, <code>#[]?</code> and <code>#each</code>,
+always return a <code><a href="../YAML/Any.html">YAML::Any</a></code> to allow further traversal. To convert them to <code>String</code>,
+<code>Array</code>, etc., use the <code>as_</code> methods, such as <code>#as_s</code>, <code>#as_a</code>, which perform
+a type check against the raw underlying value. This means that invoking <code>#as_s</code>
+when the underlying value is not a <code>String</code> will raise: the value won't automatically
+be converted (parsed) to a <code>String</code>. There are also nil-able variants (<code>#as_i?</code>, <code>#as_s?</code>, ...),
+which return <code>nil</code> when the underlying value type won't match.</p>
 
 
 
 
 
 
-
-  <h2>
-    <a id="extended-modules" class="anchor" href="#extended-modules">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Extended Modules
-  </h2>
-  <ul class="other-types-list">
-    
-      <li class="other-type"><a href="../Gettext/PluralForm.html">Gettext::PluralForm</a></li>
-    
-  </ul>
 
 
 
@@ -254,36 +258,8 @@ crafting interpreters</a></p>
   </h2>
   
     
-      <a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/gettext/plural-forms/ast.cr#L5" target="_blank">
-        backend/gettext/plural-forms/ast.cr
-      </a>
-    
-    <br/>
-  
-    
-      <a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/gettext/plural-forms/interpreter.cr#L6" target="_blank">
-        backend/gettext/plural-forms/interpreter.cr
-      </a>
-    
-    <br/>
-  
-    
-      <a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/gettext/plural-forms/lexer.cr#L17" target="_blank">
-        backend/gettext/plural-forms/lexer.cr
-      </a>
-    
-    <br/>
-  
-    
-      <a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/gettext/plural-forms/parser.cr#L9" target="_blank">
-        backend/gettext/plural-forms/parser.cr
-      </a>
-    
-    <br/>
-  
-    
-      <a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/gettext/plural-forms/tokens.cr#L4" target="_blank">
-        backend/gettext/plural-forms/tokens.cr
+      <a href="https://github.com/syeopite/lens/blob/daadb95e/src/helpers/overloads.cr#L3" target="_blank">
+        helpers/overloads.cr
       </a>
     
     <br/>
@@ -296,6 +272,25 @@ crafting interpreters</a></p>
 
 
 
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#dig(index_or_key,subkeys:Array)-instance-method" class="signature"><strong>#dig</strong>(index_or_key, subkeys : Array)</a>
+        
+          <div class="summary"><p>dig method overload to support using arrays for subkeys</p></div>
+        
+      </li>
+    
+  </ul>
 
 
 
@@ -303,12 +298,73 @@ crafting interpreters</a></p>
 
 <div class="methods-inherited">
   
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
 </div>
 
 
 
 
 
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="dig(index_or_key,subkeys:Array)-instance-method">
+      <div class="signature">
+        
+        def <strong>dig</strong>(index_or_key, subkeys : Array)
+
+        <a class="method-permalink" href="#dig(index_or_key,subkeys:Array)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>dig method overload to support using arrays for subkeys</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/helpers/overloads.cr#L5" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 

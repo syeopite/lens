@@ -124,18 +124,8 @@
       
     </li>
   
-  <li class="parent open current" data-id="Lens/Lens" data-name="lens">
+  <li class=" current" data-id="Lens/Lens" data-name="lens">
       <a href="Lens.html">Lens</a>
-      
-        <ul>
-  
-  <li class=" " data-id="Lens/Lens/Formats" data-name="lens::formats">
-      <a href="Lens/Formats.html">Formats</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -156,6 +146,36 @@
   
   <li class=" " data-id="Lens/LensExceptions/ParseError" data-name="lensexceptions::parseerror">
       <a href="LensExceptions/ParseError.html">ParseError</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="Lens/RubyI18n" data-name="rubyi18n">
+      <a href="RubyI18n.html">RubyI18n</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/RubyI18n/Yaml" data-name="rubyi18n::yaml">
+      <a href="RubyI18n/Yaml.html">Yaml</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="Lens/YAML" data-name="yaml">
+      <a href="YAML.html">YAML</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/YAML/Any" data-name="yaml::any">
+      <a href="YAML/Any.html">Any</a>
       
     </li>
   
@@ -204,14 +224,14 @@
   </h2>
   
     
-      <a href="https://github.com/syeopite/lens/blob/6220a4ee/src/helpers/base/lexer.cr#L7" target="_blank">
+      <a href="https://github.com/syeopite/lens/blob/daadb95e/src/helpers/base/lexer.cr#L7" target="_blank">
         helpers/base/lexer.cr
       </a>
     
     <br/>
   
     
-      <a href="https://github.com/syeopite/lens/blob/6220a4ee/src/lens.cr#L3" target="_blank">
+      <a href="https://github.com/syeopite/lens/blob/daadb95e/src/lens.cr#L3" target="_blank">
         lens.cr
       </a>
     
@@ -243,26 +263,6 @@
 
 
 
-  <h2>
-    <a id="class-method-summary" class="anchor" href="#class-method-summary">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Class Method Summary
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#fetch_backend(fmt:Formats)-class-method" class="signature"><strong>.fetch_backend</strong>(fmt : Formats)</a>
-        
-          <div class="summary"><p>Returns the backend for the selected format</p>
-<p><span class="flag red">DEPRECATED</span>  Please just call the respective backends instead!</p></div>
-        
-      </li>
-    
-  </ul>
-
 
 
 
@@ -275,44 +275,6 @@
 
 
 
-
-  <h2>
-    <a id="class-method-detail" class="anchor" href="#class-method-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Class Method Detail
-  </h2>
-  
-    <div class="entry-detail" id="fetch_backend(fmt:Formats)-class-method">
-      <div class="signature">
-        
-        def self.<strong>fetch_backend</strong>(fmt : <a href="Lens/Formats.html">Formats</a>)
-
-        <a class="method-permalink" href="#fetch_backend(fmt:Formats)-class-method">#</a>
-      </div>
-      
-        <div class="doc">
-          
-          <p>Returns the backend for the selected format</p>
-<p>Please note that each backend has a different API for translations.</p>
-<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;lens&quot;</span>
-
-<span class="t">Lens</span>.fetch_backend(<span class="t">Lens</span><span class="t">::</span><span class="t">Formats</span><span class="t">::</span><span class="t">GettextPO</span>).<span class="k">as</span>(<span class="t">Gettext</span><span class="t">::</span><span class="t">POBackend</span>.<span class="k">class</span>)      <span class="c"># =&gt; Gettext::POBackend</span>
-<span class="t">Lens</span>.fetch_backend(<span class="t">Lens</span><span class="t">::</span><span class="t">Formats</span><span class="t">::</span><span class="t">GettextMO</span>).<span class="k">as</span>(<span class="t">Gettext</span><span class="t">::</span><span class="t">MOBackend</span>.<span class="k">class</span>)      <span class="c"># =&gt; Gettext::MOBackend</span>
-<span class="t">Lens</span>.fetch_backend(<span class="t">Lens</span><span class="t">::</span><span class="t">Formats</span><span class="t">::</span><span class="t">CrystalI18nYAML</span>).<span class="k">as</span>(<span class="t">CrystalI18n</span><span class="t">::</span><span class="t">I18n</span>.<span class="k">class</span>) <span class="c"># =&gt; CrystalI18n::I18n</span></code></pre>
-<p><span class="flag red">DEPRECATED</span>  Please just call the respective backends instead!</p>
-        </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/syeopite/lens/blob/6220a4ee/src/lens.cr#L33" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
 
 
 

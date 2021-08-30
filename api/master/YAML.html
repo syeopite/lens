@@ -10,13 +10,13 @@
   <meta name="crystal_docs.json_config_url" content="/cry-versions.json">
 
 
-    <link rel="canonical" href="https://syeopite.github.io/lens/api/latest/CrystalI18n.html">
+    <link rel="canonical" href="https://syeopite.github.io/lens/api/latest/YAML.html">
 
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/doc.js"></script>
 
   <meta name="repository-name" content="Lens">
-  <title>CrystalI18n - Lens v0.2.0-dev</title>
+  <title>YAML - Lens v0.2.0-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "";
   </script>
@@ -54,7 +54,7 @@
   <div class="types-list">
     <ul>
   
-  <li class="parent open current" data-id="Lens/CrystalI18n" data-name="crystali18n">
+  <li class="parent " data-id="Lens/CrystalI18n" data-name="crystali18n">
       <a href="CrystalI18n.html">CrystalI18n</a>
       
         <ul>
@@ -169,7 +169,7 @@
       
     </li>
   
-  <li class="parent " data-id="Lens/YAML" data-name="yaml">
+  <li class="parent open current" data-id="Lens/YAML" data-name="yaml">
       <a href="YAML.html">YAML</a>
       
         <ul>
@@ -193,7 +193,7 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">module</span> CrystalI18n
+  <span class="kind">module</span> YAML
 
 </h1>
 
@@ -210,7 +210,67 @@
     Overview
   </h2>
 
-  <p><span class="flag red">DEPRECATED</span>  CrystalI18n has been renamed to <code><a href="RubyI18n.html">RubyI18n</a></code></p>
+  <p>The YAML module provides serialization and deserialization of YAML
+version 1.1 to/from native Crystal data structures, with the additional
+independent types specified in http://yaml.org/type/</p>
+<h3><a id="parsing-with-parse-and-parse-all" class="anchor" href="#parsing-with-parse-and-parse-all">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Parsing with <code>#parse</code> and <code>#parse_all</code></h3>
+<p><code>YAML.parse</code> will return an <code><a href="YAML/Any.html">Any</a></code>, which is a convenient wrapper around all possible
+YAML core types, making it easy to traverse a complex YAML structure but requires
+some casts from time to time, mostly via some method invocations.</p>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;yaml&quot;</span>
+
+data <span class="o">=</span> <span class="t">YAML</span>.parse <span class="s">&lt;&lt;-END</span>
+<span class="s">         ---
+         foo:
+           bar:
+             baz:
+               - qux
+               - fox
+         END</span>
+data[<span class="s">&quot;foo&quot;</span>][<span class="s">&quot;bar&quot;</span>][<span class="s">&quot;baz&quot;</span>][<span class="n">1</span>].as_s <span class="c"># =&gt; &quot;fox&quot;</span></code></pre>
+<p><code>YAML.parse</code> can read from an <code>IO</code> directly (such as a file) which saves
+allocating a string:</p>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;yaml&quot;</span>
+
+yaml <span class="o">=</span> <span class="t">File</span>.open(<span class="s">&quot;path/to/file.yml&quot;</span>) <span class="k">do</span> <span class="o">|</span>file<span class="o">|</span>
+  <span class="t">YAML</span>.parse(file)
+<span class="k">end</span></code></pre>
+<h3><a id="parsing-with-from-yaml" class="anchor" href="#parsing-with-from-yaml">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Parsing with <code>from_yaml</code></h3>
+<p>A type <code>T</code> can be deserialized from YAML by invoking <code>T.from_yaml(string_or_io)</code>.
+For this to work, <code>T</code> must implement
+<code>new(ctx : YAML::PullParser, node : YAML::Nodes::Node)</code> and decode
+a value from the given <em>node</em>, using <em>ctx</em> to store and retrieve
+anchored values (see <code>YAML::PullParser</code> for an explanation of this).</p>
+<p>Crystal primitive types, <code>Time</code>, <code>Bytes</code> and <code>Union</code> implement
+this method. <code>YAML::Serializable</code> can be used to implement this method
+for user types.</p>
+<h3><a id="dumping-with-yaml.dump-or-to-yaml" class="anchor" href="#dumping-with-yaml.dump-or-to-yaml">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Dumping with <code>YAML.dump</code> or <code>#to_yaml</code></h3>
+<p><code>YAML.dump</code> generates the YAML representation for an object.
+An <code>IO</code> can be passed and it will be written there,
+otherwise it will be returned as a string. Similarly, <code>#to_yaml</code>
+(with or without an <code>IO</code>) on any object does the same.</p>
+<p>For this to work, the type given to <code>YAML.dump</code> must implement
+<code>to_yaml(builder : YAML::Nodes::Builder</code>).</p>
+<p>Crystal primitive types, <code>Time</code> and <code>Bytes</code> implement
+this method. <code>YAML::Serializable</code> can be used to implement this method
+for user types.</p>
+<pre><code class="language-crystal">yaml <span class="o">=</span> <span class="t">YAML</span>.dump({hello: <span class="s">&quot;world&quot;</span>})                               <span class="c"># =&gt; &quot;---\nhello: world\n&quot;</span>
+<span class="t">File</span>.open(<span class="s">&quot;foo.yml&quot;</span>, <span class="s">&quot;w&quot;</span>) { <span class="o">|</span>f<span class="o">|</span> <span class="t">YAML</span>.dump({hello: <span class="s">&quot;world&quot;</span>}, f) } <span class="c"># writes it to the file</span>
+<span class="c"># or:</span>
+yaml <span class="o">=</span> {hello: <span class="s">&quot;world&quot;</span>}.to_yaml                               <span class="c"># =&gt; &quot;---\nhello: world\n&quot;</span>
+<span class="t">File</span>.open(<span class="s">&quot;foo.yml&quot;</span>, <span class="s">&quot;w&quot;</span>) { <span class="o">|</span>f<span class="o">|</span> {hello: <span class="s">&quot;world&quot;</span>}.to_yaml(f) } <span class="c"># writes it to the file</span></code></pre>
 
 
 
@@ -235,8 +295,8 @@
   </h2>
   
     
-      <a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/crystal-i18n.cr#L5" target="_blank">
-        backend/crystal-i18n.cr
+      <a href="https://github.com/syeopite/lens/blob/daadb95e/src/helpers/overloads.cr#L2" target="_blank">
+        helpers/overloads.cr
       </a>
     
     <br/>

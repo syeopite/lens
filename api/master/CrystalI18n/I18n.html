@@ -124,18 +124,8 @@
       
     </li>
   
-  <li class="parent " data-id="Lens/Lens" data-name="lens">
+  <li class=" " data-id="Lens/Lens" data-name="lens">
       <a href="../Lens.html">Lens</a>
-      
-        <ul>
-  
-  <li class=" " data-id="Lens/Lens/Formats" data-name="lens::formats">
-      <a href="../Lens/Formats.html">Formats</a>
-      
-    </li>
-  
-</ul>
-
       
     </li>
   
@@ -156,6 +146,36 @@
   
   <li class=" " data-id="Lens/LensExceptions/ParseError" data-name="lensexceptions::parseerror">
       <a href="../LensExceptions/ParseError.html">ParseError</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="Lens/RubyI18n" data-name="rubyi18n">
+      <a href="../RubyI18n.html">RubyI18n</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/RubyI18n/Yaml" data-name="rubyi18n::yaml">
+      <a href="../RubyI18n/Yaml.html">Yaml</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="Lens/YAML" data-name="yaml">
+      <a href="../YAML.html">YAML</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/YAML/Any" data-name="yaml::any">
+      <a href="../YAML/Any.html">Any</a>
       
     </li>
   
@@ -192,7 +212,7 @@
     Overview
   </h2>
 
-  <p>Backend for the crystal-i18n format. This class contains methods to parse and interact with them</p>
+  <p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p>
 
 
 
@@ -217,8 +237,8 @@
   </h2>
   
     
-      <a href="https://github.com/syeopite/lens/blob/6220a4ee/src/backend/crystal-i18n/crystal-i18n.cr#L14" target="_blank">
-        backend/crystal-i18n/crystal-i18n.cr
+      <a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/crystal-i18n.cr#L7" target="_blank">
+        backend/crystal-i18n.cr
       </a>
     
     <br/>
@@ -241,7 +261,7 @@
       <li class="entry-summary">
         <a href="#new(locale_directory_path:String,reference_locale:String=%22en%22)-class-method" class="signature"><strong>.new</strong>(locale_directory_path : String, reference_locale : String = <span class="s">&quot;en&quot;</span>)</a>
         
-          <div class="summary"><p>Creates a new crystal-i18n instance that reads from the given locale directory path.</p></div>
+          <div class="summary"><p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p></div>
         
       </li>
     
@@ -264,49 +284,49 @@
       <li class="entry-summary">
         <a href="#create-instance-method" class="signature"><strong>#create</strong></a>
         
-          <div class="summary"><p>Returns self | Here for compatibility with <code><a href="../Gettext/MOBackend.html">Gettext::MOBackend</a></code> and <code><a href="../Gettext/POBackend.html">Gettext::POBackend</a></code></p></div>
+          <div class="summary"><p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#define_rule(locale:String,value:Int32%7CInt64%7CFloat64-%3EString)-instance-method" class="signature"><strong>#define_rule</strong>(locale : String, value : Int32 | Int64 | Float64 -> String)</a>
         
-          <div class="summary"><p>Set pluralization rules for the given locale.</p></div>
+          <div class="summary"><p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#localize(locale:String,time:Time,format:String)-instance-method" class="signature"><strong>#localize</strong>(locale : String, time : Time, format : String)</a>
         
-          <div class="summary"><p>Localize a date object with correspondence to a specific format</p></div>
+          <div class="summary"><p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#plural_rules:Hash(String,Int32%7CInt64%7CFloat64-%3EString)-instance-method" class="signature"><strong>#plural_rules</strong> : Hash(String, Int32 | Int64 | Float64 -> String)</a>
         
-          <div class="summary"><p>Returns all defined CLDR plural rules.</p></div>
+          <div class="summary"><p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#select(locale)-instance-method" class="signature"><strong>#select</strong>(locale)</a>
         
-          <div class="summary"><p>Selects a locale to use for translations</p></div>
+          <div class="summary"><p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#translate(key:String,count:Int%7CFloat?=nil,iter:Int?=nil,scope:Indexable(String)%7CString?=nil,**kwargs)-instance-method" class="signature"><strong>#translate</strong>(key : String, count : Int | Float? = <span class="n">nil</span>, iter : Int? = <span class="n">nil</span>, scope : Indexable(String) | String? = <span class="n">nil</span>, **kwargs)</a>
         
-          <div class="summary"><p>Fetches a translation from the <em>selected</em> locale with the given path (key).</p></div>
+          <div class="summary"><p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p></div>
         
       </li>
     
       <li class="entry-summary">
         <a href="#translate(locale:String,key:String,count:Int%7CFloat?=nil,iter:Int?=nil,scope:Indexable(String)%7CString?=nil,**kwargs)-instance-method" class="signature"><strong>#translate</strong>(locale : String, key : String, count : Int | Float? = <span class="n">nil</span>, iter : Int? = <span class="n">nil</span>, scope : Indexable(String) | String? = <span class="n">nil</span>, **kwargs)</a>
         
-          <div class="summary"><p>Fetches a translation from the <em>given</em> locale with the given path (key).</p></div>
+          <div class="summary"><p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p></div>
         
       </li>
     
@@ -360,14 +380,13 @@
       
         <div class="doc">
           
-          <p>Creates a new crystal-i18n instance that reads from the given locale directory path.</p>
-<pre><code class="language-crystal"><span class="t">CrystalI18n</span><span class="t">::</span><span class="t">I18n</span>.<span class="k">new</span>(<span class="s">&quot;locales&quot;</span>)</code></pre>
+          <p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/6220a4ee/src/backend/crystal-i18n/crystal-i18n.cr#L20" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/crystal-i18n.cr#L9" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -396,15 +415,13 @@
       
         <div class="doc">
           
-          <p>Returns self | Here for compatibility with <code><a href="../Gettext/MOBackend.html">Gettext::MOBackend</a></code> and <code><a href="../Gettext/POBackend.html">Gettext::POBackend</a></code></p>
-<p>catalogue = CrystalI18n::I18n.new(&quot;locales&quot;)
-catalogue == catalogue.create() # =&gt; true</p>
+          <p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/6220a4ee/src/backend/crystal-i18n/crystal-i18n.cr#L189" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/crystal-i18n.cr#L113" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -419,14 +436,13 @@ catalogue == catalogue.create() # =&gt; true</p>
       
         <div class="doc">
           
-          <p>Set pluralization rules for the given locale.
-See <code><a href="../CrystalI18n.html#define_rule(locale:String,value:Int32%7CInt64%7CFloat64-%3EString)-class-method">CrystalI18n.define_rule</a></code> for more information</p>
+          <p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/6220a4ee/src/backend/crystal-i18n/crystal-i18n.cr#L176" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/crystal-i18n.cr#L103" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -441,13 +457,13 @@ See <code><a href="../CrystalI18n.html#define_rule(locale:String,value:Int32%7CI
       
         <div class="doc">
           
-          <p>Localize a date object with correspondence to a specific format</p>
+          <p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/6220a4ee/src/backend/crystal-i18n/crystal-i18n.cr#L141" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/crystal-i18n.cr#L69" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -462,13 +478,13 @@ See <code><a href="../CrystalI18n.html#define_rule(locale:String,value:Int32%7CI
       
         <div class="doc">
           
-          <p>Returns all defined CLDR plural rules.</p>
+          <p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/6220a4ee/src/backend/crystal-i18n/crystal-i18n.cr#L181" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/crystal-i18n.cr#L108" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -483,27 +499,13 @@ See <code><a href="../CrystalI18n.html#define_rule(locale:String,value:Int32%7CI
       
         <div class="doc">
           
-          <p>Selects a locale to use for translations</p>
-<p>Raises a KeyError when the selected locale isn't found.</p>
-<p>If your application is monolingual then this along with <code>#translate(key, count, iter)</code> is your friend.
-However, if you need to switch languages on the fly then this method should be ignored.</p>
-<p>Instead, you should use the <code><a href="../CrystalI18n/I18n.html#translate(key:String,count:Int%7CFloat?=nil,iter:Int?=nil,scope:Indexable(String)%7CString?=nil,**kwargs)-instance-method">#translate(locale, key, count, iter)</a></code> overload, which allows for fetching
-messages from any locales without changing the state of the instance.</p>
-<pre><code class="language-crystal">catalogue <span class="o">=</span> <span class="t">CrystalI18n</span><span class="t">::</span><span class="t">I18n</span>.<span class="k">new</span>(<span class="s">&quot;locales&quot;</span>)
-
-catalogue.<span class="k">select</span>(<span class="s">&quot;en&quot;</span>)
-catalogue.translate(<span class="s">&quot;translation&quot;</span>) <span class="c"># =&gt; &quot;Translated Message&quot;</span>
-
-catalogue.<span class="k">select</span>(<span class="s">&quot;example&quot;</span>)
-catalogue.translate(<span class="s">&quot;translation&quot;</span>) <span class="c"># =&gt; &quot;Some message in another language&quot;</span>
-
-catalogue.<span class="k">select</span>(<span class="s">&quot;doesn&#39;t exist&quot;</span>) <span class="c"># raises KeyError</span></code></pre>
+          <p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/6220a4ee/src/backend/crystal-i18n/crystal-i18n.cr#L73" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/crystal-i18n.cr#L41" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -518,15 +520,13 @@ catalogue.<span class="k">select</span>(<span class="s">&quot;doesn&#39;t exist&
       
         <div class="doc">
           
-          <p>Fetches a translation from the <em>selected</em> locale with the given path (key).</p>
-<p>Functionality is the same as <code><a href="../CrystalI18n/I18n.html#translate(key:String,count:Int%7CFloat?=nil,iter:Int?=nil,scope:Indexable(String)%7CString?=nil,**kwargs)-instance-method">CrystalI18n::I18n.translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil)</a></code>
-but with the first argument removed</p>
+          <p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/6220a4ee/src/backend/crystal-i18n/crystal-i18n.cr#L85" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/crystal-i18n.cr#L50" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -541,33 +541,13 @@ but with the first argument removed</p>
       
         <div class="doc">
           
-          <p>Fetches a translation from the <em>given</em> locale with the given path (key).</p>
-<p>Basic usage is this:</p>
-<pre><code class="language-crystal">catalogue <span class="o">=</span> <span class="t">CrystalI18n</span><span class="t">::</span><span class="t">I18n</span>.<span class="k">new</span>(<span class="s">&quot;locales&quot;</span>)
-catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;translation&quot;</span>) <span class="c"># =&gt; &quot;Translated Message&quot;</span></code></pre>
-<p>This method can also translate plural-forms through the count argument.</p>
-<pre><code class="language-crystal">catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;possessions.fruits.apples&quot;</span>, <span class="n">50</span>) <span class="c"># =&gt; &quot;I have 50 apples&quot;</span>
-catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;possessions.fruits.apples&quot;</span>, <span class="n">1</span>)  <span class="c"># =&gt; &quot;I have 1 apple&quot;</span></code></pre>
-<p>Interpolation can be done through kwargs.</p>
-<pre><code class="language-crystal"><span class="c"># message is &#39;Hello there, my name is %{name} and I&#39;m a %{profession}`.</span>
-result <span class="o">=</span> catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;introduction.messages&quot;</span>, name: <span class="s">&quot;Steve&quot;</span>, profession: <span class="s">&quot;programmer&quot;</span>)
-result <span class="c"># =&gt; &quot;Hello there, my name is Steve and I&#39;m a programmer&quot;</span></code></pre>
-<p>If the value at the given path (key) turns out to be an array then you can pass in the iter argument
-to select a specific value at the given index</p>
-<pre><code class="language-crystal">catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;items.foods&quot;</span>, iter: <span class="n">2</span>) <span class="c"># =&gt; &quot;Hamburger&quot;</span></code></pre>
-<p>A scope, the area from which the key-path should traverse from, can also be specified. For instance, a scope of <code>possessions.fruits</code>
-would allow the key to just be <code>apples</code>.</p>
-<pre><code class="language-crystal">catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;possessions&quot;</span>, <span class="n">1</span>, scope : {<span class="s">&quot;possessions&quot;</span>, <span class="s">&quot;fruits&quot;</span>})  <span class="c"># =&gt; &quot;I have 1 apple&quot;</span>
-
-<span class="c"># Strings also work!</span>
-catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;possessions&quot;</span>, <span class="n">1</span>, scope : <span class="s">&quot;possessions.fruits&quot;</span>)  <span class="c"># =&gt; &quot;I have 1 apple&quot;</span></code></pre>
-<p>When a translation is not found <code><a href="../LensExceptions/MissingTranslation.html">LensExceptions::MissingTranslation</a></code> would be raised.</p>
+          <p><span class="flag red">DEPRECATED</span>  CrystalI18n::I18n has been renamed to <code><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></code></p>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/6220a4ee/src/backend/crystal-i18n/crystal-i18n.cr#L127" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/crystal-i18n.cr#L55" target="_blank">View source</a>]
         
       </div>
     </div>

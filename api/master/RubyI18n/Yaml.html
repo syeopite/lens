@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 1.1.1">
+<meta name="crystal_docs.project_version" content="v0.2.0-dev">
+<meta name="crystal_docs.project_name" content="Lens">
+
+  <meta name="crystal_docs.json_config_url" content="/cry-versions.json">
+
+
+    <link rel="canonical" href="https://syeopite.github.io/lens/api/latest/RubyI18n/Yaml.html">
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="Lens">
+  <title>RubyI18n::Yaml - Lens v0.2.0-dev</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          Lens
+        </a>
+      </h1>
+
+      <span class="project-version">
+        v0.2.0-dev
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent " data-id="Lens/CrystalI18n" data-name="crystali18n">
+      <a href="../CrystalI18n.html">CrystalI18n</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/CrystalI18n/I18n" data-name="crystali18n::i18n">
+      <a href="../CrystalI18n/I18n.html">I18n</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="Lens/Gettext" data-name="gettext">
+      <a href="../Gettext.html">Gettext</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/Gettext/Catalogue" data-name="gettext::catalogue">
+      <a href="../Gettext/Catalogue.html">Catalogue</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/Gettext/MOBackend" data-name="gettext::mobackend">
+      <a href="../Gettext/MOBackend.html">MOBackend</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Lens/Gettext/PluralForm" data-name="gettext::pluralform">
+      <a href="../Gettext/PluralForm.html">PluralForm</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/Gettext/PluralForm/Interpreter" data-name="gettext::pluralform::interpreter">
+      <a href="../Gettext/PluralForm/Interpreter.html">Interpreter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/Gettext/PluralForm/Parser" data-name="gettext::pluralform::parser">
+      <a href="../Gettext/PluralForm/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/Gettext/PluralForm/Scanner" data-name="gettext::pluralform::scanner">
+      <a href="../Gettext/PluralForm/Scanner.html">Scanner</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/Gettext/PluralForm/Token" data-name="gettext::pluralform::token">
+      <a href="../Gettext/PluralForm/Token.html">Token</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Lens/Gettext/POBackend" data-name="gettext::pobackend">
+      <a href="../Gettext/POBackend.html">POBackend</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Lens/Lens" data-name="lens">
+      <a href="../Lens.html">Lens</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Lens/LensExceptions" data-name="lensexceptions">
+      <a href="../LensExceptions.html">LensExceptions</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/LensExceptions/LexError" data-name="lensexceptions::lexerror">
+      <a href="../LensExceptions/LexError.html">LexError</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/LensExceptions/MissingTranslation" data-name="lensexceptions::missingtranslation">
+      <a href="../LensExceptions/MissingTranslation.html">MissingTranslation</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/LensExceptions/ParseError" data-name="lensexceptions::parseerror">
+      <a href="../LensExceptions/ParseError.html">ParseError</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent open current" data-id="Lens/RubyI18n" data-name="rubyi18n">
+      <a href="../RubyI18n.html">RubyI18n</a>
+      
+        <ul>
+  
+  <li class=" current" data-id="Lens/RubyI18n/Yaml" data-name="rubyi18n::yaml">
+      <a href="../RubyI18n/Yaml.html">Yaml</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="Lens/YAML" data-name="yaml">
+      <a href="../YAML.html">YAML</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/YAML/Any" data-name="yaml::any">
+      <a href="../YAML/Any.html">Any</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">class</span> RubyI18n::Yaml
+
+</h1>
+
+
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../RubyI18n/Yaml.html">RubyI18n::Yaml</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+
+
+
+
+  <h2>
+    <a id="overview" class="anchor" href="#overview">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Overview
+  </h2>
+
+  <p>Backend for the ruby-i18n format. This class contains methods to parse and interact with them</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/ruby-i18n-yaml/ruby-i18n-yaml.cr#L21" target="_blank">
+        backend/ruby-i18n-yaml/ruby-i18n-yaml.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+  <h2>
+    <a id="constructors" class="anchor" href="#constructors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructors
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#new(locale_directory_path:String,reference_locale:String=%22en%22)-class-method" class="signature"><strong>.new</strong>(locale_directory_path : String, reference_locale : String = <span class="s">&quot;en&quot;</span>)</a>
+        
+          <div class="summary"><p>Creates a new ruby-i18n YAML instance that reads from the given locale directory path.</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#create-instance-method" class="signature"><strong>#create</strong></a>
+        
+          <div class="summary"><p>Returns self | Here for compatibility with <code><a href="../Gettext/MOBackend.html">Gettext::MOBackend</a></code> and <code><a href="../Gettext/POBackend.html">Gettext::POBackend</a></code></p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#define_rule(locale:String,value:Int32%7CInt64%7CFloat64-%3EString)-instance-method" class="signature"><strong>#define_rule</strong>(locale : String, value : Int32 | Int64 | Float64 -> String)</a>
+        
+          <div class="summary"><p>Set pluralization rules for the given locale.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#localize(locale:String,time:Time,format:String)-instance-method" class="signature"><strong>#localize</strong>(locale : String, time : Time, format : String)</a>
+        
+          <div class="summary"><p>Localize a date object with correspondence to a specific format.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#localize(locale:String,number:Int32%7CInt64%7CFloat64,type:String=%22humanize%22,format:String?=nil)-instance-method" class="signature"><strong>#localize</strong>(locale : String, number : Int32 | Int64 | Float64, type : String = <span class="s">&quot;humanize&quot;</span>, format : String? = <span class="n">nil</span>)</a>
+        
+          <div class="summary"><p>Localize a number with correspondence to a specific type.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#plural_rules:Hash(String,Int32%7CInt64%7CFloat64-%3EString)-instance-method" class="signature"><strong>#plural_rules</strong> : Hash(String, Int32 | Int64 | Float64 -> String)</a>
+        
+          <div class="summary"><p>Returns all defined CLDR plural rules.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#select(locale)-instance-method" class="signature"><strong>#select</strong>(locale)</a>
+        
+          <div class="summary"><p>Selects a locale to use for translations</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#translate(key:String,count:Int%7CFloat?=nil,iter:Int?=nil,scope:Indexable(String)%7CString?=nil,**kwargs)-instance-method" class="signature"><strong>#translate</strong>(key : String, count : Int | Float? = <span class="n">nil</span>, iter : Int? = <span class="n">nil</span>, scope : Indexable(String) | String? = <span class="n">nil</span>, **kwargs)</a>
+        
+          <div class="summary"><p>Fetches a translation from the <em>selected</em> locale with the given path (key).</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#translate(locale:String,key:String,count:Int%7CFloat?=nil,iter:Int?=nil,scope:Indexable(String)%7CString?=nil,**kwargs)-instance-method" class="signature"><strong>#translate</strong>(locale : String, key : String, count : Int | Float? = <span class="n">nil</span>, iter : Int? = <span class="n">nil</span>, scope : Indexable(String) | String? = <span class="n">nil</span>, **kwargs)</a>
+        
+          <div class="summary"><p>Fetches a translation from the <em>given</em> locale with the given path (key).</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+<div class="methods-inherited">
+  
+    
+
+
+    
+
+
+    
+
+
+  
+    
+
+
+    
+
+
+    
+
+
+  
+</div>
+
+
+  <h2>
+    <a id="constructor-detail" class="anchor" href="#constructor-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Constructor Detail
+  </h2>
+  
+    <div class="entry-detail" id="new(locale_directory_path:String,reference_locale:String=&quot;en&quot;)-class-method">
+      <div class="signature">
+        
+        def self.<strong>new</strong>(locale_directory_path : String, reference_locale : String = <span class="s">&quot;en&quot;</span>)
+
+        <a class="method-permalink" href="#new(locale_directory_path:String,reference_locale:String=%22en%22)-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Creates a new ruby-i18n YAML instance that reads from the given locale directory path.</p>
+<pre><code class="language-crystal"><span class="t">RubyI18n</span><span class="t">::</span><span class="t">Yaml</span>.<span class="k">new</span>(<span class="s">&quot;locales&quot;</span>)</code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/ruby-i18n-yaml/ruby-i18n-yaml.cr#L27" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="create-instance-method">
+      <div class="signature">
+        
+        def <strong>create</strong>
+
+        <a class="method-permalink" href="#create-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns self | Here for compatibility with <code><a href="../Gettext/MOBackend.html">Gettext::MOBackend</a></code> and <code><a href="../Gettext/POBackend.html">Gettext::POBackend</a></code></p>
+<pre><code class="language-crystal">catalogue <span class="o">=</span> <span class="t">RubyI18n</span><span class="t">::</span><span class="t">Yaml</span>.<span class="k">new</span>(<span class="s">&quot;locales&quot;</span>)
+catalogue <span class="o">==</span> catalogue.create <span class="c"># =&gt; true</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/ruby-i18n-yaml/ruby-i18n-yaml.cr#L294" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="define_rule(locale:String,value:Int32|Int64|Float64-&gt;String)-instance-method">
+      <div class="signature">
+        
+        def <strong>define_rule</strong>(locale : String, value : Int32 | Int64 | Float64 -> String)
+
+        <a class="method-permalink" href="#define_rule(locale:String,value:Int32%7CInt64%7CFloat64-%3EString)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Set pluralization rules for the given locale.
+See <code><a href="../RubyI18n.html#define_rule(locale:String,value:Int32%7CInt64%7CFloat64-%3EString)-class-method">RubyI18n.define_rule</a></code> for more information</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/ruby-i18n-yaml/ruby-i18n-yaml.cr#L278" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="localize(locale:String,time:Time,format:String)-instance-method">
+      <div class="signature">
+        
+        def <strong>localize</strong>(locale : String, time : Time, format : String)
+
+        <a class="method-permalink" href="#localize(locale:String,time:Time,format:String)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Localize a date object with correspondence to a specific format.</p>
+<p>Raises <code><a href="../LensExceptions/MissingTranslation.html">LensExceptions::MissingTranslation</a></code> when the selected format doesn't exist.</p>
+<p><span class="flag purple">NOTE</span>  Default data is provided for the English locale.</p>
+<pre><code class="language-crystal">date <span class="o">=</span> <span class="t">Time</span>.unix(<span class="n">1629520612</span>)
+catalogue.localize(<span class="s">&quot;en&quot;</span>, date, format: <span class="s">&quot;default&quot;</span>) <span class="c"># =&gt; &quot;2021-08-21&quot;</span>
+catalogue.localize(<span class="s">&quot;en&quot;</span>, date, format: <span class="s">&quot;long&quot;</span>)    <span class="c"># =&gt; &quot;July 21, 2021&quot;</span>
+catalogue.localize(<span class="s">&quot;en&quot;</span>, date, format: <span class="s">&quot;short&quot;</span>)   <span class="c"># =&gt; &quot;Jul 21&quot;</span>
+
+<span class="c"># Raises when the given format isn&#39;t defined.</span>
+catalogue.localize(<span class="s">&quot;ru&quot;</span>, date, format: <span class="s">&quot;short&quot;</span>) <span class="c"># LensExceptions::MissingTranslation</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/ruby-i18n-yaml/ruby-i18n-yaml.cr#L163" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="localize(locale:String,number:Int32|Int64|Float64,type:String=&quot;humanize&quot;,format:String?=nil)-instance-method">
+      <div class="signature">
+        
+        def <strong>localize</strong>(locale : String, number : Int32 | Int64 | Float64, type : String = <span class="s">&quot;humanize&quot;</span>, format : String? = <span class="n">nil</span>)
+
+        <a class="method-permalink" href="#localize(locale:String,number:Int32%7CInt64%7CFloat64,type:String=%22humanize%22,format:String?=nil)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Localize a number with correspondence to a specific type.</p>
+<p>Raises <code><a href="../LensExceptions/MissingTranslation.html">LensExceptions::MissingTranslation</a></code> when attributes required for formatting are missing. <a href="">See usage docs for more information</a></p>
+<p>Currently, Lens supports 3 localization types for numbers, within the ruby-i18n YAML format.</p>
+<ul>
+<li>Humanize</li>
+<li>Percentage</li>
+<li>Currency</li>
+</ul>
+<p>Two different formats are available in humanize.</p>
+<ul>
+<li>Bytes
+<ul>
+<li>Provides humanized byte size. IE 100000 bytes -&gt; 1 MB</li>
+</ul>
+</li>
+<li>Decimal
+<ul>
+<li>Provides humanized positive numbers.</li>
+</ul>
+</li>
+</ul>
+<p><span class="flag purple">NOTE</span>  Default data is provided for the English locale.</p>
+<p>The most basic usage is humanizing a number. For instance:</p>
+<pre><code class="language-crystal">catalogue.localize(<span class="s">&quot;en&quot;</span>, <span class="n">1000</span>)           <span class="c"># =&gt; &quot;1 Thousand&quot;</span>
+catalogue.localize(<span class="s">&quot;en&quot;</span>, <span class="n">10_250_000_000</span>) <span class="c"># =&gt; &quot;10.2 Billion&quot;</span></code></pre>
+<p>Humanized bytes:</p>
+<pre><code class="language-crystal">catalogue.localize(<span class="s">&quot;en&quot;</span>, <span class="n">1000</span>, <span class="k">type</span>: <span class="s">&quot;humanize&quot;</span>, format: <span class="s">&quot;storage_units&quot;</span> <span class="c"># =&gt; &quot;1 KB&quot;</span>
+catalogue.localize(<span class="s">&quot;en&quot;</span>, <span class="n">1500</span>, <span class="k">type</span>: <span class="s">&quot;humanize&quot;</span>, format: <span class="s">&quot;storage&quot;</span>) <span class="c"># =&gt; &quot;1.5 KB&quot;</span>
+
+catalogue.localize(<span class="s">&quot;en&quot;</span>, <span class="n">100_000</span>, <span class="k">type</span>: <span class="s">&quot;humanize&quot;</span>, format: <span class="s">&quot;bytes&quot;</span>) <span class="c"># =&gt; &quot;100 KB&quot;</span>
+catalogue.localize(<span class="s">&quot;en&quot;</span>, <span class="n">120_000</span>, <span class="k">type</span>: <span class="s">&quot;humanize&quot;</span>, format: <span class="s">&quot;storage&quot;</span>) <span class="c"># =&gt; &quot;120 KB&quot;</span>
+catalogue.localize(<span class="s">&quot;en&quot;</span>, <span class="n">102_000</span>, <span class="k">type</span>: <span class="s">&quot;humanize&quot;</span>, format: <span class="s">&quot;storage&quot;</span>) <span class="c"># =&gt; &quot;102 KB&quot;</span></code></pre>
+<p>Localized percentages:</p>
+<pre><code class="language-crystal">catalogue.localize(<span class="s">&quot;en&quot;</span>, <span class="n">4.528</span>, <span class="k">type</span>: <span class="s">&quot;percentage&quot;</span>).should eq(<span class="s">&quot;4.53%&quot;</span>)</code></pre>
+<p>Localized currency:</p>
+<pre><code class="language-crystal">catalogue.localize(<span class="s">&quot;en&quot;</span>, <span class="n">4.528</span>, <span class="k">type</span>: <span class="s">&quot;currency&quot;</span>).should eq(<span class="s">&quot;$4.528&quot;</span>)</code></pre>
+<p><a href="https://example.com">For a more detailed explanation, please refer to the usage documentation.</a></p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/ruby-i18n-yaml/ruby-i18n-yaml.cr#L231" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="plural_rules:Hash(String,Int32|Int64|Float64-&gt;String)-instance-method">
+      <div class="signature">
+        
+        def <strong>plural_rules</strong> : Hash(String, Int32 | Int64 | Float64 -> String)
+
+        <a class="method-permalink" href="#plural_rules:Hash(String,Int32%7CInt64%7CFloat64-%3EString)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Returns all defined CLDR plural rules.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/ruby-i18n-yaml/ruby-i18n-yaml.cr#L283" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="select(locale)-instance-method">
+      <div class="signature">
+        
+        def <strong>select</strong>(locale)
+
+        <a class="method-permalink" href="#select(locale)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Selects a locale to use for translations</p>
+<p>Raises a KeyError when the selected locale isn't found.</p>
+<p>If your application is monolingual then this along with <code>#translate(key, count, iter)</code> is your friend.
+However, if you need to switch languages on the fly then this method should be ignored.</p>
+<p>Instead, you should use the <code><a href="../RubyI18n/Yaml.html#translate(key:String,count:Int%7CFloat?=nil,iter:Int?=nil,scope:Indexable(String)%7CString?=nil,**kwargs)-instance-method">#translate(locale, key, count, iter)</a></code> overload, which allows for fetching
+messages from any locales without changing the state of the instance.</p>
+<pre><code class="language-crystal">catalogue <span class="o">=</span> <span class="t">RubyI18n</span><span class="t">::</span><span class="t">Yaml</span>.<span class="k">new</span>(<span class="s">&quot;locales&quot;</span>)
+
+catalogue.<span class="k">select</span>(<span class="s">&quot;en&quot;</span>)
+catalogue.translate(<span class="s">&quot;translation&quot;</span>) <span class="c"># =&gt; &quot;Translated Message&quot;</span>
+
+catalogue.<span class="k">select</span>(<span class="s">&quot;example&quot;</span>)
+catalogue.translate(<span class="s">&quot;translation&quot;</span>) <span class="c"># =&gt; &quot;Some message in another language&quot;</span>
+
+catalogue.<span class="k">select</span>(<span class="s">&quot;doesn&#39;t exist&quot;</span>) <span class="c"># raises KeyError</span></code></pre>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/ruby-i18n-yaml/ruby-i18n-yaml.cr#L80" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="translate(key:String,count:Int|Float?=nil,iter:Int?=nil,scope:Indexable(String)|String?=nil,**kwargs)-instance-method">
+      <div class="signature">
+        
+        def <strong>translate</strong>(key : String, count : Int | Float? = <span class="n">nil</span>, iter : Int? = <span class="n">nil</span>, scope : Indexable(String) | String? = <span class="n">nil</span>, **kwargs)
+
+        <a class="method-permalink" href="#translate(key:String,count:Int%7CFloat?=nil,iter:Int?=nil,scope:Indexable(String)%7CString?=nil,**kwargs)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Fetches a translation from the <em>selected</em> locale with the given path (key).</p>
+<p>Functionality is the same as <code><a href="../RubyI18n/Yaml.html#translate(key:String,count:Int%7CFloat?=nil,iter:Int?=nil,scope:Indexable(String)%7CString?=nil,**kwargs)-instance-method">RubyI18n::Yaml.translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil)</a></code>
+but with the first argument removed</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/ruby-i18n-yaml/ruby-i18n-yaml.cr#L92" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="translate(locale:String,key:String,count:Int|Float?=nil,iter:Int?=nil,scope:Indexable(String)|String?=nil,**kwargs)-instance-method">
+      <div class="signature">
+        
+        def <strong>translate</strong>(locale : String, key : String, count : Int | Float? = <span class="n">nil</span>, iter : Int? = <span class="n">nil</span>, scope : Indexable(String) | String? = <span class="n">nil</span>, **kwargs)
+
+        <a class="method-permalink" href="#translate(locale:String,key:String,count:Int%7CFloat?=nil,iter:Int?=nil,scope:Indexable(String)%7CString?=nil,**kwargs)-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Fetches a translation from the <em>given</em> locale with the given path (key).</p>
+<p>Basic usage is this:</p>
+<pre><code class="language-crystal">catalogue <span class="o">=</span> <span class="t">RubyI18n</span><span class="t">::</span><span class="t">Yaml</span>.<span class="k">new</span>(<span class="s">&quot;locales&quot;</span>)
+catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;translation&quot;</span>) <span class="c"># =&gt; &quot;Translated Message&quot;</span></code></pre>
+<p>This method can also translate plural-forms through the count argument.</p>
+<pre><code class="language-crystal">catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;possessions.fruits.apples&quot;</span>, <span class="n">50</span>) <span class="c"># =&gt; &quot;I have 50 apples&quot;</span>
+catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;possessions.fruits.apples&quot;</span>, <span class="n">1</span>)  <span class="c"># =&gt; &quot;I have 1 apple&quot;</span></code></pre>
+<p>Interpolation can be done through kwargs.</p>
+<pre><code class="language-crystal"><span class="c"># message is &#39;Hello there, my name is %{name} and I&#39;m a %{profession}`.</span>
+result <span class="o">=</span> catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;introduction.messages&quot;</span>, name: <span class="s">&quot;Steve&quot;</span>, profession: <span class="s">&quot;programmer&quot;</span>)
+result <span class="c"># =&gt; &quot;Hello there, my name is Steve and I&#39;m a programmer&quot;</span></code></pre>
+<p>If the value at the given path (key) turns out to be an array then you can pass in the iter argument
+to select a specific value at the given index</p>
+<pre><code class="language-crystal">catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;items.foods&quot;</span>, iter: <span class="n">2</span>) <span class="c"># =&gt; &quot;Hamburger&quot;</span></code></pre>
+<p>A scope, the area from which the key-path should traverse from, can also be specified. For instance, a scope of <code>possessions.fruits</code>
+would allow the key to just be <code>apples</code>.</p>
+<pre><code class="language-crystal">catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;possessions&quot;</span>, <span class="n">1</span>, scope : {<span class="s">&quot;possessions&quot;</span>, <span class="s">&quot;fruits&quot;</span>})  <span class="c"># =&gt; &quot;I have 1 apple&quot;</span>
+
+<span class="c"># Strings also work!</span>
+catalogue.translate(<span class="s">&quot;en&quot;</span>, <span class="s">&quot;possessions&quot;</span>, <span class="n">1</span>, scope : <span class="s">&quot;possessions.fruits&quot;</span>)  <span class="c"># =&gt; &quot;I have 1 apple&quot;</span></code></pre>
+<p>When a translation is not found <code><a href="../LensExceptions/MissingTranslation.html">LensExceptions::MissingTranslation</a></code> would be raised.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/daadb95e/src/backend/ruby-i18n-yaml/ruby-i18n-yaml.cr#L134" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+</div>
+
+</body>
+</html>
