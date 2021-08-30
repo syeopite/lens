@@ -1,6 +1,6 @@
 {
   "versions": [
-    {"name": "nightly", "url": "/api/master/", "released": false},
-    {"name": "v0.1.0", "url": "/api/v0.1.0/"}
+    {"name": "nightly", "url": "/lens/api/master/", "released": false},
+    {"name": "v0.1.0", "url": "/lens/api/v0.1.0/"}
   ]
 }
