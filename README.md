@@ -15,6 +15,8 @@ Lens was conceived due to various problems within crystal's internationalization
 
 In short, Lens is packed full of features and designed for internationalization.
 
+**Note: Documentation below is for Master. [For the stable release version, please see v0.1.0.](https://github.com/syeopite/lens/tree/0.1.0)**
+
 
 ## Getting started 
 
@@ -25,6 +27,7 @@ Lens supports numerous different formats:
 | GNU Gettext PO | `Gettext::POBackend` | [Here](https://syeopite.github.io/lens/formats/gnu-gettext)
 | GNU Gettext MO | `Gettext::MOBackend` | [Here](https://syeopite.github.io/lens/formats/gnu-gettext)
 | Ruby YAML | `RubyI18n::Yaml` | [Here](https://syeopite.github.io/lens/formats/ruby-yaml)
+
 
 To get started, simply initialize a backend: 
 ```crystal
