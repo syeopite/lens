@@ -60,7 +60,7 @@ Note that each backend has a slightly different API.
    dependencies:
      lens:
        github: syeopite/lens
-       version: ~> v0.1.0
+       version: ~> 0.1.0
    ```
 
 2. Run `shards install`
