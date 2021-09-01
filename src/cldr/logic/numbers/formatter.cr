@@ -23,6 +23,7 @@ module CLDR::Numbers
       @integer_reader = Char::Reader.new(@integer.reverse)
     end
 
+    # Add X amount of integers to string from Int reader.
     def add_integer_to_str_x_times(str, times)
       times.times do
         char = @integer_reader.current_char
@@ -37,43 +38,73 @@ module CLDR::Numbers
       return true
     end
 
-    def handle_group(str)
-      # Handle primary grouping
-      if grouping = @metadata.primary_grouping
-        # If the formatted number is currently empty and there is a
-        # secondary grouping option then we'll only add the primary grouping
-        # once. Here.
-        if str.empty? && @metadata.secondary_grouping
-          add_integer_to_str_x_times(str, grouping)
-          str << Lang::GroupSymbol
-          return
-        elsif !@metadata.secondary_grouping
-          while (@integer.size - @integer_reader.pos) != 0
-            status = add_integer_to_str_x_times(str, grouping)
-            if !status
-              break
-            end
-
-            if (@integer.size - @integer_reader.pos) != 0
-              str << Lang::GroupSymbol
-            end
-          end
-        end
-      end
-
-      if grouping = @metadata.secondary_grouping
-        # We only use secondary grouping if the amount of
-        # integers left is greater than the grouping size
-        chars_left = (@integer.size - @integer_reader.pos)
-
-        while chars_left >= grouping
-          status = add_integer_to_str_x_times(str, grouping)
+    # Handles the grouping of the integer numbers.
+    #
+    # CLDR defines two grouping types.
+    # - Primary | Least significant digits
+    # - Secondary | Everything else
+    #
+    # For most languages, they are the same size. However, some such as Hindi have
+    # different values. Because of that, we need to handle both separately.
+    #
+    # Recall that during parsing, we did some special evaluations of these groups. Mainly:
+    #
+    # 1. When the primary_group is equal to the secondary_group, the secondary_group attribute
+    # would be unset within @metadata and remain as nil.
+    #
+    # 2. Each *valid* and different group within the number pattern, results in
+    # a different `Rules::Group`.
+    #
+    # This means that this method has three different paths:
+    #
+    # 1. To handle the case where there is only a primary group, as in all the integers
+    # are split into chunks of primary grouping sizes.
+    # 2. To handle the case of grouping the first  X (of primary grouping sizes) amount of
+    # numbers and **only** the first X amount.
+    # 3. Split leftover numbers into chunks of secondary grouping sizes.
+    #
+    private def handle_group(str)
+      if !@metadata.secondary_grouping && (grouping = @metadata.primary_grouping)
+        while (@integer.size - @integer_reader.pos) != 0
+          status = self.add_integer_to_str_x_times(str, grouping)
           if !status
             break
           end
 
-          if (@integer.size - @integer_reader.pos) != 0
+          # Check again that we're still able to group. If so, start the next portion with a marker.
+          if (@integer.size - @integer_reader.pos) >= grouping
             str << Lang::GroupSymbol
+          end
+        end
+      else
+        # When there is a secondary group, then there must be a primary group. And since
+        # the IO is empty, we know we're currently at the start (or right-most number in
+        # the integer portion of the number). This means that we can handle the single
+        # primary group we need to group successfully.
+        if str.empty? && (grouping = @metadata.primary_grouping)
+          self.add_integer_to_str_x_times(str, grouping)
+
+          # If there's still enough characters to *potentially* create a secondary group,
+          # then we'll go ahead and add the marker.
+          if (@integer.size - @integer_reader.pos) != 0
+            return str << Lang::GroupSymbol
+          end
+        else
+          grouping = @metadata.secondary_grouping.not_nil!
+          # We only group when the amount of characters left in the int reader is actually enough
+          # to group.
+          while (@integer.size - @integer_reader.pos) >= grouping
+            status = self.add_integer_to_str_x_times(str, grouping)
+            # It only returns false when we're at at the end of source.
+            # TODO refactor variable name to be more intuitive.
+            if !status
+              break
+            end
+
+            # Check again that we're still able to group. If so, start the next portion with a marker.
+            if (@integer.size - @integer_reader.pos) >= grouping
+              str << Lang::GroupSymbol
+            end
           end
         end
       end
