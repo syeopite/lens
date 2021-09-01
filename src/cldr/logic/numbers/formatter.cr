@@ -80,8 +80,14 @@ module CLDR::Numbers
     end
 
     def handle_fractional_group(str, rule : Rules::Fractional)
+      # When the amount of fraction digits exceeds what the pattern allows
+      # then we're do a half-even (ties_even) rounding to get it to the maximums
+      # size the rule allows.
       if @fractional.size > rule.size
         str << "0.#{@fractional}".to_f64.round(rule.size, mode: :ties_even).to_s[2..]
+
+        # When the amount of fractional digits is less than the amount required by the rules we'll go ahead
+        # and add trailing zeros
       elsif @fractional.size < rule.size && rule.trailing_zeros
         str << (@fractional + "0" * (rule.size - @fractional.size))
       else
