@@ -39,7 +39,7 @@ describe Gettext do
 
         hashed_results.should eq Set{
           "08d2a781e9fd6599e25807a5b0b501ffced1a780f27211024d3c9d2b9f488d94",
-          "d9374ebfa251b29be3e26555b04ffd928ca41e7e838889955523dad6e40e03d8",
+          "d4772afc644807836bdd4aa74f5cd5c8aa23cfff7af4edbb2cba2dc921d527ae",
         }
       end
     end
@@ -79,7 +79,7 @@ describe Gettext do
         # example specs has a different hash than the PO variant.
         hashed_results.should eq Set{
           "fa315f56a0d2a6105f345c76f470374d50f790ea864472a28da8d96587bd6b60",
-          "d9374ebfa251b29be3e26555b04ffd928ca41e7e838889955523dad6e40e03d8",
+          "d4772afc644807836bdd4aa74f5cd5c8aa23cfff7af4edbb2cba2dc921d527ae",
         }
       end
     end
@@ -100,8 +100,11 @@ describe Gettext do
           end
 
           it "Can handle plurals" do
-            catalogue["en_US"].ngettext("I have %{count} apple", "I have %{count} apples", 0).should eq("Translated: I have %{count} apples")
-            catalogue["en_US"].ngettext("I have %{count} apple", "I have %{count} apples", 1).should eq("Translated: I have %{count} apple")
+            catalogue["en_US"].ngettext("I have %d apple", "I have %d apples", 0).should eq("Translated: I have %d apples")
+            catalogue["en_US"].ngettext("I have %d apple", "I have %d apples", 1).should eq("Translated: I have %d apple")
+
+            (catalogue["en_US"].ngettext("I have %d apple", "I have %d apples", 0) % 0).should eq("Translated: I have 0 apples")
+            (catalogue["en_US"].ngettext("I have %d apple", "I have %d apples", 1) % 1).should eq("Translated: I have 1 apple")
           end
 
           it "Has correct plural forms" do
