@@ -5,12 +5,41 @@ describe Gettext do
   describe Gettext::POBackend do
     describe "#parse" do
       it "#parse" do
+        # The order at which indivusuial files are opened can be different
         hashed_results = Set(String).new(2)
-        po_backend.parse.values.each { |catalogues| hashed_results << Digest::SHA256.hexdigest(catalogues.contents.to_s) }
+
+        # In order to make results consistent across different OSs for testing, we'll go ahead and sort
+        # the translations by lexicographical order. However, in order to do that we'll need to convert the
+        # catalogue contents into an array first.
+        po_backend.parse.values.each do |catalogues|
+          catalogue_contents_as_array = [] of Tuple(String, Hash(Int8, String))
+
+          catalogues.contents.each { |k, v| catalogue_contents_as_array << {k, v} }
+          catalogue_contents_as_array.sort! { |a, b| a[0] <=> b[0] }
+
+          sorted_catalogue = {} of String => Hash(Int8, String)
+
+          # Before we can revert back to an Hash, the translation hashes also needs to be sorted.
+          # The code for that is much like our sorting code above.
+          catalogue_contents_as_array.each do |translation_block|
+            translation_hashes_as_array = [] of Tuple(Int8, String)
+            sorted_translation_hash = {} of Int8 => String
+
+            translation_block[1].each { |k, v| translation_hashes_as_array << {k, v} }
+            translation_hashes_as_array.sort! { |a, b| a[0] <=> b[0] }
+            translation_hashes_as_array.each do |plural, string|
+              sorted_translation_hash[plural] = string
+            end
+
+            sorted_catalogue[translation_block[0]] = sorted_translation_hash
+          end
+
+          hashed_results << Digest::SHA256.hexdigest(sorted_catalogue.to_s)
+        end
 
         hashed_results.should eq Set{
-          "14a1b3c08a51ff9eaf1596d846a46412664d682f658f178cb6f13ace13b4f4cc",
-          "47b914b5b0b8506ecd09ad27903e9e10eedd268743b27b5c9f22a30a7b9af938",
+          "08d2a781e9fd6599e25807a5b0b501ffced1a780f27211024d3c9d2b9f488d94",
+          "d9374ebfa251b29be3e26555b04ffd928ca41e7e838889955523dad6e40e03d8",
         }
       end
     end
@@ -20,12 +49,37 @@ describe Gettext do
     describe "#parse" do
       it "#parse" do
         hashed_results = Set(String).new(2)
-        mo_backend.parse.values.each { |catalogues| hashed_results << Digest::SHA256.hexdigest(catalogues.contents.to_s) }
 
-        # Order of strings is slightly different but should have no impact on the final result
+        # Refer to the corresponding #parse spec in the `Gettext::POBackend` above for more information.
+        mo_backend.parse.values.each do |catalogues|
+          catalogue_contents_as_array = [] of Tuple(String, Hash(Int8, String))
+
+          catalogues.contents.each { |k, v| catalogue_contents_as_array << {k, v} }
+          catalogue_contents_as_array.sort! { |a, b| a[0] <=> b[0] }
+
+          sorted_catalogue = {} of String => Hash(Int8, String)
+
+          catalogue_contents_as_array.each do |translation_block|
+            translation_hashes_as_array = [] of Tuple(Int8, String)
+            sorted_translation_hash = {} of Int8 => String
+
+            translation_block[1].each { |k, v| translation_hashes_as_array << {k, v} }
+            translation_hashes_as_array.sort! { |a, b| a[0] <=> b[0] }
+            translation_hashes_as_array.each do |plural, string|
+              sorted_translation_hash[plural] = string
+            end
+
+            sorted_catalogue[translation_block[0]] = sorted_translation_hash
+          end
+
+          hashed_results << Digest::SHA256.hexdigest(sorted_catalogue.to_s)
+        end
+
+        # MO files ignores translation with empty msgstrs. As such, the translation for arabic on our
+        # example specs has a different hash than the PO variant.
         hashed_results.should eq Set{
-          "07079054d4b59c25a46747925ccfe45fbccf65c01d80c86e1b5f014491b92d29",
-          "5cdf81a98852f00fedb22cf2bcb507455a63466ab5db4eaaabd61a810ef7645b",
+          "fa315f56a0d2a6105f345c76f470374d50f790ea864472a28da8d96587bd6b60",
+          "d9374ebfa251b29be3e26555b04ffd928ca41e7e838889955523dad6e40e03d8",
         }
       end
     end
