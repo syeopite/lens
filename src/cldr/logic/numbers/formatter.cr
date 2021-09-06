@@ -9,6 +9,20 @@ module CLDR::Numbers
     @integer : String
     @fractional : String
 
+    def initialize(@instructions, @fractional_instructions, @metadata, number : String)
+      # The formatted number shall be constructed in reverse
+      numerical_components = number.split "."
+
+      case numerical_components.size
+      when 2 then @integer, @fractional = numerical_components
+      when 1 then @integer, @fractional = numerical_components[0], ""
+      else        raise LensExceptions::ParseError.new("Looks like I cannot parse the number: '#{number}'. " \
+                                                "Maybe there's an extra decimal point?")
+      end
+
+      @integer_reader = Char::Reader.new(@integer.reverse)
+    end
+
     def initialize(@instructions, @fractional_instructions, @metadata, number : Float64)
       # The formatted number shall be constructed in reverse
       @integer, @fractional = number.to_s.split "."
