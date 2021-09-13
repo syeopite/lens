@@ -323,11 +323,16 @@ module RubyI18n
              else                        keys
              end
 
-      if keys.size > 1
-        translation = @_source[locale].dig(keys[0], keys[1..])
-      else
-        translation = @_source[locale][keys[0]]
+      latch : YAML::Any? = nil
+      keys.each_with_index do |k, i|
+        if i == 0
+          latch = @_source[locale][k]
+        else
+          latch = latch.not_nil![k]
+        end
       end
+
+      translation = latch.not_nil!
 
       if translation.as_a?
         if iter
