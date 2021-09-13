@@ -11,11 +11,11 @@ Please note that this preview-list only contains what's currently implemented in
 ### CLDR (new)
 - Add methods to compute number properties (float-aware) for better plural-form handling
 - Add CLDR data for en
-- Add ability to format numbers through patterns. See #3
+- Add ability to format numbers through patterns. See [#3](https://github.com/syeopite/lens/issues/3)
 
 ### Gettext
 - **(performance)** Optimize parsing of Gettext (PO) and C plural-form expressions
-- Fix merging of Gettext files with the same name. See ccd9d7d4
+- Fix merging of Gettext files with the same name. See [`ccd9d7d4`](https://github.com/syeopite/lens/commit/ccd9d7d40e847b1c6b3f2370267d336e18bdd6c3)
 
 ### RubyI18n
 - **(BREAKING)** Rename CrystalI18n to RubyI18n
