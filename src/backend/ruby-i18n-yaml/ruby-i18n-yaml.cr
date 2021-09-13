@@ -132,7 +132,7 @@ module RubyI18n
     # When a translation is not found `LensExceptions::MissingTranslation` would be raised.
     #
     def translate(locale : String, key : String, count : Int | Float? = nil, iter : Int? = nil, scope : (Indexable(String) | String)? = nil, **kwargs)
-      self.internal_translate(locale, key, count, iter, **kwargs)
+      self.internal_translate(locale, key, count, iter, scope, **kwargs)
     rescue ex : KeyError | Exception
       if ex.is_a? KeyError
         raise LensExceptions::MissingTranslation.new("Translation in the path '#{key}' does not exist for #{locale} locale")
