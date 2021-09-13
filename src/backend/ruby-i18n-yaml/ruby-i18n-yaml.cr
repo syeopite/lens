@@ -28,7 +28,6 @@ module RubyI18n
       @_source = {} of String => Hash(String, YAML::Any)
 
       Dir.glob("#{locale_directory_path}/**/*.yml") do |yaml_file|
-        name = File.basename(yaml_file, ".yml")
         begin
           contents = YAML.parse(File.read(yaml_file)).as_h
         rescue YAML::ParseException
@@ -45,10 +44,12 @@ module RubyI18n
           end
         end
 
-        if @_source[name]?
-          @_source[name].merge!(stringify_keys(contents))
-        else
-          @_source[name] = stringify_keys(contents)
+        contents.each do |language_key, translation|
+          if @_source[language_key.as_s]?
+            @_source[language_key.as_s].merge!(stringify_keys(translation.as_h))
+          else
+            @_source[language_key.as_s] = stringify_keys(translation.as_h)
+          end
         end
       end
 

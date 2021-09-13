@@ -1,12 +1,13 @@
-# Taken from https://github.com/TechMagister/i18n.cr/blob/master/spec/locales/ru.yml
-thanks: спасибо
-new_message:
+ru:
+  # Taken from https://github.com/TechMagister/i18n.cr/blob/master/spec/locales/ru.yml
+  thanks: спасибо
+  new_message:
     "one"    : 'у вас %{count} сообщение'
     "few"    : 'у вас %{count} сообщения'
     "many"   : 'у вас %{count} сообщений'
     "other"  : 'у вас %{count} сообщений'
-messages:
-    with_2_arguments: "%{attr} и %{attr2}"
-    plural:
-        one: "%{count} %{attr}"
-        other: "%{count} %{attr}s"
+  messages:
+      with_2_arguments: "%{attr} и %{attr2}"
+      plural:
+          one: "%{count} %{attr}"
+          other: "%{count} %{attr}s"

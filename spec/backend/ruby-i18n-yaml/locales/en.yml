@@ -1,118 +1,119 @@
-akey: "Hello"
-nested_key:
-    first: "first-message-in-nest"
-    second: "second-message-in-nest"
-    third: "third-message-in-nest"
-    forth: 
-      forth-first: "forth-first-message-in-nest"
-      forth-second: "forth-second-message-in-nest"
-      forth-third: 
-        forth-third-first: "forth-third-first-message-in-nest"
-        forth-third-second: "forth-third-second-message-in-nest"
-        forth-third-third: "forth-third-forth-message-in-nest"
-        forth-third-forth: "forth-third-forth-message-in-nest"
-        forth-third-fifth:
-          4341: 4341-message-in-nest
-          4342: 4342-message-in-nest
-          4343: 4343-message-in-nest
-          4344: 4344-message-in-nest
-        forth-third-sixth-plural-test:
-          one: "%{count} %{attr}"
-          other: "%{count} %{attr}s"
+en:
+  akey: "Hello"
+  nested_key:
+      first: "first-message-in-nest"
+      second: "second-message-in-nest"
+      third: "third-message-in-nest"
+      forth: 
+        forth-first: "forth-first-message-in-nest"
+        forth-second: "forth-second-message-in-nest"
+        forth-third: 
+          forth-third-first: "forth-third-first-message-in-nest"
+          forth-third-second: "forth-third-second-message-in-nest"
+          forth-third-third: "forth-third-forth-message-in-nest"
+          forth-third-forth: "forth-third-forth-message-in-nest"
+          forth-third-fifth:
+            4341: 4341-message-in-nest
+            4342: 4342-message-in-nest
+            4343: 4343-message-in-nest
+            4344: 4344-message-in-nest
+          forth-third-sixth-plural-test:
+            one: "%{count} %{attr}"
+            other: "%{count} %{attr}s"
 
-possessions:
-  fruits:
-    apples:
-      one: "I have %{count} apple"
-      other: "I have %{count} apples"
-    unknown:
-      one: "I have %{count} %{fruit}"
-      other: "I have %{count} %{fruit}s"
+  possessions:
+    fruits:
+      apples:
+        one: "I have %{count} apple"
+        other: "I have %{count} apples"
+      unknown:
+        one: "I have %{count} %{fruit}"
+        other: "I have %{count} %{fruit}s"
 
-interpolation_stress_testing:
-  message: "%{one}, %{two}, %{three}, %{four}, %{five}, %{six}, %{seven}, %{eight}, %{nine}, %{ten}, %{one}, %{two}, %{three}, %{four}, %{five}, %{six}, %{seven}, %{eight}, %{nine}, %{ten}"
+  interpolation_stress_testing:
+    message: "%{one}, %{two}, %{three}, %{four}, %{five}, %{six}, %{seven}, %{eight}, %{nine}, %{ten}, %{one}, %{two}, %{three}, %{four}, %{five}, %{six}, %{seven}, %{eight}, %{nine}, %{ten}"
 
-new_messages:
-  "one": "you have %{count} message"
-  "other": "you have %{count} messages"
+  new_messages:
+    "one": "you have %{count} message"
+    "other": "you have %{count} messages"
 
-items:
-  foods: ["Cake", "Pie", "Hamburger", "French Fries"]
+  items:
+    foods: ["Cake", "Pie", "Hamburger", "French Fries"]
 
-date:
-  formats:
-    # https://github.com/rails/rails/blob/main/activesupport/lib/active_support/locale/en.yml
-    # Use a subset of the strftime parameters for formats.
-    default: "%Y-%m-%d"
-    short: "%b %d"
-    long: "%B %d, %Y"
+  date:
+    formats:
+      # https://github.com/rails/rails/blob/main/activesupport/lib/active_support/locale/en.yml
+      # Use a subset of the strftime parameters for formats.
+      default: "%Y-%m-%d"
+      short: "%b %d"
+      long: "%B %d, %Y"
 
-    day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
-    abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
+      day_names: [Sunday, Monday, Tuesday, Wednesday, Thursday, Friday, Saturday]
+      abbr_day_names: [Sun, Mon, Tue, Wed, Thu, Fri, Sat]
 
-    # Don't forget the nil at the beginning; there's no such thing as a 0th month
-    month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
-    abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
+      # Don't forget the nil at the beginning; there's no such thing as a 0th month
+      month_names: [~, January, February, March, April, May, June, July, August, September, October, November, December]
+      abbr_month_names: [~, Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec]
 
-# https://github.com/rails/rails/blob/main/activesupport/lib/active_support/locale/en.yml
-number:
-  format:
-    # Sets the separator between the units, for more precision (e.g. 1.0 / 2.0 == 0.5)
-    separator: "."
-    # Delimits thousands (e.g. 1,000,000 is a million) (always in groups of three)
-    delimiter: ","
-    # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
-    precision: 3
-    round_mode: default
-    # If set to true, precision will mean the number of significant digits instead
-    # of the number of decimal digits (1234 with precision 2 becomes 1200, 1.23543 becomes 1.2)
-    significant: false
-    # If set, the zeros after the decimal separator will always be stripped (e.g.: 1.200 will be 1.2)
-    strip_insignificant_zeros: false
-
-  percentage:
+  # https://github.com/rails/rails/blob/main/activesupport/lib/active_support/locale/en.yml
+  number:
     format:
-      delimiter: ""
-      precision: 2
-      strip_insignificant_zeros: true
-      format: "%n%"
-
-  human:
-    format:
-      # These six are to override number.format and are optional
-      # separator:
-      delimiter: ""
+      # Sets the separator between the units, for more precision (e.g. 1.0 / 2.0 == 0.5)
+      separator: "."
+      # Delimits thousands (e.g. 1,000,000 is a million) (always in groups of three)
+      delimiter: ","
+      # Number of decimals, behind the separator (the number 1 with a precision of 2 gives: 1.00)
       precision: 3
-      # round_mode:
-      significant: true
-      strip_insignificant_zeros: true
-    # Used in number_to_human_size()
-    storage_units:
-      # Storage units output formatting.
-      # %u is the storage unit, %n is the number (default: 2 MB)
-      format: "%n %u"
-      units:
-        byte:
-          one:   "Byte"
-          other: "Bytes"
-        kb: "KB"
-        mb: "MB"
-        gb: "GB"
-        tb: "TB"
-        pb: "PB"
-        eb: "EB"
+      round_mode: default
+      # If set to true, precision will mean the number of significant digits instead
+      # of the number of decimal digits (1234 with precision 2 becomes 1200, 1.23543 becomes 1.2)
+      significant: false
+      # If set, the zeros after the decimal separator will always be stripped (e.g.: 1.200 will be 1.2)
+      strip_insignificant_zeros: false
 
-    decimal_units:
-      format: "%n %u"
+    percentage:
+      format:
+        delimiter: ""
+        precision: 2
+        strip_insignificant_zeros: true
+        format: "%n%"
 
-      units:
-        unit: ""
-        ten:
-          one: Ten
-          other: Tens
-        hundred: Hundred
-        thousand: Thousand
-        million: Million
-        billion: Billion
-        trillion: Trillion
-        quadrillion: Quadrillion
+    human:
+      format:
+        # These six are to override number.format and are optional
+        # separator:
+        delimiter: ""
+        precision: 3
+        # round_mode:
+        significant: true
+        strip_insignificant_zeros: true
+      # Used in number_to_human_size()
+      storage_units:
+        # Storage units output formatting.
+        # %u is the storage unit, %n is the number (default: 2 MB)
+        format: "%n %u"
+        units:
+          byte:
+            one:   "Byte"
+            other: "Bytes"
+          kb: "KB"
+          mb: "MB"
+          gb: "GB"
+          tb: "TB"
+          pb: "PB"
+          eb: "EB"
+
+      decimal_units:
+        format: "%n %u"
+
+        units:
+          unit: ""
+          ten:
+            one: Ten
+            other: Tens
+          hundred: Hundred
+          thousand: Thousand
+          million: Million
+          billion: Billion
+          trillion: Trillion
+          quadrillion: Quadrillion

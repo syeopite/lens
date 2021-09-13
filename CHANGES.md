@@ -20,6 +20,19 @@ Please note that this preview-list only contains what's currently implemented in
 ### RubyI18n
 - **(BREAKING)** Rename CrystalI18n to RubyI18n
 - **(BREAKING)** Rename CrystalI18n::I18n to RubyI18n::Yaml 
+- **(BREAKING)** Get locale information from top-level key instead of file name. 
+  - This means that translations should now be in this format:
+  ```yaml
+  # locales/test.yml
+  en:
+    message1: "translation"
+    message2: "translation"
+
+  # locales/other.yml
+  fr:
+    message1: "translation in french"
+    message2: "translation in french"
+  ```
 - Add support for specifying a scope for fetching translations 
 - Add ability to localize:
     - Numbers
