@@ -5,6 +5,13 @@ on:
     branches:
       - "master"
       - "docs"
+    paths-ignore:
+      - "README.md"
+      - "CHANGES.md"
+      - LICENCE
+      - .git*
+      - .editorconfig
+
   workflow_dispatch:
 
 jobs:

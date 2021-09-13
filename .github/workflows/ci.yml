@@ -14,7 +14,6 @@ on:
       - LICENCE
       - .git*
       - .editorconfig
-      - .github/ISSUE_TEMPLATE/*
 
 jobs:
   build:
