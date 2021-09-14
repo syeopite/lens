@@ -44,6 +44,7 @@ Please note that this preview-list only contains what's currently implemented in
   Default data is provided for the en locale. Expect this to increase in the next version!
 - Fix Moldovan's `few` plural-form.
 - (**performance**) Improve translation look-up speeds by ~2x. 
+- Add support for YAML files with `.yaml` extension.
   
 
 ### General

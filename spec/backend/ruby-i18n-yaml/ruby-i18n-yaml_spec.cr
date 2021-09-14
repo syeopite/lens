@@ -24,6 +24,11 @@ describe "ruby-i18n-yaml" do
       i18n_instance.translate("en", "possessions.fruits.unknown", 0, fruit: "pear").should eq("I have 0 pears")
       i18n_instance.translate("en", "possessions.fruits.unknown", 1, fruit: "pear").should eq("I have 1 pear")
     end
+
+    it "handles .yaml files" do
+      # Stored other other.yaml
+      i18n_instance.translate("en", "yet_another_test_translation").should eq("test")
+    end
   end
 
   describe "complex usage" do

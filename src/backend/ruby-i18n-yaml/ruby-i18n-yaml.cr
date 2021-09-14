@@ -27,7 +27,7 @@ module RubyI18n
     def initialize(locale_directory_path : String, reference_locale : String = "en")
       @_source = {} of String => Hash(String, YAML::Any)
 
-      Dir.glob("#{locale_directory_path}/**/*.yml") do |yaml_file|
+      Dir.glob("#{locale_directory_path}/**/*.yml", "#{locale_directory_path}/**/*.yaml") do |yaml_file|
         begin
           contents = YAML.parse(File.read(yaml_file)).as_h
         rescue YAML::ParseException
