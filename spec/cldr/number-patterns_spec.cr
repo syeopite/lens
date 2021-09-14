@@ -102,17 +102,17 @@ describe CLDR::Numbers::PatternParser do
     Digest::SHA256.hexdigest(fractional_rules.to_s).should(eq("9366e1ee0e2281a95b4acf90472f2c9c619a49310c6974adaf62f989d5172bd9"))
   end
 
-  it "Can parse pattern '*x #,##,@@@##0.###'" do
-    rules, fractional_rules, metadata = CLDR::Numbers::PatternParser.new("*x #,##,@@@##0.###").parse
+  # it "Can parse pattern '*x #,##,@@@##0.###'" do
+  #   rules, fractional_rules, metadata = CLDR::Numbers::PatternParser.new("*x #,##,@@@##0.###").parse
 
-    metadata.secondary_grouping.should(eq(2))
-    metadata.primary_grouping.should(eq(3))
-    metadata.use_padding.should(eq(true))
-    metadata.padding_character.should(eq("x"))
-    metadata.maximum_significant_figures.should(eq(6))
-    metadata.minimum_significant_figures.should(eq(3))
+  #   metadata.secondary_grouping.should(eq(2))
+  #   metadata.primary_grouping.should(eq(3))
+  #   metadata.use_padding.should(eq(true))
+  #   metadata.padding_character.should(eq("x"))
+  #   metadata.maximum_significant_figures.should(eq(6))
+  #   metadata.minimum_significant_figures.should(eq(3))
 
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("0a8333eb12ab400404d2ebc60f6a07b3fbb0aa18d745f303c7676d707e7bd892"))
-    Digest::SHA256.hexdigest(fractional_rules.to_s).should(eq("9366e1ee0e2281a95b4acf90472f2c9c619a49310c6974adaf62f989d5172bd9"))
-  end
+  #   Digest::SHA256.hexdigest(rules.to_s).should(eq("0a8333eb12ab400404d2ebc60f6a07b3fbb0aa18d745f303c7676d707e7bd892"))
+  #   Digest::SHA256.hexdigest(fractional_rules.to_s).should(eq("9366e1ee0e2281a95b4acf90472f2c9c619a49310c6974adaf62f989d5172bd9"))
+  # end
 end
