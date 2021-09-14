@@ -41,7 +41,6 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-
       - name: Add git user for mike
         run: |
           git config --global user.name GitHub Actions
@@ -49,6 +48,9 @@ jobs:
 
       - name: "Deploy documentation for nightly"
         run: mike deploy v0.2.0 nightly master --push
+
+      # TODO add some way of skipping this step when it has already been done
+      # in previous commits. 
 
       - name: "Label development version with -dev suffix"
         run: mike retitle v0.2.0 v0.2.0-dev --push
@@ -140,4 +142,5 @@ jobs:
           folder: api
           target-folder: api/master
           clean: false
+          commit-message: "Update API documentation for nightly"
       
