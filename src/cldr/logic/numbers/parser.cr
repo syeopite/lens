@@ -1,6 +1,7 @@
 require "./lexer"
 require "./tokens"
 require "./rules"
+require "../../../helpers/base/parser"
 
 module CLDR::Numbers
   # EXPERIMENTAL
