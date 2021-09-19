@@ -2,7 +2,7 @@
 
 
 ## Next
-##### ETA: 2021-09-25
+##### ETA: 2021-10-10
 
 A preview of what's coming in the next version of Lens! 
 
