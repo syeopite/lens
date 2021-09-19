@@ -1,5 +1,6 @@
-require "../../../src/backend/gettext/**"
 require "spec"
+require "digest/sha256"
+require "../../../src/backend/gettext/**"
 
 describe Gettext do
   po_backend = Gettext::POBackend.new("spec/backend/gettext/locales")
