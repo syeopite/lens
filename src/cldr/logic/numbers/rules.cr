@@ -10,15 +10,22 @@ module CLDR::Numbers
       end
     end
 
-    {% for name in %w(Integer Fractional) %}
-      struct {{name.id}} < Rules
-        getter leading_zeros
-        getter trailing_zeros
+    struct Integer < Rules
+      getter leading_zeros
+      getter trailing_zeros
 
-        def initialize(@leading_zeros : Bool, @trailing_zeros : Bool)
-        end
+      def initialize(@leading_zeros : Bool, @trailing_zeros : Bool)
       end
-    {% end %}
+    end
+
+    struct Fractional < Rules
+      getter leading_zeros
+      getter trailing_zeros
+      getter size
+
+      def initialize(@leading_zeros : Bool, @trailing_zeros : Bool, @size : Int32)
+      end
+    end
   end
 
   private class Metadata
