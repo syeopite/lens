@@ -1,3 +1,6 @@
+require "../../../src/backend/gettext/**"
+require "spec"
+
 describe Gettext do
   po_backend = Gettext::POBackend.new("spec/backend/gettext/locales")
   mo_backend = Gettext::MOBackend.new("spec/backend/gettext/locales")
