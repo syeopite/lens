@@ -28,91 +28,159 @@ end
 
 describe CLDR::Numbers::PatternParser do
   it "Can parse pattern: '#,##0.##'" do
-    rules, fractional_rules, metadata = CLDR::Numbers::PatternParser.new("#,##0.##").parse
+    rules, metadata = CLDR::Numbers::PatternParser.new("#,##0.##").parse
 
-    metadata.secondary_grouping.should(eq(nil))
+    # [CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=false),
+    # CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
+    # CLDR::Numbers::Rules::Fractional( @leading_zeros=false,@size=2, @trailing_zeros=false)]
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("85060283cc519b96e8568228e716dd8702ebd01a4cfb5ce1085759c3656fc9d6"))
+
     metadata.primary_grouping.should(eq(3))
-    metadata.use_padding.should(eq(false))
-    metadata.padding_character.should(eq(nil))
+    metadata.secondary_grouping.should(eq(nil))
+
+    metadata.fractional_primary_grouping.should(eq(nil))
+    metadata.fractional_secondary_grouping.should(eq(nil))
+
     metadata.maximum_significant_figures.should(eq(nil))
     metadata.minimum_significant_figures.should(eq(nil))
 
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("b7eb419d7f755e8258d1de10b73fbb9dcf45e9532a3d8336d46c905c0991b2c9"))
-    Digest::SHA256.hexdigest(fractional_rules.to_s).should(eq("3e4bb9056cad89d7814db01ec8c9aeb79782de80dfa9cad2c1aff5a3dfd9b14c"))
+    metadata.use_padding.should(eq(false))
+    metadata.padding_character.should(eq(nil))
   end
 
-  # TODO
   # it "Can parse pattern: '0.00+;0.00-'" do
-  #   rules, fractional_rules, metadata = CLDR::Numbers::PatternParser.new("0.00+;0.00-").parse
+  #   rules, metadata = CLDR::Numbers::PatternParser.new("0.00+;0.00-").parse
   # end
 
-  it "Can parse pattern '###0.0000#'" do
-    rules, fractional_rules, metadata = CLDR::Numbers::PatternParser.new("###0.0000#").parse
+  it "Can parse pattern: '###0.0000#'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("###0.0000#").parse
 
-    metadata.secondary_grouping.should(eq(nil))
+    # [CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=true),
+    # CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
+    # CLDR::Numbers::Rules::Fractional( @leading_zeros=true, @size=5, @trailing_zeros=false)]
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("9daebf03f8156e59b2d681aae4b4c818eed4da0013c8a54d275c6efa4399018f"))
+
     metadata.primary_grouping.should(eq(nil))
-    metadata.use_padding.should(eq(false))
-    metadata.padding_character.should(eq(nil))
+    metadata.secondary_grouping.should(eq(nil))
+
+    metadata.fractional_primary_grouping.should(eq(nil))
+    metadata.fractional_secondary_grouping.should(eq(nil))
+
     metadata.maximum_significant_figures.should(eq(nil))
     metadata.minimum_significant_figures.should(eq(nil))
 
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"))
-    Digest::SHA256.hexdigest(fractional_rules.to_s).should(eq("56b858c3e4157c6fce3a6941f35eb4758892e9fc0698424a3b0506732660454d"))
+    metadata.use_padding.should(eq(false))
+    metadata.padding_character.should(eq(nil))
   end
 
-  it "Can parse pattern '00000.0000'" do
-    rules, fractional_rules, metadata = CLDR::Numbers::PatternParser.new("00000.0000").parse
+  it "Can parse pattern: '00000.0000'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("00000.0000").parse
 
-    metadata.secondary_grouping.should(eq(nil))
+    # [CLDR::Numbers::Rules::Integer(@leading_zeros=true, @trailing_zeros=true),
+    #  CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
+    #  CLDR::Numbers::Rules::Fractional(@leading_zeros=true, @size=4,@trailing_zeros=true)]
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("f12ed58a6bfbe4bdb2dad4a49d5807ad52c01ec301f7607c07808b08c3f1f78e"))
+
     metadata.primary_grouping.should(eq(nil))
-    metadata.use_padding.should(eq(false))
-    metadata.padding_character.should(eq(nil))
-    metadata.maximum_significant_figures.should(eq(nil))
-    metadata.minimum_significant_figures.should(eq(nil))
-
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"))
-    Digest::SHA256.hexdigest(fractional_rules.to_s).should(eq("a6cc89f0edb84aeea108beacb2d843b69b0b571093c05a7e3ea9c0dca7f2529c"))
-  end
-
-  it "Can parse pattern '#,##0.00 ¤'" do
-    rules, fractional_rules, metadata = CLDR::Numbers::PatternParser.new("#,##0.00 ¤").parse
-
     metadata.secondary_grouping.should(eq(nil))
-    metadata.primary_grouping.should(eq(3))
+
+    metadata.fractional_primary_grouping.should(eq(nil))
+    metadata.fractional_secondary_grouping.should(eq(nil))
+
+    metadata.maximum_significant_figures.should(eq(nil))
+    metadata.minimum_significant_figures.should(eq(nil))
+
     metadata.use_padding.should(eq(false))
     metadata.padding_character.should(eq(nil))
-    metadata.maximum_significant_figures.should(eq(nil))
-    metadata.minimum_significant_figures.should(eq(nil))
-
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("d5e330e30ef614845533058658802ee95fe8197461b7f1441b00f16318f5e9c8"))
-    Digest::SHA256.hexdigest(fractional_rules.to_s).should(eq("5cdfd9594341dc8a00de80afd39a31a73f85a24469fed17e112cf0bb950958b6"))
   end
 
-  it "Can parse pattern '*x #,##,##0.###'" do
-    rules, fractional_rules, metadata = CLDR::Numbers::PatternParser.new("*x #,##,##0.###").parse
+  it "Can parse pattern: '#,##0.00 ¤'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("#,##0.00 ¤").parse
 
-    metadata.secondary_grouping.should(eq(2))
+    # [CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=true),
+    # CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
+    # CLDR::Numbers::Rules::Fractional(
+    #  @leading_zeros=true,
+    #  @size=2,
+    #  @trailing_zeros=false),
+    # CLDR::Numbers::Rules::InjectCharacter(@character=" "),
+    # CLDR::Numbers::Rules::InjectSymbol(@character=CurrencySymbol)]
+
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("fc55341c08e64f95bc66d5b277ef79f8982a687ab470ef98313f8dc7b429dc8d"))
+
     metadata.primary_grouping.should(eq(3))
-    metadata.use_padding.should(eq(true))
-    metadata.padding_character.should(eq("x"))
+    metadata.secondary_grouping.should(eq(nil))
+
+    metadata.fractional_primary_grouping.should(eq(nil))
+    metadata.fractional_secondary_grouping.should(eq(nil))
+
     metadata.maximum_significant_figures.should(eq(nil))
     metadata.minimum_significant_figures.should(eq(nil))
 
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("0a8333eb12ab400404d2ebc60f6a07b3fbb0aa18d745f303c7676d707e7bd892"))
-    Digest::SHA256.hexdigest(fractional_rules.to_s).should(eq("9366e1ee0e2281a95b4acf90472f2c9c619a49310c6974adaf62f989d5172bd9"))
+    metadata.use_padding.should(eq(false))
+    metadata.padding_character.should(eq(nil))
   end
 
-  # it "Can parse pattern '*x #,##,@@@##0.###'" do
-  #   rules, fractional_rules, metadata = CLDR::Numbers::PatternParser.new("*x #,##,@@@##0.###").parse
+  it "Can parse pattern: '#,@@###,###.000'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("#,@@###,###").parse
 
-  #   metadata.secondary_grouping.should(eq(2))
-  #   metadata.primary_grouping.should(eq(3))
-  #   metadata.use_padding.should(eq(true))
-  #   metadata.padding_character.should(eq("x"))
-  #   metadata.maximum_significant_figures.should(eq(6))
-  #   metadata.minimum_significant_figures.should(eq(3))
+    # CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=false)]
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("cda3a37489e10497a6a7e9c0fa9a1ad6b794c510cfc56ebf9852246331575fe7"))
 
-  #   Digest::SHA256.hexdigest(rules.to_s).should(eq("0a8333eb12ab400404d2ebc60f6a07b3fbb0aa18d745f303c7676d707e7bd892"))
-  #   Digest::SHA256.hexdigest(fractional_rules.to_s).should(eq("9366e1ee0e2281a95b4acf90472f2c9c619a49310c6974adaf62f989d5172bd9"))
-  # end
+    metadata.primary_grouping.should(eq(3))
+    metadata.secondary_grouping.should(eq(5))
+
+    metadata.fractional_primary_grouping.should(eq(nil))
+    metadata.fractional_secondary_grouping.should(eq(nil))
+
+    metadata.maximum_significant_figures.should(eq(8))
+    metadata.minimum_significant_figures.should(eq(2))
+
+    metadata.use_padding.should(eq(false))
+    metadata.padding_character.should(eq(nil))
+  end
+
+  it "Can parse pattern: '@@##,###'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("@@###,###.###").parse
+
+    # CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=false)
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("5c42c6ea3739a793c784a8145a21998fa90ea0cf7e06790fd79dae08d18fb880"))
+
+    metadata.primary_grouping.should(eq(3))
+    metadata.secondary_grouping.should(eq(nil))
+
+    metadata.fractional_primary_grouping.should(eq(nil))
+    metadata.fractional_secondary_grouping.should(eq(nil))
+
+    metadata.maximum_significant_figures.should(eq(8))
+    metadata.minimum_significant_figures.should(eq(2))
+
+    metadata.use_padding.should(eq(false))
+    metadata.padding_character.should(eq(nil))
+  end
+
+  it "Can parse pattern: '#,###.0,##,0##'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("#,###.0,##,0##").parse
+
+    # [CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=false),
+    # CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
+    # CLDR::Numbers::Rules::Fractional(
+    #  @leading_zeros=true,
+    #  @size=6,
+    #  @trailing_zeros=false)]
+
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("72a345f805cf0843558fa07e4ac2321e0d3826ce77743e0dafbfefbb97976f79"))
+
+    metadata.primary_grouping.should(eq(3))
+    metadata.secondary_grouping.should(eq(nil))
+
+    metadata.fractional_primary_grouping.should(eq(3))
+    metadata.fractional_secondary_grouping.should(eq(2))
+
+    metadata.maximum_significant_figures.should(eq(nil))
+    metadata.minimum_significant_figures.should(eq(nil))
+
+    metadata.use_padding.should(eq(false))
+    metadata.padding_character.should(eq(nil))
+  end
 end
