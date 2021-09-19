@@ -10,13 +10,12 @@ module CLDR::Numbers
       end
     end
 
-    {% for name in %w(Group Fractional) %}
+    {% for name in %w(Integer Fractional) %}
       struct {{name.id}} < Rules
         getter leading_zeros
         getter trailing_zeros
-        getter size
 
-        def initialize(@leading_zeros : Bool, @trailing_zeros : Bool, @size : Int32)
+        def initialize(@leading_zeros : Bool, @trailing_zeros : Bool)
         end
       end
     {% end %}
