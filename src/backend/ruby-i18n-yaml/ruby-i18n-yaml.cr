@@ -14,7 +14,7 @@ require "../../helpers/plural-rules/*"
 #
 # TODO: replace link to documentation once written.
 # Each of the variants in Crystal has some slight variations compared with the original ruby-i18n. Minor alternations are needed
-# to be compatible with Lens. [See the usage documentation for more information](https://example.com)
+# to be compatible with Lens. [See the usage documentation for more information](https://syeopite.github.io/lens/latest/formats/ruby-yaml/)
 #
 module RubyI18n
   # Backend for the ruby-i18n format. This class contains methods to parse and interact with them
@@ -226,7 +226,7 @@ module RubyI18n
     # catalogue.localize("en", 4.528, type: "currency").should eq("$4.528")
     # ```
     #
-    # [For a more detailed explanation, please refer to the usage documentation.](https://example.com)
+    # [For a more detailed explanation, please refer to the usage documentation.](https://syeopite.github.io/lens/latest/formats/ruby-yaml/)
     #
     #
     def localize(locale : String, number : Int32 | Int64 | Float64,
