@@ -10,6 +10,13 @@ module CLDR::Numbers
       end
     end
 
+    struct InjectCharacter < Rules
+      getter character
+
+      def initialize(@character : String)
+      end
+    end
+
     struct Integer < Rules
       getter leading_zeros
       getter trailing_zeros
