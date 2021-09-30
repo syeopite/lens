@@ -25,7 +25,7 @@ module CLDR::Numbers
   # or Ruby's RubyTwitterCLDR's, but still not as strict as pure ICU.
   class PatternParser < Lens::Base::Parser(Token, TokenTypes, PatternLexer)
     AFFIX_CHARACTERS = {TokenTypes::PercentSign, TokenTypes::PerMilleSign, TokenTypes::CurrencySymbol,
-                        TokenTypes::StringLiteral, TokenTypes::Character}
+                        TokenTypes::StringLiteral, TokenTypes::Character, TokenTypes::MinusSign, TokenTypes::PlusSign}
 
     def initialize(source : String)
       super(source)
@@ -41,7 +41,13 @@ module CLDR::Numbers
       prefix, integer, fractional, suffix = self.subpattern
 
       if self.match(TokenTypes::SubPatternBoundary)
-        # TODO
+        negative_prefix = self.affix
+
+        while !AFFIX_CHARACTERS.includes? @current_token.token_type
+          self.advance_token_iterator
+        end
+
+        negative_suffix = self.affix
       else
         negative_prefix, negative_suffix = {nil, nil}
       end

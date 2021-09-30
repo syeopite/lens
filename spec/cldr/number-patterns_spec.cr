@@ -48,9 +48,37 @@ describe CLDR::Numbers::PatternParser do
     metadata.padding_character.should(eq(nil))
   end
 
-  # it "Can parse pattern: '0.00+;0.00-'" do
-  #   rules, metadata = CLDR::Numbers::PatternParser.new("0.00+;0.00-").parse
-  # end
+  it "Can parse pattern: '0.00+;0.00-'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("0.00+;0.00-").parse
+
+    # CLDR::Numbers::PatternConstruct(
+    #  @fractional=
+    #  [CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
+    #   CLDR::Numbers::Rules::Fractional(
+    #    @leading_zeros=true,
+    #    @size=2,
+    #    @trailing_zeros=false)
+    #  ],
+    # @integer=[CLDR::Numbers::Rules::Integer(@leading_zeros=true, @trailing_zeros=false)],
+    # @negative_prefix=[],
+    # @negative_suffix=[CLDR::Numbers::Rules::InjectSymbol(@character=MinusSign)],
+    # @prefix=[],
+    # @suffix=[CLDR::Numbers::Rules::InjectSymbol(@character=PlusSign)])
+
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("f8d759aec12293ab7b4a0751608f291ae64f592184b293a6a75e7e163c25ff10"))
+
+    metadata.primary_grouping.should(eq(nil))
+    metadata.secondary_grouping.should(eq(nil))
+
+    metadata.fractional_primary_grouping.should(eq(nil))
+    metadata.fractional_secondary_grouping.should(eq(nil))
+
+    metadata.maximum_significant_figures.should(eq(nil))
+    metadata.minimum_significant_figures.should(eq(nil))
+
+    metadata.use_padding.should(eq(false))
+    metadata.padding_character.should(eq(nil))
+  end
 
   it "Can parse pattern: '###0.0000#'" do
     rules, metadata = CLDR::Numbers::PatternParser.new("###0.0000#").parse
