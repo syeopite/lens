@@ -103,10 +103,10 @@ describe CLDR::Numbers::PatternParser do
     #  @leading_zeros=true,
     #  @size=2,
     #  @trailing_zeros=false),
-    # CLDR::Numbers::Rules::InjectCharacter(@character=" "),
+    # CLDR::Numbers::Rules::InjectCharacters(@character=" "),
     # CLDR::Numbers::Rules::InjectSymbol(@character=CurrencySymbol)]
 
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("fc55341c08e64f95bc66d5b277ef79f8982a687ab470ef98313f8dc7b429dc8d"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("d00810e4b7571d39caf9ee999dcad81dc00ded30744af15ab941fb86cc054096"))
 
     metadata.primary_grouping.should(eq(3))
     metadata.secondary_grouping.should(eq(nil))

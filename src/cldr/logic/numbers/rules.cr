@@ -10,7 +10,7 @@ module CLDR::Numbers
       end
     end
 
-    struct InjectCharacter < Rules
+    struct InjectCharacters < Rules
       getter character
 
       def initialize(@character : String)

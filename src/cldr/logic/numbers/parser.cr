@@ -58,7 +58,16 @@ module CLDR::Numbers
 
       while self.match(*AFFIX_CHARACTERS)
         if @previous_token.token_type == TokenTypes::Character
-          affix_rules << Rules::InjectCharacter.new(@previous_token.literal.as(String))
+          extra_characters = String.build do |io|
+            io << @previous_token.literal.as(String)
+
+            # Match any remaining character tokens
+            while self.match(TokenTypes::Character)
+              io << @previous_token.literal.as(String)
+            end
+          end
+
+          affix_rules << Rules::InjectCharacters.new(extra_characters)
         else
           affix_rules << Rules::InjectSymbol.new(@previous_token.token_type)
         end
