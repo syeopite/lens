@@ -5,6 +5,16 @@ require "./rules"
 require "../../../helpers/base/parser"
 
 module CLDR::Numbers
+  # Construct consisting of component rules parsed from a CLDR number pattern
+  record PatternConstruct,
+    prefix : Array(Rules::Rules),
+    integer : Array(Rules::Rules),
+    fractional : Array(Rules::Rules),
+    suffix : Array(Rules::Rules),
+
+    negative_prefix : Array(Rules::Rules)?,
+    negative_suffix : Array(Rules::Rules)?
+
   # EXPERIMENTAL
   # TODO Write documentation
   #
@@ -23,31 +33,33 @@ module CLDR::Numbers
       @metadata = Metadata.new
     end
 
-    # Matches a entire pattern (positive and negative) into rules and associated values.
+    # Matches a entire pattern (along with explicit negative prefixes/suffixes
+    # into rules and associated values.
+    #
+    # -> PatternConstruct
     private def pattern
-      positive_pattern = self.subpattern
+      prefix, integer, fractional, suffix = self.subpattern
 
-      # TODO
-      # negative_pattern = nil
-      # if self.match(TokenTypes::SubPatternBoundary)
-      #   negative_pattern = self.subpattern(negative: true)
-      # end
+      if self.match(TokenTypes::SubPatternBoundary)
+        # TODO
+      else
+        negative_prefix, negative_suffix = {nil, nil}
+      end
 
-      return positive_pattern.to_a.flatten
+      return PatternConstruct.new(
+        prefix: prefix,
+        integer: integer,
+        fractional: fractional,
+        suffix: suffix,
+
+        negative_prefix: negative_prefix,
+        negative_suffix: negative_suffix
+      )
     end
 
     # Matches a subpattern (pos or neg): prefix, number (body) and suffix.
     private def subpattern(negative = false)
-      prefix = self.affix
-      number = self.number
-      suffix = self.affix
-
-      return prefix, number, suffix
-    end
-
-    # Matches a number (integer and fractional)
-    private def number
-      return self.integer + self.fractional_format
+      return self.affix, self.integer, self.fractional_format, self.affix
     end
 
     private def affix
@@ -102,7 +114,8 @@ module CLDR::Numbers
     # into the metadata.
     #
     # Takes in an array of grouping sizes, and the known size of the in-process of parsing grouping block.
-    private def sigdigits(groups = nil, grouping_block_count = nil)
+    private def sigdigits(groups = nil, grouping_block_count = nil) : Array(Rules::Rules)
+      rules = [] of Rules::Rules
       groups ||= [] of Int32
       grouping_block_count ||= 0
 
@@ -179,11 +192,8 @@ module CLDR::Numbers
       @metadata.minimum_significant_figures = minimum_significant_figures
       @metadata.maximum_significant_figures = minimum_significant_figures + additional_significant_figures_count
 
-      if !groups.empty?
-        return [Rules::Integer.new(false, false)]
-      else
-        return [] of Rules::Rules
-      end
+      rules << Rules::Integer.new(false, false)
+      return rules
     end
 
     # Matches the integer portion of the number pattern which can contain
@@ -192,6 +202,7 @@ module CLDR::Numbers
     # Differs from ICU specs as we allow intermediate
     # #s and 0s. Just that only the first and last 0 has any effect.
     private def integer
+      rules = [] of Rules::Rules
       groups = [] of Int32
       grouping_block_count = 0
       leading_zero = false
@@ -244,11 +255,8 @@ module CLDR::Numbers
         @metadata.primary_grouping = groups[0]
       end
 
-      if !groups.empty?
-        return [Rules::Integer.new(leading_zero, trailing_zero)]
-      else
-        return [Rules::Integer.new(leading_zero, trailing_zero)]
-      end
+      rules << Rules::Integer.new(leading_zero, trailing_zero)
+      return rules
     end
 
     # Matches fractional part of number pattern
@@ -318,12 +326,8 @@ module CLDR::Numbers
 
     # Parse a number pattern
     def parse
-      self.token_reader do |token|
-        r = self.pattern
-        @rules += r if r
-      end
-
-      return @rules, @metadata
+      self.advance_token_iterator
+      return self.pattern, @metadata
     end
   end
 end

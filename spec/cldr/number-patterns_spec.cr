@@ -33,7 +33,7 @@ describe CLDR::Numbers::PatternParser do
     # [CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=false),
     # CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
     # CLDR::Numbers::Rules::Fractional( @leading_zeros=false,@size=2, @trailing_zeros=false)]
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("85060283cc519b96e8568228e716dd8702ebd01a4cfb5ce1085759c3656fc9d6"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("95400605930b4bf3b9486fea9bcf00bbc1925298cee6798b8872e42aec657e5d"))
 
     metadata.primary_grouping.should(eq(3))
     metadata.secondary_grouping.should(eq(nil))
@@ -58,7 +58,7 @@ describe CLDR::Numbers::PatternParser do
     # [CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=true),
     # CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
     # CLDR::Numbers::Rules::Fractional( @leading_zeros=true, @size=5, @trailing_zeros=false)]
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("9daebf03f8156e59b2d681aae4b4c818eed4da0013c8a54d275c6efa4399018f"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("9133e83847ad12fd2015976ba1c2c85efe16b65bda6b1858d76d62c689800442"))
 
     metadata.primary_grouping.should(eq(nil))
     metadata.secondary_grouping.should(eq(nil))
@@ -79,7 +79,7 @@ describe CLDR::Numbers::PatternParser do
     # [CLDR::Numbers::Rules::Integer(@leading_zeros=true, @trailing_zeros=true),
     #  CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
     #  CLDR::Numbers::Rules::Fractional(@leading_zeros=true, @size=4,@trailing_zeros=true)]
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("f12ed58a6bfbe4bdb2dad4a49d5807ad52c01ec301f7607c07808b08c3f1f78e"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("aece7bbf7cb909757b6c8a46c83095b26bed089896ef08576a47ef276e856a38"))
 
     metadata.primary_grouping.should(eq(nil))
     metadata.secondary_grouping.should(eq(nil))
@@ -105,8 +105,7 @@ describe CLDR::Numbers::PatternParser do
     #  @trailing_zeros=false),
     # CLDR::Numbers::Rules::InjectCharacters(@character=" "),
     # CLDR::Numbers::Rules::InjectSymbol(@character=CurrencySymbol)]
-
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("d00810e4b7571d39caf9ee999dcad81dc00ded30744af15ab941fb86cc054096"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("c00ede9b9a017ab5c3f2bbe7607cd0240ac41e9203583aab4ec4929ff6d6979b"))
 
     metadata.primary_grouping.should(eq(3))
     metadata.secondary_grouping.should(eq(nil))
@@ -125,7 +124,7 @@ describe CLDR::Numbers::PatternParser do
     rules, metadata = CLDR::Numbers::PatternParser.new("#,@@###,###").parse
 
     # CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=false)]
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("cda3a37489e10497a6a7e9c0fa9a1ad6b794c510cfc56ebf9852246331575fe7"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("b4489f3618a51a2489ea0121d9ac4874977eb88290955505550ff549a4e74cf6"))
 
     metadata.primary_grouping.should(eq(3))
     metadata.secondary_grouping.should(eq(5))
@@ -144,7 +143,7 @@ describe CLDR::Numbers::PatternParser do
     rules, metadata = CLDR::Numbers::PatternParser.new("@@###,###.###").parse
 
     # CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=false)
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("5c42c6ea3739a793c784a8145a21998fa90ea0cf7e06790fd79dae08d18fb880"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("b1395beb8aa0973ee795ce6b1f1ef134a9f7046a998cfaa6c0e9fad002d52531"))
 
     metadata.primary_grouping.should(eq(3))
     metadata.secondary_grouping.should(eq(nil))
@@ -169,7 +168,7 @@ describe CLDR::Numbers::PatternParser do
     #  @size=6,
     #  @trailing_zeros=false)]
 
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("72a345f805cf0843558fa07e4ac2321e0d3826ce77743e0dafbfefbb97976f79"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("da91a712e37dfa02eee3accce65c16da2026bbf3c3b5a12260ec030f578ffcfc"))
 
     metadata.primary_grouping.should(eq(3))
     metadata.secondary_grouping.should(eq(nil))
