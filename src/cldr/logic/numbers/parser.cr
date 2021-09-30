@@ -14,12 +14,16 @@ module CLDR::Numbers
   # Note that the grammar there is far stricter than other implementations like Python's babel
   # or Ruby's RubyTwitterCLDR's, but still not as strict as pure ICU.
   class PatternParser < Lens::Base::Parser(Token, TokenTypes, PatternLexer)
+    AFFIX_CHARACTERS = {TokenTypes::PercentSign, TokenTypes::PerMilleSign, TokenTypes::CurrencySymbol,
+                        TokenTypes::StringLiteral, TokenTypes::Character}
+
     def initialize(source : String)
       super(source)
       @rules = [] of Rules::Rules
       @metadata = Metadata.new
     end
 
+    # Matches a entire pattern (positive and negative) into rules and associated values.
     private def pattern
       positive_pattern = self.subpattern
 
@@ -32,6 +36,7 @@ module CLDR::Numbers
       return positive_pattern.to_a.flatten
     end
 
+    # Matches a subpattern (pos or neg): prefix, number (body) and suffix.
     private def subpattern(negative = false)
       prefix = self.affix
       number = self.number
@@ -40,6 +45,7 @@ module CLDR::Numbers
       return prefix, number, suffix
     end
 
+    # Matches a number (integer and fractional)
     private def number
       return self.integer + self.fractional_format
     end
@@ -50,8 +56,7 @@ module CLDR::Numbers
       # Before an affix
       self.pad_spec
 
-      while self.match(TokenTypes::PercentSign, TokenTypes::PerMilleSign, TokenTypes::CurrencySymbol,
-              TokenTypes::StringLiteral, TokenTypes::Character)
+      while self.match(*AFFIX_CHARACTERS)
         if @previous_token.token_type == TokenTypes::Character
           affix_rules << Rules::InjectCharacter.new(@previous_token.literal.as(String))
         else
@@ -65,6 +70,7 @@ module CLDR::Numbers
       return affix_rules
     end
 
+    # Matches a padding specifier and the related metadata needed for formatting
     private def pad_spec(negative = false)
       if self.match(TokenTypes::PaddingSignifier)
         if @metadata.use_padding
@@ -92,15 +98,18 @@ module CLDR::Numbers
       grouping_block_count ||= 0
 
       additional_significant_figures_count = 0
-      minimum_significant_figures = 1 # Already matched at least one
+      # This method is called as soon as when we matched a @,
+      # meaning at least one minimum significant figure
+      minimum_significant_figures = 1
       matched_significant_figure_signifier = true
+
       # Match remaining @s
       while self.match(TokenTypes::SignificantDigitSignifier)
         grouping_block_count += 1
         minimum_significant_figures += 1
       end
 
-      # Match remaining #s and @s in initial significant figure signifier block
+      # Match remaining #s and 0s in initial significant figure signifier block
       while self.match(TokenTypes::DigitPlaceholder, TokenTypes::DigitPlaceholderNoFrontBackZeros)
         grouping_block_count += 1
         additional_significant_figures_count += 1
@@ -144,12 +153,12 @@ module CLDR::Numbers
         raise LensExceptions::ParseError.new("Blocks containing @s in a row can only appear once in a pattern.")
       end
 
-      # Only the last two actually matters according to CLDR number pattern spec.
+      # If there are more than two grouping signifier, then only the last two is relevant. Everything else is ignored
       if groups.size > 2
         groups = groups[-2..]
       end
 
-      # Configure Grouping
+      # Configure grouping
       if groups.size == 2
         @metadata.secondary_grouping = groups[0]
         @metadata.primary_grouping = groups[1]
@@ -179,15 +188,10 @@ module CLDR::Numbers
       leading_zero = false
       trailing_zero = false
 
+      # Matches leading zero
       if self.match(TokenTypes::DigitPlaceholder)
         leading_zero = true
       end
-
-      # We match the grouping separator in order to handle cases like
-      #
-      # #,### (primary grouping value of 3 and no secondary grouping)
-      # @## (No grouping values at all)
-      matched_blocks = 0
 
       while self.match(TokenTypes::DigitPlaceholderNoFrontBackZeros, TokenTypes::DigitPlaceholder, TokenTypes::SignificantDigitSignifier)
         grouping_block_count += 1
@@ -218,13 +222,12 @@ module CLDR::Numbers
       # First grouping block is meaningless. IE #,### is *only* a primary group of 3 without any secondary groups.
       groups = groups[1..] if !groups.empty?
 
-      # Only the last two actually matters
+      # If there are more than two grouping signifier, then only the last two is relevant. Everything else is ignored
       if groups.size > 2
         groups = groups[-2..]
       end
 
-      # Configure metadata
-      # Grouping
+      # Configure grouping
       if groups.size == 2
         @metadata.secondary_grouping = groups[0]
         @metadata.primary_grouping = groups[1]
@@ -250,7 +253,7 @@ module CLDR::Numbers
       trailing_zero = false
       fractional_count = 0
 
-      # Similar to #integer but without calls to #sigdigits and doesn't parse into Group rules
+      # Similar to #integer but without calls to #sigdigits
       if self.match(TokenTypes::CurrencySymbol, TokenTypes::DecimalSeparator)
         fractional_rules << Rules::InjectSymbol.new(@previous_token.token_type)
 
@@ -258,34 +261,34 @@ module CLDR::Numbers
           leading_zero = true
         end
 
+        # Look to #integer for more detailed explanation
         while self.match(TokenTypes::DigitPlaceholderNoFrontBackZeros, TokenTypes::DigitPlaceholder)
           grouping_block_count += 1
           fractional_count += 1
 
           # Do we allow trailing zeros? (This should be the "last") '0' token
-          if @previous_token.token_type == TokenTypes::DigitPlaceholder && self.is_at_end?
+          if @previous_token.token_type == TokenTypes::DigitPlaceholder && (AFFIX_CHARACTERS.includes?(@current_token) || self.is_at_end?)
             trailing_zero = true
           end
 
           # Are we at the start of another grouping block or are we at the end of the numerical body.
-          if (self.is_at_end? && groups.size > 0) || self.match(TokenTypes::GroupingSeparator)
+          if (self.is_at_end? && groups.size > 0) || self.match(TokenTypes::GroupingSeparator) || (AFFIX_CHARACTERS.includes? @current_token)
             groups << grouping_block_count
             grouping_block_count = 0
           end
         end
 
-        # 0.First grouping block is meaningless. IE #,### is *only* a fractional primary group of 3 without any fractional secondary groups.
+        # First grouping block is meaningless. IE #,### is *only* a fractional primary group of 3 without any fractional secondary groups.
         groups = groups[1..] if !groups.empty?
 
         # Configure grouping metadata for fractional values
         if !groups.empty?
-          # Only the last two actually matters
+          # If there are more than two grouping signifier, then only the last two is relevant. Everything else is ignored
           if groups.size > 2
             groups = groups[-2..]
           end
 
-          # Configure metadata
-          # Grouping
+          # Configure grouping
           if groups.size == 2
             @metadata.fractional_secondary_grouping = groups[0]
             @metadata.fractional_primary_grouping = groups[1]
