@@ -211,3 +211,88 @@ describe CLDR::Numbers::PatternParser do
     metadata.padding_character.should(eq(nil))
   end
 end
+
+describe CLDR::Numbers::PatternFormatter do
+  it "Can format pattern: '#,##0.##'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("#,##0.##").parse
+    formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+
+    formatter.format(1000.129).should(eq("1,000.13"))
+    formatter.format(-1000.129).should(eq("-1,000.13"))
+    formatter.format(1000.1).should(eq("1,000.1"))
+    formatter.format(-1000.1).should(eq("-1,000.1"))
+    formatter.format(100000.1859).should(eq("100,000.19"))
+    formatter.format(-100000.1859).should(eq("-100,000.19"))
+  end
+
+  it "Can format pattern: '0.00+;0.00-'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("0.00+;0.00-").parse
+    formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+
+    formatter.format(1000.129).should(eq("1000.13+"))
+    formatter.format(-1000.129).should(eq("1000.13-"))
+
+    formatter.format(1000.1).should(eq("1000.10+"))
+    formatter.format(-1000.1).should(eq("1000.10-"))
+
+    formatter.format(100000.1859).should(eq("100000.19+"))
+    formatter.format(-100000.1859).should(eq("100000.19-"))
+  end
+
+  # Currently Empty. Needs to be discussed.
+  # ICU libs interpret the trailing zeros option a bit differently than what we do
+  # should we replicate their behavior or continue following ours?
+  it "Can format pattern: '###0.0000#'" do
+    # rules, metadata = CLDR::Numbers::PatternParser.new("###0.0000#").parse
+    # formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+
+    # formatter.format(1000.129).should(eq("1000.129"))
+    # formatter.format(-1000.129).should(eq("-1000.129"))
+
+    # formatter.format(1000.1).should(eq("1000.1000")) # Fails! Got 1000.1
+    # formatter.format(-1000.1).should(eq("-1000.1000"))
+  end
+
+  it "Can format pattern: '00000.0000'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("00000.0000").parse
+    formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+
+    formatter.format(1000.123456).should(eq("1000.1235"))
+    formatter.format(-1000.123456).should(eq("-1000.1235"))
+
+    formatter.format(1000.129).should(eq("1000.1290"))
+    formatter.format(-1000.129).should(eq("-1000.1290"))
+  end
+
+  # TODO
+  # it "Can format pattern: '#,##0.00 ¤'" do
+  # end
+
+  # TODO
+  # it "Can format pattern: '#,@@###,###.000'" do
+  # end
+
+  # TODO
+  # it "Can format pattern: '@@##,###'" do
+  # end
+
+  # TODO. See message for pattern '###0.0000#'
+  it "Can format pattern: '#,###.0,##,0##'" do
+  end
+
+  it "Can format pattern: '#,###.0,00,000'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("#,###.0,00,000").parse
+    formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+
+    formatter.format(100000.123456).should(eq("100,000.1,23,456"))
+    formatter.format(-100000.123456).should(eq("-100,000.1,23,456"))
+  end
+
+  it "Can format pattern: 'I am a prefix #'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("I am a prefix #").parse
+    formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+
+    formatter.format(123).should(eq("I am a prefix 123"))
+    formatter.format(-123).should(eq("-I am a prefix 123"))
+  end
+end

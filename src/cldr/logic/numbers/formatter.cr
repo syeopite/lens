@@ -2,57 +2,30 @@ module CLDR::Numbers
   # EXPERIMENTAL
   # TODO Write documentation
   class PatternFormatter(Lang)
-    @instructions : Array(Rules::Rules)
-    @fractional_instructions : Array(Rules::Rules)
+    @instructions : PatternConstruct
     @metadata : Metadata
+    @reader : Char::Reader
 
-    @integer : String
-    @fractional : String
-
-    def initialize(@instructions, @fractional_instructions, @metadata, number : String)
-      # The formatted number shall be constructed in reverse
-      numerical_components = number.split "."
-
-      case numerical_components.size
-      when 2 then @integer, @fractional = numerical_components
-      when 1 then @integer, @fractional = numerical_components[0], ""
-      else        raise LensExceptions::ParseError.new("Looks like I cannot parse the number: '#{number}'. " \
-                                                "Maybe there's an extra decimal point?")
-      end
-
-      @integer_reader = Char::Reader.new(@integer.reverse)
+    def initialize(@instructions, @metadata)
+      @reader = Char::Reader.new("") # Dummy
     end
 
-    def initialize(@instructions, @fractional_instructions, @metadata, number : Float64)
-      # The formatted number shall be constructed in reverse
-      @integer, @fractional = number.to_s.split "."
-      @integer_reader = Char::Reader.new(@integer.reverse)
-    end
-
-    def initialize(@instructions, @fractional_instructions, @metadata, number : Int32)
-      # The formatted number shall be constructed in reverse
-      @fractional = ""
-      @integer = number.to_s
-
-      @integer_reader = Char::Reader.new(@integer.reverse)
-    end
-
-    # Add X amount of integers to string from Int reader.
-    def add_integer_to_str_x_times(str, times)
+    # Add X amount of integers to string from Int @reader.
+    def add_number_to_str_x_times(str, @reader, times)
       times.times do
-        char = @integer_reader.current_char
+        char = @reader.current_char
         if char == '\0'
           return false
         end
 
         str << char
-        @integer_reader.next_char
+        @reader.next_char
       end
 
       return true
     end
 
-    # Handles the grouping of the integer numbers.
+    # Handles the grouping of numbers of a numerical component
     #
     # CLDR defines two grouping types.
     # - Primary | Least significant digits
@@ -61,86 +34,97 @@ module CLDR::Numbers
     # For most languages, they are the same size. However, some such as Hindi have
     # different values. Because of that, we need to handle both separately.
     #
-    # Recall that during parsing, we did some special evaluations of these groups. Mainly:
+    # Recall that during parsing, we made it so that when the primary_group is equal to the secondary_group,
+    # the secondary_group attribute would be unset within @metadata and remain as nil.
+    # (# TODO remove this restriction for simplification)
     #
-    # 1. When the primary_group is equal to the secondary_group, the secondary_group attribute
-    # would be unset within @metadata and remain as nil.
-    #
-    # 2. Each *valid* and different group within the number pattern, results in
-    # a different `Rules::Group`.
     #
     # This means that this method has three different paths:
     #
-    # 1. To handle the case where there is only a primary group, as in all the integers
+    # 1. To handle the case where there is only a primary group, as in all the
     # are split into chunks of primary grouping sizes.
-    # 2. To handle the case of grouping the first  X (of primary grouping sizes) amount of
+    # 2. To handle the case where both groups are unset
+    # 3. To handle the case of grouping the first  X (of primary grouping sizes) amount of
     # numbers and **only** the first X amount.
-    # 3. Split leftover numbers into chunks of secondary grouping sizes.
+    # 4. Split leftover numbers into chunks of secondary grouping sizes.
     #
-    private def handle_group(str)
-      if !@metadata.secondary_grouping && (grouping = @metadata.primary_grouping)
-        while (@integer.size - @integer_reader.pos) != 0
-          status = self.add_integer_to_str_x_times(str, grouping)
+    private def handle_group(io, component_size, primary, secondary)
+      if !secondary
+        # Handle the case in which no grouping is configured
+        return self.add_remaining_characters_to_io(io) if !primary
+
+        while (component_size - @reader.pos) != 0
+          status = self.add_number_to_str_x_times(io, @reader, primary.not_nil!)
+
           if !status
             break
           end
 
           # Check again that we're still able to group. If so, start the next portion with a marker.
-          if (@integer.size - @integer_reader.pos) >= grouping
-            str << Lang::GroupSymbol
+          if (component_size - @reader.pos) >= primary
+            io << Lang::GroupSymbol
+          elsif 0 < (component_size - @reader.pos) < primary # Last
+            io << Lang::GroupSymbol
           end
         end
       else
-        # When there is a secondary group, then there must be a primary group. And since
-        # the IO is empty, we know we're currently at the start (or right-most number in
-        # the integer portion of the number). This means that we can handle the single
-        # primary group we need to group successfully.
-        if str.empty? && (grouping = @metadata.primary_grouping)
-          self.add_integer_to_str_x_times(str, grouping)
+        # First we handle the primary grouping
+        self.add_number_to_str_x_times(io, @reader, primary.not_nil!)
 
-          # If there's still enough characters to *potentially* create a secondary group,
-          # then we'll go ahead and add the marker.
-          if (@integer.size - @integer_reader.pos) != 0
-            return str << Lang::GroupSymbol
+        # If there's still enough characters to *potentially* create a secondary group,
+        # then we'll go ahead and add the marker.
+        if (component_size - @reader.pos) != 0
+          io << Lang::GroupSymbol
+        end
+
+        # Now we handle the second secondary
+        while (component_size - @reader.pos) >= secondary
+          status = self.add_number_to_str_x_times(io, @reader, secondary.not_nil!)
+          # It only returns false when we're at at the end of source.
+          # TODO refactor variable name to be more intuitive.
+          if !status
+            break
           end
-        else
-          grouping = @metadata.secondary_grouping.not_nil!
-          # We only group when the amount of characters left in the int reader is actually enough
-          # to group.
-          while (@integer.size - @integer_reader.pos) >= grouping
-            status = self.add_integer_to_str_x_times(str, grouping)
-            # It only returns false when we're at at the end of source.
-            # TODO refactor variable name to be more intuitive.
-            if !status
-              break
-            end
 
-            # Check again that we're still able to group. If so, start the next portion with a marker.
-            if (@integer.size - @integer_reader.pos) >= grouping
-              str << Lang::GroupSymbol
-            end
+          # Check again that we're still able to group. If so, start the next portion with a marker.
+          if (component_size - @reader.pos) != secondary
+            io << Lang::GroupSymbol
+          elsif 0 < (component_size - @reader.pos) < secondary # Last
+            io << Lang::GroupSymbol
           end
         end
+
+        # Handle any remaining ungrouped numbers
+        return self.add_remaining_characters_to_io(io)
       end
     end
 
-    def handle_fractional_group(str, rule : Rules::Fractional)
+    private def add_remaining_characters_to_io(io)
+      while @reader.current_char != '\0'
+        io << @reader.current_char
+        @reader.next_char
+      end
+    end
+
+    private def normalize_fraction_size(fractional, rule : Rules::Fractional)
       # When the amount of fraction digits exceeds what the pattern allows
       # then we're do a half-even (ties_even) rounding to get it to the maximums
       # size the rule allows.
-      if @fractional.size > rule.size
-        str << "0.#{@fractional}".to_f64.round(rule.size, mode: :ties_even).to_s[2..]
+      if fractional.size > rule.size
+        processed = "0.#{fractional}".to_f64.round(rule.size, mode: :ties_even).to_s[2..]
 
         # When the amount of fractional digits is less than the amount required by the rules we'll go ahead
         # and add trailing zeros
-      elsif @fractional.size < rule.size && rule.trailing_zeros
-        str << (@fractional + "0" * (rule.size - @fractional.size))
+      elsif fractional.size < rule.size && rule.trailing_zeros
+        processed = (fractional + "0" * (rule.size - fractional.size))
       else
-        str << @fractional
+        processed = fractional
       end
+
+      return processed
     end
 
-    def inject_symbol(str, rule : Rules::InjectSymbol)
+    private def inject_symbol(str, rule : Rules::InjectSymbol)
       str << case rule.character
       when TokenTypes::DecimalSeparator
         Lang::DecimalSymbol
@@ -163,29 +147,102 @@ module CLDR::Numbers
       end
     end
 
-    def format
-      formatted_int = String.build do |str|
-        @instructions.each do |rule|
+    # Formats a number (given as string) based on the pattern set by the instance.
+    def format(number : String)
+      numerical_components = number.split "."
+
+      case numerical_components.size
+      when 2 then integer, fractional = numerical_components
+      when 1 then integer, fractional = numerical_components[0], ""
+      else        raise LensExceptions::ParseError.new("Looks like I cannot parse the number: '#{number}'. " \
+                                                "Maybe there's an extra decimal point?")
+      end
+
+      if integer.starts_with? "-"
+        return self.internal_format(integer[1..], fractional, negative: true)
+      else
+        return self.internal_format(integer, fractional)
+      end
+    end
+
+    # Formats a number based on the pattern set by the instance
+    def format(number : Int)
+      if number.negative?
+        return self.internal_format(number.abs.to_s, "", negative: true)
+      else
+        return self.internal_format(number.to_s, "")
+      end
+    end
+
+    # Formats a number based on the pattern set by the instance
+    def format(number : Float)
+      integer, fractional = number.abs.to_s.split "."
+
+      if number.negative?
+        return self.internal_format(integer, fractional, negative: true)
+      else
+        return self.internal_format(integer, fractional)
+      end
+    end
+
+    private def format_affix(ruleset)
+      formatted_affix = String.build do |io|
+        ruleset.each do |rule|
           case rule
-          when Rules::Group        then self.handle_group(str)
-          when Rules::InjectSymbol then self.inject_symbol(str, rule)
+          when Rules::InjectSymbol     then self.inject_symbol(io, rule)
+          when Rules::InjectCharacters then io << rule.character
           end
         end
       end
 
-      formatted_fractional = String.build do |str|
-        if @fractional.empty?
-          break
+      return formatted_affix
+    end
+
+    private def internal_format(integer, fractional, negative = false)
+      # Construct instructions for the specific number
+      if negative
+        # Use default prefix but with addition of a minus sign in front when none
+        # explicit negative affixes are given
+        if !@instructions.negative_prefix && !@instructions.negative_suffix
+          prefix = [Rules::InjectSymbol.new(TokenTypes::MinusSign)] + @instructions.prefix
+          suffix = @instructions.suffix
+        else
+          prefix = @instructions.negative_prefix || @instructions.prefix
+          suffix = @instructions.negative_suffix || @instructions.suffix
         end
-        @fractional_instructions.each do |rule|
+      else
+        prefix = @instructions.prefix
+        suffix = @instructions.suffix
+      end
+
+      formatted_prefix = self.format_affix(prefix)
+
+      formatted_int = String.build do |io|
+        @reader = Char::Reader.new(integer.reverse)
+        self.handle_group(io, integer.size, @metadata.primary_grouping, @metadata.secondary_grouping)
+      end
+
+      formatted_fractional = String.build do |io|
+        break if fractional.empty?
+
+        @instructions.fractional.each do |rule|
           case rule
-          when Rules::InjectSymbol then self.inject_symbol(str, rule)
-          when Rules::Fractional   then self.handle_fractional_group(str, rule)
+          when Rules::InjectSymbol then self.inject_symbol(io, rule)
+          when Rules::Fractional
+            fractional = normalize_fraction_size(fractional, rule)
+            @reader = Char::Reader.new(fractional.reverse)
+
+            grouped = String.build do |fractional_grouping_io|
+              self.handle_group(fractional_grouping_io, fractional.size, @metadata.fractional_primary_grouping, @metadata.fractional_secondary_grouping)
+            end
+
+            io << grouped.reverse
           end
         end
       end
 
-      puts "#{formatted_int.reverse}#{formatted_fractional}"
+      formatted_suffix = self.format_affix(suffix)
+      return "#{formatted_prefix}#{formatted_int.reverse}#{formatted_fractional}#{formatted_suffix}"
     end
   end
 end
