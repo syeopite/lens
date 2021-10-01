@@ -217,6 +217,11 @@ module CLDR::Numbers
       # Matches leading zero
       if self.match(TokenTypes::DigitPlaceholder)
         leading_zero = true
+
+        # If it's the only zero present then obviously it'll also indicate the presence of trailing zeros
+        if ({TokenTypes::CurrencySymbol, TokenTypes::DecimalSeparator} + AFFIX_CHARACTERS).includes?(@current_token.token_type) || self.is_at_end?
+          trailing_zero = true
+        end
       end
 
       while self.match(TokenTypes::DigitPlaceholderNoFrontBackZeros, TokenTypes::DigitPlaceholder, TokenTypes::SignificantDigitSignifier)
@@ -232,8 +237,7 @@ module CLDR::Numbers
         end
 
         # Do we allow trailing zeros? (This should be the "last") '0' token
-        if ((@previous_token.token_type == TokenTypes::DigitPlaceholder && {TokenTypes::CurrencySymbol, TokenTypes::DecimalSeparator}.includes? @current_token.token_type) || \
-              (@previous_token.token_type == TokenTypes::DigitPlaceholder && self.is_at_end?))
+        if @previous_token.token_type == TokenTypes::DigitPlaceholder && (({TokenTypes::CurrencySymbol, TokenTypes::DecimalSeparator} + AFFIX_CHARACTERS).includes?(@current_token.token_type) || self.is_at_end?)
           trailing_zero = true
         end
 
@@ -290,7 +294,7 @@ module CLDR::Numbers
           fractional_count += 1
 
           # Do we allow trailing zeros? (This should be the "last") '0' token
-          if @previous_token.token_type == TokenTypes::DigitPlaceholder && (AFFIX_CHARACTERS.includes?(@current_token) || self.is_at_end?)
+          if @previous_token.token_type == TokenTypes::DigitPlaceholder && (AFFIX_CHARACTERS.includes?(@current_token.token_type) || self.is_at_end?)
             trailing_zero = true
           end
 

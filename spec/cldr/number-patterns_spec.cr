@@ -57,15 +57,15 @@ describe CLDR::Numbers::PatternParser do
     #   CLDR::Numbers::Rules::Fractional(
     #    @leading_zeros=true,
     #    @size=2,
-    #    @trailing_zeros=false)
+    #    @trailing_zeros=true)
     #  ],
-    # @integer=[CLDR::Numbers::Rules::Integer(@leading_zeros=true, @trailing_zeros=false)],
+    # @integer=[CLDR::Numbers::Rules::Integer(@leading_zeros=true, @trailing_zeros=true)],
     # @negative_prefix=[],
     # @negative_suffix=[CLDR::Numbers::Rules::InjectSymbol(@character=MinusSign)],
     # @prefix=[],
     # @suffix=[CLDR::Numbers::Rules::InjectSymbol(@character=PlusSign)])
 
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("f8d759aec12293ab7b4a0751608f291ae64f592184b293a6a75e7e163c25ff10"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("314f0c3262e27c64d2a508cd266b28e3da8bc30b3b36676de3935dd4ebcc66ac"))
 
     metadata.primary_grouping.should(eq(nil))
     metadata.secondary_grouping.should(eq(nil))
@@ -130,10 +130,10 @@ describe CLDR::Numbers::PatternParser do
     # CLDR::Numbers::Rules::Fractional(
     #  @leading_zeros=true,
     #  @size=2,
-    #  @trailing_zeros=false),
+    #  @trailing_zeros=true),
     # CLDR::Numbers::Rules::InjectCharacters(@character=" "),
     # CLDR::Numbers::Rules::InjectSymbol(@character=CurrencySymbol)]
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("c00ede9b9a017ab5c3f2bbe7607cd0240ac41e9203583aab4ec4929ff6d6979b"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("1d207189293b9611f7864e5a977b8737f2dead73059601d8172724a7cb7132e4"))
 
     metadata.primary_grouping.should(eq(3))
     metadata.secondary_grouping.should(eq(nil))
