@@ -2,7 +2,7 @@ require "digest"
 require "../../src/cldr/logic/numbers/lexer"
 require "../../src/cldr/logic/numbers/parser"
 require "../../src/cldr/logic/numbers/formatter"
-require "../../src/cldr/languages/en/*"
+require "../../src/cldr/languages/en/numbers"
 
 describe CLDR::Numbers::PatternLexer do
   it "Can scan pattern #,##0.##" do

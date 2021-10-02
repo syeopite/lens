@@ -1,5 +1,5 @@
-require "spec"
 require "../../../src/backend/ruby-i18n-yaml"
+require "../../../src/cldr/languages/en/units"
 
 describe "ruby-i18n-yaml" do
   it "able to parse locale files" do

@@ -1,5 +1,4 @@
 require "digest"
-require "spec"
 require "../../../src/backend/gettext/plural-forms/*"
 
 describe Gettext::PluralForm do
