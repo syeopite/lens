@@ -456,8 +456,8 @@
 <p>Is the YAML format <a href="https://github.com/ruby-i18n/i18n">used by ruby-i18n</a> and the format implemented by all of the internationalization libraries in Crystal prior to Lens. <a href="https://guides.rubyonrails.org/i18n.html">See here for more information regarding the format.</a></p>
 <p>Ruby YAML has support for plurals, defined with CLDR data. This means that it <em>can</em> handle plural forms of both Integers and floating point numbers. However, this has <strong>not</strong> been added to Lens as of writing. Expect to see it in either <code>v0.2.0</code> or <code>v0.3.0</code>.</p>
 <h2 id="using-ruby-yaml">Using Ruby YAML</h2>
-<p>The Ruby YAML backend is the <code>CrystalI18n::I18n</code><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. To initialize, simply pass in the locale directory:</p>
-<div class="highlight"><pre><span></span><code><span class="n">catalogue</span> <span class="o">=</span> <span class="n">CrystalI18n</span><span class="o">::</span><span class="n">I18n</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;locales&quot;</span><span class="p">)</span>
+<p>The Ruby YAML backend is the <code>RubyI18n::Yaml</code>. To initialize, simply pass in the locale directory:</p>
+<div class="highlight"><pre><span></span><code><span class="n">catalogue</span> <span class="o">=</span> <span class="n">RubyI18n</span><span class="o">::</span><span class="n">Yaml</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;locales&quot;</span><span class="p">)</span>
 </code></pre></div>
 <p>Now, we can begin translating!</p>
 <p>The most basic syntax for translating is just the <code>#translate</code> method. Simply pass in the language code for that specific locale and the key for the specific translation.</p>
@@ -501,14 +501,6 @@
 <p>If the value at the given path (key) turns out to be an array then you can pass in the iter argument to select a specific value at the given index</p>
 <div class="highlight"><pre><span></span><code><span class="n">catalogue</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="s2">&quot;en&quot;</span><span class="p">,</span> <span class="s2">&quot;items.foods&quot;</span><span class="p">,</span> <span class="ss">iter</span><span class="p">:</span> <span class="mi">2</span><span class="p">)</span> <span class="c1"># =&gt; &quot;Hamburger&quot;</span>
 </code></pre></div>
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p><code>CrystalI18n::I18n</code> really isn't a good name. It was mainly just choosen since all internationalization shards prior to Lens were based off of that format. This will get renamed in <code>v0.2.0</code>.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
                 
               
               

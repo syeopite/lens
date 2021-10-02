@@ -438,7 +438,7 @@
 <div class="highlight"><pre><span></span><code><span class="nt">dependencies</span><span class="p">:</span>
   <span class="nt">lens</span><span class="p">:</span>
     <span class="nt">github</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">syeopite/lens</span>
-    <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">~&gt; 0.1.0</span>
+    <span class="nt">version</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">~&gt; 0.2.0</span>
 </code></pre></div>
 <p>After which, you just run <code>shards install</code> and Lens would be installed.</p>
 <h2 id="usage">Usage</h2>
@@ -471,7 +471,7 @@
 </tr>
 <tr>
 <td align="center">Ruby YAML</td>
-<td align="center"><code>CrystalI18n::I18n</code><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></td>
+<td align="center"><code>RubyI18n::Yaml</code><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></td>
 <td align="center"><a href="/lens/formats/ruby-yaml">Here</a></td>
 </tr>
 </tbody>
@@ -496,7 +496,7 @@
 
 <span class="c1"># The backend for ruby-yaml on the other hand is directly the catalogue.</span>
 <span class="c1"># No need for an additional #create. And naturally, it&#39;s also not a hash.</span>
-<span class="n">yaml_catalogue</span> <span class="o">=</span> <span class="n">CrystalI18n</span><span class="o">::</span><span class="n">I18n</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;locales&quot;</span><span class="p">)</span>
+<span class="n">yaml_catalogue</span> <span class="o">=</span> <span class="n">RubyI18n</span><span class="o">::</span><span class="n">Yaml</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;locales&quot;</span><span class="p">)</span>
 
 <span class="c1"># Gettext</span>
 <span class="n">gettext_catalogue</span><span class="o">.</span><span class="n">gettext</span><span class="p">(</span><span class="s2">&quot;A message&quot;</span><span class="p">)</span>     <span class="c1"># =&gt; &quot;Translated message&quot;</span>
