@@ -295,4 +295,27 @@ describe CLDR::Numbers::PatternFormatter do
     formatter.format(123).should(eq("I am a prefix 123"))
     formatter.format(-123).should(eq("-I am a prefix 123"))
   end
+
+  it "Can format pattern: '#,##0.##' (given as string)" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("#,##0.##").parse
+    formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+
+    formatter.format("1000.129").should(eq("1,000.13"))
+    formatter.format("-1000.129").should(eq("-1,000.13"))
+    formatter.format("1000.1").should(eq("1,000.1"))
+    formatter.format("-1000.1").should(eq("-1,000.1"))
+    formatter.format("100000.1859").should(eq("100,000.19"))
+    formatter.format("-100000.1859").should(eq("-100,000.19"))
+  end
+
+  it "Handle invalid numbers given as strings" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("#,##0.##").parse
+    formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+
+    {"10fw00.129", "-1v000.129", "---1000.1", "1000...1", "wasd", "12345     678 hi"}.each do |n|
+      expect_raises(ArgumentError | LensExceptions::ParseError) do
+        formatter.format(n)
+      end
+    end
+  end
 end

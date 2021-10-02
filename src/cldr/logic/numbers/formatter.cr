@@ -148,6 +148,14 @@ module CLDR::Numbers
     end
 
     # Formats a number (given as string) based on the pattern set by the instance.
+    #
+    # ```
+    # rules, metadata = CLDR::Numbers::PatternParser.new("#,##0.###").parse
+    # formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+    #
+    # formatter.format("12345")     # => 12,345
+    # formatter.format("1000.1236") # => 1,000.124
+    # ```
     def format(number : String)
       numerical_components = number.split "."
 
@@ -158,11 +166,25 @@ module CLDR::Numbers
                                                 "Maybe there's an extra decimal point?")
       end
 
-      if integer.starts_with? "-"
-        return self.internal_format(integer[1..], fractional, negative: true)
+      if negative = integer.starts_with? "-"
+        integer = integer[1..]
       else
-        return self.internal_format(integer, fractional)
+        negative = false
       end
+
+      # Invalid number handling
+      if integer.starts_with?("-") || fractional.starts_with?("-")
+        raise ArgumentError.new("Invalid number: '#{number}' given to #format of PatternFormatter")
+      end
+
+      begin
+        integer.to_i(prefix: false, whitespace: false)
+        fractional.to_i(prefix: false, whitespace: false)
+      rescue ArgumentError
+        raise ArgumentError.new("Invalid number: '#{number}' given to #format of PatternFormatter")
+      end
+
+      return self.internal_format(integer, fractional, negative: negative)
     end
 
     # Formats a number based on the pattern set by the instance
