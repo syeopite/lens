@@ -254,7 +254,7 @@ describe CLDR::Numbers::PatternFormatter do
     formatter.format(-123).should(eq("-I am a prefix 123"))
   end
 
-  it "Can format pattern: '0,000' (leading zeros)", tags: "current" do
+  it "Can format pattern: '0,000' (leading zeros)" do
     rules, metadata = CLDR::Numbers::PatternParser.new("0,000").parse
     formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
 
@@ -262,7 +262,7 @@ describe CLDR::Numbers::PatternFormatter do
     formatter.format("000000000").should(eq("000,000,000"))
   end
 
-  it "Can format pattern: '##0,000' (leading zeros)", tags: "current" do
+  it "Can format pattern: '##0,000' (leading zeros)" do
     rules, metadata = CLDR::Numbers::PatternParser.new("##0,000").parse
     formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
 
