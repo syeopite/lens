@@ -8,4 +8,7 @@ authors:
 
 crystal: ">= 1.0, < 2.0"
 
+crystalline:
+  main: .crystalline_requires.cr
+
 license: MIT
