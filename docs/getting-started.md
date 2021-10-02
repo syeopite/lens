@@ -17,7 +17,7 @@ Lens is written in *pure* crystal and without any external dependencies besides 
 dependencies:
   lens:
     github: syeopite/lens
-    version: ~> 0.1.0
+    version: ~> 0.2.0
 ```
 
 After which, you just run `shards install` and Lens would be installed.
