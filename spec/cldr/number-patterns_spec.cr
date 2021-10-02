@@ -29,11 +29,7 @@ end
 describe CLDR::Numbers::PatternParser do
   it "Can parse pattern: '#,##0.##'" do
     rules, metadata = CLDR::Numbers::PatternParser.new("#,##0.##").parse
-
-    # [CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=false),
-    # CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
-    # CLDR::Numbers::Rules::Fractional( @leading_zeros=false,@size=2, @trailing_zeros=false)]
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("95400605930b4bf3b9486fea9bcf00bbc1925298cee6798b8872e42aec657e5d"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("de87b782b6b35b38190e6db61c90fbf2b78c58ce913561d213d708d3fce60498"))
 
     metadata.primary_grouping.should(eq(3))
     metadata.secondary_grouping.should(eq(nil))
@@ -50,22 +46,7 @@ describe CLDR::Numbers::PatternParser do
 
   it "Can parse pattern: '0.00+;0.00-'" do
     rules, metadata = CLDR::Numbers::PatternParser.new("0.00+;0.00-").parse
-
-    # CLDR::Numbers::PatternConstruct(
-    #  @fractional=
-    #  [CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
-    #   CLDR::Numbers::Rules::Fractional(
-    #    @leading_zeros=true,
-    #    @size=2,
-    #    @trailing_zeros=true)
-    #  ],
-    # @integer=[CLDR::Numbers::Rules::Integer(@leading_zeros=true, @trailing_zeros=true)],
-    # @negative_prefix=[],
-    # @negative_suffix=[CLDR::Numbers::Rules::InjectSymbol(@character=MinusSign)],
-    # @prefix=[],
-    # @suffix=[CLDR::Numbers::Rules::InjectSymbol(@character=PlusSign)])
-
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("314f0c3262e27c64d2a508cd266b28e3da8bc30b3b36676de3935dd4ebcc66ac"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("ae0155c50b2140c7da8d80d29c7c921dc732a67c4e39b702df0fab5e0ae86ca2"))
 
     metadata.primary_grouping.should(eq(nil))
     metadata.secondary_grouping.should(eq(nil))
@@ -82,11 +63,7 @@ describe CLDR::Numbers::PatternParser do
 
   it "Can parse pattern: '###0.0000#'" do
     rules, metadata = CLDR::Numbers::PatternParser.new("###0.0000#").parse
-
-    # [CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=true),
-    # CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
-    # CLDR::Numbers::Rules::Fractional( @leading_zeros=true, @size=5, @trailing_zeros=false)]
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("9133e83847ad12fd2015976ba1c2c85efe16b65bda6b1858d76d62c689800442"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("e65f81767ac28642ff7fa4e56a166703640eeacf61c5ed386bc7cc68179107b5"))
 
     metadata.primary_grouping.should(eq(nil))
     metadata.secondary_grouping.should(eq(nil))
@@ -103,11 +80,7 @@ describe CLDR::Numbers::PatternParser do
 
   it "Can parse pattern: '00000.0000'" do
     rules, metadata = CLDR::Numbers::PatternParser.new("00000.0000").parse
-
-    # [CLDR::Numbers::Rules::Integer(@leading_zeros=true, @trailing_zeros=true),
-    #  CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
-    #  CLDR::Numbers::Rules::Fractional(@leading_zeros=true, @size=4,@trailing_zeros=true)]
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("aece7bbf7cb909757b6c8a46c83095b26bed089896ef08576a47ef276e856a38"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("b55e0e3d73a58c7814885ad9676b54f85ca8545f6e33711d7b0281b8a97b60df"))
 
     metadata.primary_grouping.should(eq(nil))
     metadata.secondary_grouping.should(eq(nil))
@@ -124,16 +97,7 @@ describe CLDR::Numbers::PatternParser do
 
   it "Can parse pattern: '#,##0.00 ¤'" do
     rules, metadata = CLDR::Numbers::PatternParser.new("#,##0.00 ¤").parse
-
-    # [CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=true),
-    # CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
-    # CLDR::Numbers::Rules::Fractional(
-    #  @leading_zeros=true,
-    #  @size=2,
-    #  @trailing_zeros=true),
-    # CLDR::Numbers::Rules::InjectCharacters(@character=" "),
-    # CLDR::Numbers::Rules::InjectSymbol(@character=CurrencySymbol)]
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("1d207189293b9611f7864e5a977b8737f2dead73059601d8172724a7cb7132e4"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("b2a177c4caa0cbc035ba99e9a35e871ab4e96c1a9b5b8ce74bb322f70f6072b5"))
 
     metadata.primary_grouping.should(eq(3))
     metadata.secondary_grouping.should(eq(nil))
@@ -150,9 +114,7 @@ describe CLDR::Numbers::PatternParser do
 
   it "Can parse pattern: '#,@@###,###.000'" do
     rules, metadata = CLDR::Numbers::PatternParser.new("#,@@###,###").parse
-
-    # CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=false)]
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("b4489f3618a51a2489ea0121d9ac4874977eb88290955505550ff549a4e74cf6"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("ac4f3b4b84d4201fa5bcdbbab5103eaa5cfc197e06ebe78acb5fc0c4c7b0b3f7"))
 
     metadata.primary_grouping.should(eq(3))
     metadata.secondary_grouping.should(eq(5))
@@ -169,9 +131,7 @@ describe CLDR::Numbers::PatternParser do
 
   it "Can parse pattern: '@@##,###'" do
     rules, metadata = CLDR::Numbers::PatternParser.new("@@###,###.###").parse
-
-    # CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=false)
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("b1395beb8aa0973ee795ce6b1f1ef134a9f7046a998cfaa6c0e9fad002d52531"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("1b225792d2f470908492f3ea239de594753d1b301f2a33c7a522154579f026cc"))
 
     metadata.primary_grouping.should(eq(3))
     metadata.secondary_grouping.should(eq(nil))
@@ -188,15 +148,7 @@ describe CLDR::Numbers::PatternParser do
 
   it "Can parse pattern: '#,###.0,##,0##'" do
     rules, metadata = CLDR::Numbers::PatternParser.new("#,###.0,##,0##").parse
-
-    # [CLDR::Numbers::Rules::Integer(@leading_zeros=false, @trailing_zeros=false),
-    # CLDR::Numbers::Rules::InjectSymbol(@character=DecimalSeparator),
-    # CLDR::Numbers::Rules::Fractional(
-    #  @leading_zeros=true,
-    #  @size=6,
-    #  @trailing_zeros=false)]
-
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("da91a712e37dfa02eee3accce65c16da2026bbf3c3b5a12260ec030f578ffcfc"))
+    Digest::SHA256.hexdigest(rules.to_s).should(eq("5b60a2dab57d0d23844707b23dfe00ec840ffea1903a9eeb727e87889b08972e"))
 
     metadata.primary_grouping.should(eq(3))
     metadata.secondary_grouping.should(eq(nil))
@@ -217,8 +169,6 @@ describe CLDR::Numbers::PatternFormatter do
     rules, metadata = CLDR::Numbers::PatternParser.new("#,##0.##").parse
     formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
 
-    formatter.format(1000.129).should(eq("1,000.13"))
-    formatter.format(-1000.129).should(eq("-1,000.13"))
     formatter.format(1000.1).should(eq("1,000.1"))
     formatter.format(-1000.1).should(eq("-1,000.1"))
     formatter.format(100000.1859).should(eq("100,000.19"))
@@ -239,18 +189,18 @@ describe CLDR::Numbers::PatternFormatter do
     formatter.format(-100000.1859).should(eq("100000.19-"))
   end
 
-  # Currently Empty. Needs to be discussed.
-  # ICU libs interpret the trailing zeros option a bit differently than what we do
-  # should we replicate their behavior or continue following ours?
   it "Can format pattern: '###0.0000#'" do
-    # rules, metadata = CLDR::Numbers::PatternParser.new("###0.0000#").parse
-    # formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+    rules, metadata = CLDR::Numbers::PatternParser.new("###0.0000#").parse
+    formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
 
-    # formatter.format(1000.129).should(eq("1000.129"))
-    # formatter.format(-1000.129).should(eq("-1000.129"))
+    formatter.format(1000.129).should(eq("1000.1290"))
+    formatter.format(-1000.129).should(eq("-1000.1290"))
 
-    # formatter.format(1000.1).should(eq("1000.1000")) # Fails! Got 1000.1
-    # formatter.format(-1000.1).should(eq("-1000.1000"))
+    formatter.format(1000.1).should(eq("1000.1000"))
+    formatter.format(-1000.1).should(eq("-1000.1000"))
+
+    formatter.format(1000.12345).should(eq("1000.12345"))
+    formatter.format(-1000.12345).should(eq("-1000.12345"))
   end
 
   it "Can format pattern: '00000.0000'" do
@@ -276,8 +226,15 @@ describe CLDR::Numbers::PatternFormatter do
   # it "Can format pattern: '@@##,###'" do
   # end
 
-  # TODO. See message for pattern '###0.0000#'
   it "Can format pattern: '#,###.0,##,0##'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("#,###.0,##,0##").parse
+    formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+
+    formatter.format(1000.123456).should(eq("1,000.1,23,456"))
+    formatter.format(-1000.123456).should(eq("-1,000.1,23,456"))
+
+    formatter.format(1000.129).should(eq("1,000.129"))
+    formatter.format(-1000.129).should(eq("-1,000.129"))
   end
 
   it "Can format pattern: '#,###.0,00,000'" do
@@ -294,6 +251,22 @@ describe CLDR::Numbers::PatternFormatter do
 
     formatter.format(123).should(eq("I am a prefix 123"))
     formatter.format(-123).should(eq("-I am a prefix 123"))
+  end
+
+  it "Can format pattern: '0,000' (leading zeros)", tags: "current" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("0,000").parse
+    formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+
+    formatter.format("000000000").should(eq("000,000,000"))
+    formatter.format("000000000").should(eq("000,000,000"))
+  end
+
+  it "Can format pattern: '##0,000' (leading zeros)", tags: "current" do
+    rules, metadata = CLDR::Numbers::PatternParser.new("##0,000").parse
+    formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+
+    formatter.format("000000000").should(eq("0,000,000"))
+    formatter.format("000000000").should(eq("0,000,000"))
   end
 
   it "Can format pattern: '#,##0.##' (given as string)" do

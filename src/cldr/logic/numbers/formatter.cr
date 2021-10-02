@@ -123,7 +123,26 @@ module CLDR::Numbers
       end
     end
 
-    # Normalize fraction size with respective to maximum, minimum digits and trailing zero edibility
+    # Normalize integer with respect to the amount of leading zeros edibility
+    private def normalize_integer_size(integer, forbidden_leading_zero_count)
+      return integer if forbidden_leading_zero_count == 0
+      leading_zero_count = count_zeros_of_string_encoded_number(integer, direction: true)
+      return integer if leading_zero_count == 0
+
+      integer = (
+        if forbidden_leading_zero_count > leading_zero_count
+          integer[leading_zero_count..]
+        elsif forbidden_leading_zero_count <= leading_zero_count
+          integer[forbidden_leading_zero_count..]
+        else
+          integer
+        end
+      )
+
+      return integer
+    end
+
+    # Normalize fraction size with respect to maximum, minimum digits and trailing zeros edibility
     private def normalize_fraction_size(fractional, rule : Rules::Fractional)
       # When the amount of fraction digits exceeds what the pattern allows
       # then we'll do a half-even (ties_even) rounding to get it to the maximums
@@ -133,11 +152,25 @@ module CLDR::Numbers
 
         # When the amount of fractional digits is less than the amount required by the rules we'll go ahead
         # and add trailing zeros
-      elsif fractional.size < rule.size && rule.trailing_zeros
+      elsif fractional.size < rule.size
         processed = (fractional + "0" * (rule.size - fractional.size))
       else
         processed = fractional
       end
+
+      return processed if rule.forbidden_trailing_zero_count == 0
+      trailing_zero_count = count_zeros_of_string_encoded_number(processed, direction: false)
+      return processed if trailing_zero_count == 0
+
+      processed = (
+        if rule.forbidden_trailing_zero_count > trailing_zero_count
+          processed[...-trailing_zero_count]
+        elsif rule.forbidden_trailing_zero_count <= trailing_zero_count
+          processed[...-rule.forbidden_trailing_zero_count]
+        else
+          processed
+        end
+      )
 
       return processed
     end
@@ -201,6 +234,7 @@ module CLDR::Numbers
       formatted_prefix = self.format_affix(prefix)
 
       formatted_int = String.build do |io|
+        integer = normalize_integer_size(integer, @instructions.integer[0].as(Rules::Integer).forbidden_leading_zero_count)
         @reader = Char::Reader.new(integer.reverse)
         self.handle_group(io, integer.size, @metadata.primary_grouping, @metadata.secondary_grouping)
       end
@@ -260,7 +294,10 @@ module CLDR::Numbers
 
       begin
         integer.to_i(prefix: false, whitespace: false)
-        fractional.to_i(prefix: false, whitespace: false)
+
+        if !fractional.empty?
+          fractional.to_i(prefix: false, whitespace: false)
+        end
       rescue ArgumentError
         raise ArgumentError.new("Invalid number: '#{number}' given to #format of PatternFormatter")
       end

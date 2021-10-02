@@ -21,7 +21,7 @@ module CLDR::Numbers
   # (Mostly) Based of off the pattern BNF specified in ICU4C's DecimalFormat docs
   # See https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classicu_1_1DecimalFormat.html
   #
-  # Note that the grammar there is far stricter than other implementations like Python's babel
+  # Note that the grammar chosen here is far stricter than other implementations like Python's babel
   # or Ruby's RubyTwitterCLDR's, but still not as strict as pure ICU.
   class PatternParser < Lens::Base::Parser(Token, TokenTypes, PatternLexer)
     AFFIX_CHARACTERS = {TokenTypes::PercentSign, TokenTypes::PerMilleSign, TokenTypes::CurrencySymbol,
@@ -164,7 +164,6 @@ module CLDR::Numbers
         # We're also not using consume here in order to not advance the token iterator the token.
 
         if self.is_at_end? || self.match(TokenTypes::GroupingSeparator) || {TokenTypes::CurrencySymbol, TokenTypes::DecimalSeparator}.includes? @current_token.token_type
-          # Trailing and leading zeros are meaningless sigdigit patterns
           groups << grouping_block_count
           grouping_block_count = 0
         end
@@ -198,31 +197,22 @@ module CLDR::Numbers
       @metadata.minimum_significant_figures = minimum_significant_figures
       @metadata.maximum_significant_figures = minimum_significant_figures + additional_significant_figures_count
 
-      rules << Rules::Integer.new(false, false)
+      # Trailing and leading zeros are meaningless in sigdigit patterns
+      rules << Rules::Integer.new(0)
       return rules
     end
 
     # Matches the integer portion of the number pattern which can contain
     # grouping and sigfigs information.
     #
-    # Differs from ICU specs as we allow intermediate
-    # #s and 0s. Just that only the first and last 0 has any effect.
+    # Differs from ICU's version as we allow intermediate #s and 0s,
+    # with the total amount of #s in the pattern, meaening the amount of forbidden
+    # leading zeros. This is the behavior that matches ruby-cldr and python's babel.
     private def integer
       rules = [] of Rules::Rules
       groups = [] of Int32
       grouping_block_count = 0
-      leading_zero = false
-      trailing_zero = false
-
-      # Matches leading zero
-      if self.match(TokenTypes::DigitPlaceholder)
-        leading_zero = true
-
-        # If it's the only zero present then obviously it'll also indicate the presence of trailing zeros
-        if ({TokenTypes::CurrencySymbol, TokenTypes::DecimalSeparator} + AFFIX_CHARACTERS).includes?(@current_token.token_type) || self.is_at_end?
-          trailing_zero = true
-        end
-      end
+      forbidden_leading_zero_count = 0
 
       while self.match(TokenTypes::DigitPlaceholderNoFrontBackZeros, TokenTypes::DigitPlaceholder, TokenTypes::SignificantDigitSignifier)
         grouping_block_count += 1
@@ -231,14 +221,14 @@ module CLDR::Numbers
         # with those in mind.
         if @previous_token.token_type == TokenTypes::SignificantDigitSignifier
           # In the ICU version, it'll error when we have "0"s in this expression. However, as are already more
-          # lenient than it by allowing intermediate 0s between #s (albeit meaningless except as grouping size counts)
-          # I don't see why we shouldn't also allow it in sigfig pattern, but interpreted the same as #s.
+          # lenient than it by allowing intermediate 0s between #s I don't see why we shouldn't also allow it in
+          #  sigfig pattern, but interpreted the same as #s.
           return self.sigdigits(groups, grouping_block_count)
         end
 
-        # Do we allow trailing zeros? (This should be the "last") '0' token
-        if @previous_token.token_type == TokenTypes::DigitPlaceholder && (({TokenTypes::CurrencySymbol, TokenTypes::DecimalSeparator} + AFFIX_CHARACTERS).includes?(@current_token.token_type) || self.is_at_end?)
-          trailing_zero = true
+        # The total amount of #s within this section of the pattern shows the amount of forbidden leading zeros.
+        if @previous_token.token_type == TokenTypes::DigitPlaceholderNoFrontBackZeros
+          forbidden_leading_zero_count += 1
         end
 
         # Are we at the start of another grouping block or are we at the end of the numerical body.
@@ -265,37 +255,36 @@ module CLDR::Numbers
         @metadata.primary_grouping = groups[0]
       end
 
-      rules << Rules::Integer.new(leading_zero, trailing_zero)
+      rules << Rules::Integer.new(forbidden_leading_zero_count)
       return rules
     end
 
     # Matches fractional part of number pattern
+    #
+    # Differs from ICU's version as we allow intermediate #s and 0s,
+    # with the total amount of #s in the pattern, meaening the amount of forbidden
+    # trailing zeros. This is the behavior that matches ruby-cldr and python's babel.
     private def fractional_format
       fractional_rules = [] of Rules::Rules
 
       groups = [] of Int32
       grouping_block_count = 0
 
-      leading_zero = false
-      trailing_zero = false
+      forbidden_trailing_zero_count = 0
       fractional_count = 0
 
       # Similar to #integer but without calls to #sigdigits
       if self.match(TokenTypes::CurrencySymbol, TokenTypes::DecimalSeparator)
         fractional_rules << Rules::InjectSymbol.new(@previous_token.token_type)
 
-        if self.check(TokenTypes::DigitPlaceholder)
-          leading_zero = true
-        end
-
         # Look to #integer for more detailed explanation
         while self.match(TokenTypes::DigitPlaceholderNoFrontBackZeros, TokenTypes::DigitPlaceholder)
           grouping_block_count += 1
           fractional_count += 1
 
-          # Do we allow trailing zeros? (This should be the "last") '0' token
-          if @previous_token.token_type == TokenTypes::DigitPlaceholder && (AFFIX_CHARACTERS.includes?(@current_token.token_type) || self.is_at_end?)
-            trailing_zero = true
+          # The total amount of #s within this section of the pattern shows the amount of forbidden trailing zeros.
+          if @previous_token.token_type == TokenTypes::DigitPlaceholderNoFrontBackZeros
+            forbidden_trailing_zero_count += 1
           end
 
           # Are we at the start of another grouping block or are we at the end of the numerical body.
@@ -325,7 +314,7 @@ module CLDR::Numbers
         end
 
         if fractional_count != 0
-          fractional_rules << Rules::Fractional.new(leading_zero, trailing_zero, fractional_count)
+          fractional_rules << Rules::Fractional.new(forbidden_trailing_zero_count, fractional_count)
         end
       end
 

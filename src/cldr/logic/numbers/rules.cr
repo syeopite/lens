@@ -18,19 +18,30 @@ module CLDR::Numbers
     end
 
     struct Integer < Rules
-      getter leading_zeros
-      getter trailing_zeros
+      # Same as forbidden_trailing_zero_range in `Fractional` but for leading zeros.
+      getter forbidden_leading_zero_count
 
-      def initialize(@leading_zeros : Bool, @trailing_zeros : Bool)
+      def initialize(@forbidden_leading_zero_count : Int32)
       end
     end
 
     struct Fractional < Rules
-      getter leading_zeros
-      getter trailing_zeros
+      # Amount of forbidden trailing zeros at the end of the fractional portion of the formatted number.
+      #
+      # This is best explained by example:
+      # Pattern: '0.000####' has a maximum fraction size of 7 characters and forbids 4 trailing zeros
+      #   Number: 0.123 results in this **internally*: '0.1230000' due to trailing zero padding but
+      #   since we forbid 4 trailing zeros, the actual formatted number is '0.123'
+      #   Number: 0.1234 -> 0.1234
+      #
+      # Since we allow for intermediate #s within a pattern, we forbid 3 trailing zeros.+
+      # Pattern: '0.000###0000
+      # Number: 0.1 -> 0.1000000
+      #
+      getter forbidden_trailing_zero_count
       getter size
 
-      def initialize(@leading_zeros : Bool, @trailing_zeros : Bool, @size : Int32)
+      def initialize(@forbidden_trailing_zero_count : Int32, @size : Int32)
       end
     end
   end
