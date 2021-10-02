@@ -7,10 +7,10 @@ Ruby YAML has support for plurals, defined with CLDR data. This means that it *c
 
 ## Using Ruby YAML
 
-The Ruby YAML backend is the `CrystalI18n::I18n`[^1]. To initialize, simply pass in the locale directory:
+The Ruby YAML backend is the `RubyI18n::Yaml`. To initialize, simply pass in the locale directory:
 
 ```crystal
-catalogue = CrystalI18n::I18n.new("locales")
+catalogue = RubyI18n::Yaml.new("locales")
 ```
 
 Now, we can begin translating!
@@ -78,5 +78,3 @@ If the value at the given path (key) turns out to be an array then you can pass 
 ```crystal
 catalogue.translate("en", "items.foods", iter: 2) # => "Hamburger"
 ```
-
-[^1]: `CrystalI18n::I18n` really isn't a good name. It was mainly just choosen since all internationalization shards prior to Lens were based off of that format. This will get renamed in `v0.2.0`.

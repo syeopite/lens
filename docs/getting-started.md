@@ -40,7 +40,7 @@ Now we'll select a format!
 |:--------:|:--------:|:----------------:|
 | GNU Gettext PO | `Gettext::POBackend` | [Here](/lens/formats/gnu-gettext)
 | GNU Gettext MO | `Gettext::MOBackend` | [Here](/lens/formats/gnu-gettext)
-| Ruby YAML | `CrystalI18n::I18n`[^1] | [Here](/lens/formats/ruby-yaml)
+| Ruby YAML | `RubyI18n::Yaml`[^1] | [Here](/lens/formats/ruby-yaml)
 
 
 For this simple illustration lets use `Gettext::MOBackend`.
@@ -75,7 +75,7 @@ catalogue = catalogue_hash["en_US"]
 
     # The backend for ruby-yaml on the other hand is directly the catalogue.
     # No need for an additional #create. And naturally, it's also not a hash.
-    yaml_catalogue = CrystalI18n::I18n.new("locales")
+    yaml_catalogue = RubyI18n::Yaml.new("locales")
 
     # Gettext
     gettext_catalogue.gettext("A message")     # => "Translated message"
