@@ -1,3 +1,4 @@
+require "spec"
 require "digest/sha256"
 require "../../../src/backend/gettext/mo/*"
 require "../../../src/backend/gettext/po/*"

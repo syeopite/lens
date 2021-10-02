@@ -1,3 +1,4 @@
+require "spec"
 require "digest"
 require "../../../src/backend/gettext/plural-forms/*"
 

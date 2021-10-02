@@ -1,3 +1,4 @@
+require "spec"
 require "../../../src/cldr/logic/number_properties.cr"
 
 describe CLDR::Plurals do

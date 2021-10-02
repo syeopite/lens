@@ -1,3 +1,4 @@
+require "spec"
 require "digest"
 require "../../src/cldr/logic/numbers/lexer"
 require "../../src/cldr/logic/numbers/parser"

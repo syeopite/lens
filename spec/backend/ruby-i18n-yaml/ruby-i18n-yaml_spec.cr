@@ -1,3 +1,4 @@
+require "spec"
 require "../../../src/backend/ruby-i18n-yaml"
 require "../../../src/cldr/languages/en/units"
 
