@@ -113,29 +113,12 @@ describe CLDR::Numbers::PatternParser do
     metadata.padding_character.should(eq(nil))
   end
 
-  it "Can parse pattern: '#,@@###,###.000'" do
+  it "Can parse pattern: '#,@@###,###'" do
     rules, metadata = CLDR::Numbers::PatternParser.new("#,@@###,###").parse
     Digest::SHA256.hexdigest(rules.to_s).should(eq("ac4f3b4b84d4201fa5bcdbbab5103eaa5cfc197e06ebe78acb5fc0c4c7b0b3f7"))
 
     metadata.primary_grouping.should(eq(3))
     metadata.secondary_grouping.should(eq(5))
-
-    metadata.fractional_primary_grouping.should(eq(nil))
-    metadata.fractional_secondary_grouping.should(eq(nil))
-
-    metadata.maximum_significant_figures.should(eq(8))
-    metadata.minimum_significant_figures.should(eq(2))
-
-    metadata.use_padding.should(eq(false))
-    metadata.padding_character.should(eq(nil))
-  end
-
-  it "Can parse pattern: '@@##,###'" do
-    rules, metadata = CLDR::Numbers::PatternParser.new("@@###,###.###").parse
-    Digest::SHA256.hexdigest(rules.to_s).should(eq("1b225792d2f470908492f3ea239de594753d1b301f2a33c7a522154579f026cc"))
-
-    metadata.primary_grouping.should(eq(3))
-    metadata.secondary_grouping.should(eq(nil))
 
     metadata.fractional_primary_grouping.should(eq(nil))
     metadata.fractional_secondary_grouping.should(eq(nil))
@@ -217,10 +200,6 @@ describe CLDR::Numbers::PatternFormatter do
 
   # TODO
   # it "Can format pattern: '#,##0.00 ¤'" do
-  # end
-
-  # TODO
-  # it "Can format pattern: '#,@@###,###.000'" do
   # end
 
   # TODO

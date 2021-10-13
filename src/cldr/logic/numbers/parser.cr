@@ -137,8 +137,8 @@ module CLDR::Numbers
         minimum_significant_figures += 1
       end
 
-      # Match remaining #s and 0s in initial significant figure signifier block
-      while self.match(TokenTypes::DigitPlaceholder, TokenTypes::DigitPlaceholderNoFrontBackZeros)
+      # Match remaining #s in initial significant figure signifier block
+      while self.match(TokenTypes::DigitPlaceholderNoFrontBackZeros)
         grouping_block_count += 1
         additional_significant_figures_count += 1
       end
@@ -156,7 +156,7 @@ module CLDR::Numbers
 
       self.match(TokenTypes::GroupingSeparator)
 
-      while self.match(TokenTypes::DigitPlaceholder, TokenTypes::DigitPlaceholderNoFrontBackZeros)
+      while self.match(TokenTypes::DigitPlaceholderNoFrontBackZeros)
         grouping_block_count += 1
         additional_significant_figures_count += 1
 
@@ -213,6 +213,7 @@ module CLDR::Numbers
       groups = [] of Int32
       grouping_block_count = 0
       forbidden_leading_zero_count = 0
+      has_zero_in_pattern = false
 
       while self.match(TokenTypes::DigitPlaceholderNoFrontBackZeros, TokenTypes::DigitPlaceholder, TokenTypes::SignificantDigitSignifier)
         grouping_block_count += 1
@@ -220,6 +221,11 @@ module CLDR::Numbers
         # If the matched token is a significant figure signifier we'll go ahead and parse the rest of this integer block
         # with those in mind.
         if @previous_token.token_type == TokenTypes::SignificantDigitSignifier
+          # Forbid significant digits in combination with min/max integer/fraction digits
+          if has_zero_in_pattern
+            raise LensExceptions::ParseError.new("'0's cannot be used in significant digit patterns")
+          end
+
           # In the ICU version, it'll error when we have "0"s in this expression. However, as are already more
           # lenient than it by allowing intermediate 0s between #s I don't see why we shouldn't also allow it in
           #  sigfig pattern, but interpreted the same as #s.
@@ -229,6 +235,8 @@ module CLDR::Numbers
         # The total amount of #s within this section of the pattern shows the amount of forbidden leading zeros.
         if @previous_token.token_type == TokenTypes::DigitPlaceholderNoFrontBackZeros
           forbidden_leading_zero_count += 1
+        elsif @previous_token.token_type == TokenTypes::DigitPlaceholder
+          has_zero_in_pattern = true
         end
 
         # Are we at the start of another grouping block or are we at the end of the numerical body.
@@ -276,6 +284,10 @@ module CLDR::Numbers
       # Similar to #integer but without calls to #sigdigits
       if self.match(TokenTypes::CurrencySymbol, TokenTypes::DecimalSeparator)
         fractional_rules << Rules::InjectSymbol.new(@previous_token.token_type)
+
+        if @metadata.minimum_significant_figures && @previous_token.token_type == TokenTypes::DecimalSeparator
+          raise LensExceptions::ParseError.new("A decimal separator cannot be in a significant digit pattern")
+        end
 
         # Look to #integer for more detailed explanation
         while self.match(TokenTypes::DigitPlaceholderNoFrontBackZeros, TokenTypes::DigitPlaceholder)
