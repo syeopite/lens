@@ -325,6 +325,10 @@ describe CLDR::Numbers::PatternFormatter do
       {1.1, "1.1000"},
     })
 
+    test_pattern_format("@@@@@", {
+      {331.03, "331.03"},
+    })
+
     test_pattern_format("@@@#####", {
       {1023, "1023"},
     })

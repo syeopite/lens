@@ -270,7 +270,14 @@ module CLDR::Numbers
         if fractional.empty?
           total_sig_figs = (integer.rstrip("0").size)
         else
-          total_sig_figs = (integer.lstrip("0").size + fractional.lstrip("0").size)
+          if integer == "0"
+            # Since the integer portion is 0, we'll need to strip the leading zeros
+            # from the fractional part in order to find the remaining siginfnicant digits. IE:
+            # 0.003 has only one sigfig
+            total_sig_figs = (integer.rstrip("0").size + fractional.lstrip("0").size)
+          else
+            total_sig_figs = (integer.rstrip("0").size + fractional.size)
+          end
         end
 
         if total_sig_figs < @metadata.minimum_significant_figures.not_nil! && total_sig_figs != 0
