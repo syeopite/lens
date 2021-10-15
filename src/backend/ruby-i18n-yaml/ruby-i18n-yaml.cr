@@ -12,7 +12,6 @@ require "../../helpers/plural-rules/*"
 #
 # and any of the other implementations the community has made.
 #
-# TODO: replace link to documentation once written.
 # Each of the variants in Crystal has some slight variations compared with the original ruby-i18n. Minor alternations are needed
 # to be compatible with Lens. [See the usage documentation for more information](https://syeopite.github.io/lens/latest/formats/ruby-yaml/)
 #
