@@ -113,9 +113,9 @@ jobs:
           ref: master
 
       - name: Install Crystal
-        uses: oprypin/install-crystal@v1.2.4
+        uses: crystal-lang/install-crystal@v1.5.3
         with:
-          crystal: nightly
+          crystal: 1.2.0
 
       - name: Cache Shards
         uses: actions/cache@v2
