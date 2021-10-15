@@ -451,5 +451,21 @@ module CLDR::Numbers
 
       return value
     end
+
+    # Count how many zeros appear in a row within an string. Direction corresponds to the
+    # direction parameter, true equates to LTR while false means to RTL.
+    private def count_zeros_of_string_encoded_number(string : String, direction : Bool)
+      string = string.reverse if !direction
+      count = 0
+      string.each_char do |c|
+        if c == '0'
+          count += 1
+        else
+          break
+        end
+      end
+
+      return count
+    end
   end
 end
