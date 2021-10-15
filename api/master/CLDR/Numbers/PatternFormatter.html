@@ -10,13 +10,13 @@
   <meta name="crystal_docs.json_config_url" content="/lens/cry-versions.json">
 
 
-    <link rel="canonical" href="https://syeopite.github.io/lens/api/latest/Gettext/PluralForm/Interpreter.html">
+    <link rel="canonical" href="https://syeopite.github.io/lens/api/latest/CLDR/Numbers/PatternFormatter.html">
 
 <link href="../../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="Lens">
-  <title>Gettext::PluralForm::Interpreter - Lens v0.2.0-dev</title>
+  <title>CLDR::Numbers::PatternFormatter(Lang) - Lens v0.2.0-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -54,12 +54,12 @@
   <div class="types-list">
     <ul>
   
-  <li class="parent " data-id="Lens/CLDR" data-name="cldr">
+  <li class="parent open current" data-id="Lens/CLDR" data-name="cldr">
       <a href="../../CLDR.html">CLDR</a>
       
         <ul>
   
-  <li class="parent " data-id="Lens/CLDR/Numbers" data-name="cldr::numbers">
+  <li class="parent open current" data-id="Lens/CLDR/Numbers" data-name="cldr::numbers">
       <a href="../../CLDR/Numbers.html">Numbers</a>
       
         <ul>
@@ -69,7 +69,7 @@
       
     </li>
   
-  <li class=" " data-id="Lens/CLDR/Numbers/PatternFormatter" data-name="cldr::numbers::patternformatter(lang)">
+  <li class=" current" data-id="Lens/CLDR/Numbers/PatternFormatter" data-name="cldr::numbers::patternformatter(lang)">
       <a href="../../CLDR/Numbers/PatternFormatter.html">PatternFormatter</a>
       
     </li>
@@ -124,7 +124,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="Lens/Gettext" data-name="gettext">
+  <li class="parent " data-id="Lens/Gettext" data-name="gettext">
       <a href="../../Gettext.html">Gettext</a>
       
         <ul>
@@ -139,12 +139,12 @@
       
     </li>
   
-  <li class="parent open current" data-id="Lens/Gettext/PluralForm" data-name="gettext::pluralform">
+  <li class="parent " data-id="Lens/Gettext/PluralForm" data-name="gettext::pluralform">
       <a href="../../Gettext/PluralForm.html">PluralForm</a>
       
         <ul>
   
-  <li class=" current" data-id="Lens/Gettext/PluralForm/Interpreter" data-name="gettext::pluralform::interpreter">
+  <li class=" " data-id="Lens/Gettext/PluralForm/Interpreter" data-name="gettext::pluralform::interpreter">
       <a href="../../Gettext/PluralForm/Interpreter.html">Interpreter</a>
       
     </li>
@@ -233,12 +233,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Gettext::PluralForm::Interpreter
+  <span class="kind">class</span> CLDR::Numbers::PatternFormatter(Lang)
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Gettext/PluralForm/Interpreter.html">Gettext::PluralForm::Interpreter</a></li><li class="superclass">Gettext::PluralForm::ExpressionVisitor</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../CLDR/Numbers/PatternFormatter.html">CLDR::Numbers::PatternFormatter(Lang)</a></li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -252,8 +252,11 @@
     Overview
   </h2>
 
-  <p>A interpreter that calculates the plural-form to take from syntax trees representing the plural-form expression.</p>
-<p><a href="https://craftinginterpreters.com/evaluating-expressions.html">Based on this interpreter from crafting interpreters</a></p>
+  <p><span class="flag lime">EXPERIMENTAL</span> </p>
+<p>Formatter for formatting decimal numbers with the attributes from the selected language,
+and the parsed results from a pattern.</p>
+<pre><code class="language-crystal">rules, metadata <span class="o">=</span> <span class="t">CLDR</span><span class="t">::</span><span class="t">Numbers</span><span class="t">::</span><span class="t">PatternParser</span>.<span class="k">new</span>(<span class="s">&quot;#,##0.###&quot;</span>).parse
+formatter <span class="o">=</span> <span class="t">CLDR</span><span class="t">::</span><span class="t">Numbers</span><span class="t">::</span><span class="t">PatternFormatter</span>(<span class="t">CLDR</span><span class="t">::</span><span class="t">Languages</span><span class="t">::</span><span class="t">EN</span>).<span class="k">new</span>(rules, metadata)</code></pre>
 
 
 
@@ -278,8 +281,8 @@
   </h2>
   
     
-      <a href="https://github.com/syeopite/lens/blob/ed4fffca/src/backend/gettext/plural-forms/interpreter.cr#L12" target="_blank">
-        backend/gettext/plural-forms/interpreter.cr
+      <a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/numbers/formatter.cr#L11" target="_blank">
+        cldr/logic/numbers/formatter.cr
       </a>
     
     <br/>
@@ -300,9 +303,9 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new%28expressions%3AArray%28Expression%29%29-class-method" class="signature"><strong>.new</strong>(expressions : Array(Expression))</a>
+        <a href="#new%28instructions%3APatternConstruct%2Cmetadata%3AMetadata%29-class-method" class="signature"><strong>.new</strong>(instructions : PatternConstruct, metadata : Metadata)</a>
         
-          <div class="summary"><p>Creates an interpreter with the given expression trees from the <code><a href="../../Gettext/PluralForm/Parser.html">PluralForm::Parser</a></code> as input.</p></div>
+          <div class="summary"><p>Initializes a decimal formatter with the parsed results from the <code><a href="../../CLDR/Numbers/PatternParser.html">PatternParser</a></code>.</p></div>
         
       </li>
     
@@ -323,9 +326,23 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#interpret%28number%29-instance-method" class="signature"><strong>#interpret</strong>(number)</a>
+        <a href="#format%28number%3AString%29-instance-method" class="signature"><strong>#format</strong>(number : String)</a>
         
-          <div class="summary"><p>Calculates which plural form to use for the given number</p></div>
+          <div class="summary"><p>Formats a number (given as string) based on the pattern set by the instance.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#format%28number%3AInt%29-instance-method" class="signature"><strong>#format</strong>(number : Int)</a>
+        
+          <div class="summary"><p>Formats a number based on the pattern set by the instance</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#format%28number%3AFloat%29-instance-method" class="signature"><strong>#format</strong>(number : Float)</a>
+        
+          <div class="summary"><p>Formats a number based on the pattern set by the instance</p></div>
         
       </li>
     
@@ -336,16 +353,6 @@
 
 
 <div class="methods-inherited">
-  
-    
-
-
-    
-
-
-    
-
-
   
     
 
@@ -379,28 +386,28 @@
     Constructor Detail
   </h2>
   
-    <div class="entry-detail" id="new(expressions:Array(Expression))-class-method">
+    <div class="entry-detail" id="new(instructions:PatternConstruct,metadata:Metadata)-class-method">
       <div class="signature">
         
-        def self.<strong>new</strong>(expressions : Array(Expression))
+        def self.<strong>new</strong>(instructions : <a href="../../CLDR/Numbers/PatternConstruct.html">PatternConstruct</a>, metadata : Metadata)
 
-        <a class="method-permalink" href="#new%28expressions%3AArray%28Expression%29%29-class-method">#</a>
+        <a class="method-permalink" href="#new%28instructions%3APatternConstruct%2Cmetadata%3AMetadata%29-class-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Creates an interpreter with the given expression trees from the <code><a href="../../Gettext/PluralForm/Parser.html">PluralForm::Parser</a></code> as input.</p>
-<pre><code class="language-crystal">plural_form_scanner <span class="o">=</span> <span class="t">Gettext</span><span class="t">::</span><span class="t">PluralForm</span><span class="t">::</span><span class="t">Scanner</span>.<span class="k">new</span>(<span class="s">&quot;nplurals=2; plural=(n &gt; 1);&quot;</span>)
-expressions <span class="o">=</span> <span class="t">Gettext</span><span class="t">::</span><span class="t">PluralForm</span><span class="t">::</span><span class="t">Parser</span>.<span class="k">new</span>(plural_form_scanner.scan).parse
-interpreter <span class="o">=</span> <span class="t">Gettext</span><span class="t">::</span><span class="t">PluralForm</span><span class="t">::</span><span class="t">Interpreter</span>.<span class="k">new</span>(expressions)
-interpreter.interpret(<span class="n">1</span>)  <span class="c"># =&gt; 0</span>
-interpreter.interpret(<span class="n">50</span>) <span class="c"># =&gt; 1</span></code></pre>
+          <p>Initializes a decimal formatter with the parsed results from the <code><a href="../../CLDR/Numbers/PatternParser.html">PatternParser</a></code>.</p>
+<pre><code class="language-crystal">rules, metadata <span class="o">=</span> <span class="t">CLDR</span><span class="t">::</span><span class="t">Numbers</span><span class="t">::</span><span class="t">PatternParser</span>.<span class="k">new</span>(<span class="s">&quot;#,##0.###&quot;</span>).parse
+formatter <span class="o">=</span> <span class="t">CLDR</span><span class="t">::</span><span class="t">Numbers</span><span class="t">::</span><span class="t">PatternFormatter</span>(<span class="t">CLDR</span><span class="t">::</span><span class="t">Languages</span><span class="t">::</span><span class="t">EN</span>).<span class="k">new</span>(rules, metadata)
+
+formatter.format(<span class="s">&quot;12345&quot;</span>)     <span class="c"># =&gt; 12,345</span>
+formatter.format(<span class="s">&quot;1000.1236&quot;</span>) <span class="c"># =&gt; 1,000.124</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/backend/gettext/plural-forms/interpreter.cr#L22" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/numbers/formatter.cr#L25" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -419,23 +426,70 @@ interpreter.interpret(<span class="n">50</span>) <span class="c"># =&gt; 1</span
     Instance Method Detail
   </h2>
   
-    <div class="entry-detail" id="interpret(number)-instance-method">
+    <div class="entry-detail" id="format(number:String)-instance-method">
       <div class="signature">
         
-        def <strong>interpret</strong>(number)
+        def <strong>format</strong>(number : String)
 
-        <a class="method-permalink" href="#interpret%28number%29-instance-method">#</a>
+        <a class="method-permalink" href="#format%28number%3AString%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
-          <p>Calculates which plural form to use for the given number</p>
+          <p>Formats a number (given as string) based on the pattern set by the instance.</p>
+<pre><code class="language-crystal">rules, metadata <span class="o">=</span> <span class="t">CLDR</span><span class="t">::</span><span class="t">Numbers</span><span class="t">::</span><span class="t">PatternParser</span>.<span class="k">new</span>(<span class="s">&quot;#,##0.###&quot;</span>).parse
+formatter <span class="o">=</span> <span class="t">CLDR</span><span class="t">::</span><span class="t">Numbers</span><span class="t">::</span><span class="t">PatternFormatter</span>(<span class="t">CLDR</span><span class="t">::</span><span class="t">Languages</span><span class="t">::</span><span class="t">EN</span>).<span class="k">new</span>(rules, metadata)
+
+formatter.format(<span class="s">&quot;12345&quot;</span>)     <span class="c"># =&gt; 12,345</span>
+formatter.format(<span class="s">&quot;1000.1236&quot;</span>) <span class="c"># =&gt; 1,000.124</span></code></pre>
         </div>
       
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/backend/gettext/plural-forms/interpreter.cr#L164" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/numbers/formatter.cr#L324" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="format(number:Int)-instance-method">
+      <div class="signature">
+        
+        def <strong>format</strong>(number : Int)
+
+        <a class="method-permalink" href="#format%28number%3AInt%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Formats a number based on the pattern set by the instance</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/numbers/formatter.cr#L368" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="format(number:Float)-instance-method">
+      <div class="signature">
+        
+        def <strong>format</strong>(number : Float)
+
+        <a class="method-permalink" href="#format%28number%3AFloat%29-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Formats a number based on the pattern set by the instance</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/numbers/formatter.cr#L391" target="_blank">View source</a>]
         
       </div>
     </div>

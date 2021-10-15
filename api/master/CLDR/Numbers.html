@@ -10,13 +10,13 @@
   <meta name="crystal_docs.json_config_url" content="/lens/cry-versions.json">
 
 
-    <link rel="canonical" href="https://syeopite.github.io/lens/api/latest/LensExceptions/LexError.html">
+    <link rel="canonical" href="https://syeopite.github.io/lens/api/latest/CLDR/Numbers.html">
 
 <link href="../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../js/doc.js"></script>
 
   <meta name="repository-name" content="Lens">
-  <title>LensExceptions::LexError - Lens v0.2.0-dev</title>
+  <title>CLDR::Numbers - Lens v0.2.0-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../";
   </script>
@@ -54,12 +54,12 @@
   <div class="types-list">
     <ul>
   
-  <li class="parent " data-id="Lens/CLDR" data-name="cldr">
+  <li class="parent open current" data-id="Lens/CLDR" data-name="cldr">
       <a href="../CLDR.html">CLDR</a>
       
         <ul>
   
-  <li class="parent " data-id="Lens/CLDR/Numbers" data-name="cldr::numbers">
+  <li class="parent open current" data-id="Lens/CLDR/Numbers" data-name="cldr::numbers">
       <a href="../CLDR/Numbers.html">Numbers</a>
       
         <ul>
@@ -184,12 +184,12 @@
       
     </li>
   
-  <li class="parent open current" data-id="Lens/LensExceptions" data-name="lensexceptions">
+  <li class="parent " data-id="Lens/LensExceptions" data-name="lensexceptions">
       <a href="../LensExceptions.html">LensExceptions</a>
       
         <ul>
   
-  <li class=" current" data-id="Lens/LensExceptions/LexError" data-name="lensexceptions::lexerror">
+  <li class=" " data-id="Lens/LensExceptions/LexError" data-name="lensexceptions::lexerror">
       <a href="../LensExceptions/LexError.html">LexError</a>
       
     </li>
@@ -233,12 +233,10 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> LensExceptions::LexError
+  <span class="kind">module</span> CLDR::Numbers
 
 </h1>
 
-
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../LensExceptions/LexError.html">LensExceptions::LexError</a></li><li class="superclass">Exception</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -252,7 +250,9 @@
     Overview
   </h2>
 
-  <p>Exception thrown when an error occurrs during lexing.</p>
+  <p>Module containing methods to handle CLDR number patterns</p>
+<p><span class="flag lime">EXPERIMENTAL</span> </p>
+<p><span class="flag orange">TODO</span>  Write documentation</p>
 
 
 
@@ -277,8 +277,36 @@
   </h2>
   
     
-      <a href="https://github.com/syeopite/lens/blob/ed4fffca/src/helpers/exceptions.cr#L4" target="_blank">
-        helpers/exceptions.cr
+      <a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/numbers/formatter.cr#L1" target="_blank">
+        cldr/logic/numbers/formatter.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/numbers/lexer.cr#L7" target="_blank">
+        cldr/logic/numbers/lexer.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/numbers/parser.cr#L7" target="_blank">
+        cldr/logic/numbers/parser.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/numbers/rules.cr#L1" target="_blank">
+        cldr/logic/numbers/rules.cr
+      </a>
+    
+    <br/>
+  
+    
+      <a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/numbers/tokens.cr#L1" target="_blank">
+        cldr/logic/numbers/tokens.cr
       </a>
     
     <br/>
@@ -287,23 +315,6 @@
 
 
 
-
-  <h2>
-    <a id="constructors" class="anchor" href="#constructors">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructors
-  </h2>
-  <ul class="list-summary">
-    
-      <li class="entry-summary">
-        <a href="#new%28file_name%2Cmessage%2Cfull_line%3AString%2Cline%3AInt%2Ccolumn%3AInt%29-class-method" class="signature"><strong>.new</strong>(file_name, message, full_line : String, line : Int, column : Int)</a>
-        
-      </li>
-    
-  </ul>
 
 
 
@@ -315,64 +326,8 @@
 
 <div class="methods-inherited">
   
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
 </div>
 
-
-  <h2>
-    <a id="constructor-detail" class="anchor" href="#constructor-detail">
-  <svg class="octicon-link" aria-hidden="true">
-    <use href="#octicon-link"/>
-  </svg>
-</a>
-    Constructor Detail
-  </h2>
-  
-    <div class="entry-detail" id="new(file_name,message,full_line:String,line:Int,column:Int)-class-method">
-      <div class="signature">
-        
-        def self.<strong>new</strong>(file_name, message, full_line : String, line : Int, column : Int)
-
-        <a class="method-permalink" href="#new%28file_name%2Cmessage%2Cfull_line%3AString%2Cline%3AInt%2Ccolumn%3AInt%29-class-method">#</a>
-      </div>
-      
-      <br/>
-      <div>
-        
-          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/helpers/exceptions.cr#L5" target="_blank">View source</a>]
-        
-      </div>
-    </div>
-  
 
 
 

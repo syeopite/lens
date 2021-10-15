@@ -10,13 +10,13 @@
   <meta name="crystal_docs.json_config_url" content="/lens/cry-versions.json">
 
 
-    <link rel="canonical" href="https://syeopite.github.io/lens/api/latest/Gettext/PluralForm/Scanner.html">
+    <link rel="canonical" href="https://syeopite.github.io/lens/api/latest/CLDR/Numbers/PatternParser.html">
 
 <link href="../../css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../../js/doc.js"></script>
 
   <meta name="repository-name" content="Lens">
-  <title>Gettext::PluralForm::Scanner - Lens v0.2.0-dev</title>
+  <title>CLDR::Numbers::PatternParser - Lens v0.2.0-dev</title>
   <script type="text/javascript">
     CrystalDocs.base_path = "../../";
   </script>
@@ -54,12 +54,12 @@
   <div class="types-list">
     <ul>
   
-  <li class="parent " data-id="Lens/CLDR" data-name="cldr">
+  <li class="parent open current" data-id="Lens/CLDR" data-name="cldr">
       <a href="../../CLDR.html">CLDR</a>
       
         <ul>
   
-  <li class="parent " data-id="Lens/CLDR/Numbers" data-name="cldr::numbers">
+  <li class="parent open current" data-id="Lens/CLDR/Numbers" data-name="cldr::numbers">
       <a href="../../CLDR/Numbers.html">Numbers</a>
       
         <ul>
@@ -79,7 +79,7 @@
       
     </li>
   
-  <li class=" " data-id="Lens/CLDR/Numbers/PatternParser" data-name="cldr::numbers::patternparser">
+  <li class=" current" data-id="Lens/CLDR/Numbers/PatternParser" data-name="cldr::numbers::patternparser">
       <a href="../../CLDR/Numbers/PatternParser.html">PatternParser</a>
       
     </li>
@@ -124,7 +124,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="Lens/Gettext" data-name="gettext">
+  <li class="parent " data-id="Lens/Gettext" data-name="gettext">
       <a href="../../Gettext.html">Gettext</a>
       
         <ul>
@@ -139,7 +139,7 @@
       
     </li>
   
-  <li class="parent open current" data-id="Lens/Gettext/PluralForm" data-name="gettext::pluralform">
+  <li class="parent " data-id="Lens/Gettext/PluralForm" data-name="gettext::pluralform">
       <a href="../../Gettext/PluralForm.html">PluralForm</a>
       
         <ul>
@@ -154,7 +154,7 @@
       
     </li>
   
-  <li class=" current" data-id="Lens/Gettext/PluralForm/Scanner" data-name="gettext::pluralform::scanner">
+  <li class=" " data-id="Lens/Gettext/PluralForm/Scanner" data-name="gettext::pluralform::scanner">
       <a href="../../Gettext/PluralForm/Scanner.html">Scanner</a>
       
     </li>
@@ -233,12 +233,12 @@
 <div class="main-content">
 <h1 class="type-name">
 
-  <span class="kind">class</span> Gettext::PluralForm::Scanner
+  <span class="kind">class</span> CLDR::Numbers::PatternParser
 
 </h1>
 
 
-  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../Gettext/PluralForm/Scanner.html">Gettext::PluralForm::Scanner</a></li><li class="superclass">Lens::Base::Lexer(<a href="../../Gettext/PluralForm/Token.html">Gettext::PluralForm::Token</a>)</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
+  <ul class="superclass-hierarchy"><li class="superclass"><a href="../../CLDR/Numbers/PatternParser.html">CLDR::Numbers::PatternParser</a></li><li class="superclass">Lens::Base::Parser(CLDR::Numbers::Token, CLDR::Numbers::TokenTypes, <a href="../../CLDR/Numbers/PatternLexer.html">CLDR::Numbers::PatternLexer</a>)</li><li class="superclass">Reference</li><li class="superclass">Object</li></ul>
 
 
 
@@ -252,8 +252,10 @@
     Overview
   </h2>
 
-  <p>A scanner to tokenize a subset of C's grammar</p>
-<p>Based on https://www.craftinginterpreters.com/scanning.html</p>
+  <p><span class="flag lime">EXPERIMENTAL</span> </p>
+<p><span class="flag orange">TODO</span>  Write documentation</p>
+<p>(Mostly) Based of off the pattern BNF specified in ICU4C's DecimalFormat docs
+See https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classicu_1_1DecimalFormat.html</p>
 
 
 
@@ -278,14 +280,33 @@
   </h2>
   
     
-      <a href="https://github.com/syeopite/lens/blob/ed4fffca/src/backend/gettext/plural-forms/lexer.cr#L23" target="_blank">
-        backend/gettext/plural-forms/lexer.cr
+      <a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/numbers/parser.cr#L24" target="_blank">
+        cldr/logic/numbers/parser.cr
       </a>
     
     <br/>
   
 
 
+
+  
+    <h2>
+      <a id="constant-summary" class="anchor" href="#constant-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+      Constant Summary
+    </h2>
+  
+  <dl>
+    
+      <dt class="entry-const" id="AFFIX_CHARACTERS">
+        <strong>AFFIX_CHARACTERS</strong> = <code>{<span class="t">TokenTypes</span><span class="t">::</span><span class="t">PercentSign</span>, <span class="t">TokenTypes</span><span class="t">::</span><span class="t">PerMilleSign</span>, <span class="t">TokenTypes</span><span class="t">::</span><span class="t">CurrencySymbol</span>, <span class="t">TokenTypes</span><span class="t">::</span><span class="t">StringLiteral</span>, <span class="t">TokenTypes</span><span class="t">::</span><span class="t">Character</span>, <span class="t">TokenTypes</span><span class="t">::</span><span class="t">MinusSign</span>, <span class="t">TokenTypes</span><span class="t">::</span><span class="t">PlusSign</span>}</code>
+      </dt>
+      
+    
+  </dl>
 
 
 
@@ -302,7 +323,28 @@
       <li class="entry-summary">
         <a href="#new%28source%3AString%29-class-method" class="signature"><strong>.new</strong>(source : String)</a>
         
-          <div class="summary"><p>Creates a new scanner instance with the given source</p></div>
+      </li>
+    
+  </ul>
+
+
+
+
+
+  <h2>
+    <a id="instance-method-summary" class="anchor" href="#instance-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#parse-instance-method" class="signature"><strong>#parse</strong></a>
+        
+          <div class="summary"><p>Parse a number pattern</p></div>
         
       </li>
     
@@ -312,59 +354,30 @@
 
 
 
-
-
-
-
 <div class="methods-inherited">
   
     
 
-  <h3>Instance methods inherited from class <code>Lens::Base::Lexer(<a href="../../Gettext/PluralForm/Token.html">Gettext::PluralForm::Token</a>)</code></h3>
+  <h3>Instance methods inherited from class <code>Lens::Base::Parser(CLDR::Numbers::Token, CLDR::Numbers::TokenTypes, <a href="../../CLDR/Numbers/PatternLexer.html">CLDR::Numbers::PatternLexer</a>)</code></h3>
   
   
-    <a href="../../Lens/Base/Lexer.html#next-instance-method" class="tooltip">
-      <span>next</span>
-    next</a>, 
-    
-  
-    <a href="../../Lens/Base/Lexer.html#scan-instance-method" class="tooltip">
-      <span>scan</span>
-    scan</a>
+    <a href="../../Lens/Base/Parser.html#parse-instance-method" class="tooltip">
+      <span>parse</span>
+    parse</a>
     
   
 
 
     
 
-  <h3>Constructor methods inherited from class <code>Lens::Base::Lexer(<a href="../../Gettext/PluralForm/Token.html">Gettext::PluralForm::Token</a>)</code></h3>
+  <h3>Constructor methods inherited from class <code>Lens::Base::Parser(CLDR::Numbers::Token, CLDR::Numbers::TokenTypes, <a href="../../CLDR/Numbers/PatternLexer.html">CLDR::Numbers::PatternLexer</a>)</code></h3>
   
   
-    <a href="../../Lens/Base/Lexer.html#new%28source%3AString%29-class-method" class="tooltip">
+    <a href="../../Lens/Base/Parser.html#new%28source%3AString%29-class-method" class="tooltip">
       <span>new(source : String)</span>
     new</a>
     
   
-
-
-    
-
-
-  
-    
-
-
-    
-
-
-    
-
-
-  
-    
-
-
-    
 
 
     
@@ -411,16 +424,10 @@
         <a class="method-permalink" href="#new%28source%3AString%29-class-method">#</a>
       </div>
       
-        <div class="doc">
-          
-          <p>Creates a new scanner instance with the given source</p>
-<pre><code class="language-crystal">plural_form_scanner <span class="o">=</span> <span class="t">Gettext</span><span class="t">::</span><span class="t">PluralForm</span><span class="t">::</span><span class="t">Scanner</span>.<span class="k">new</span>(<span class="s">&quot;nplurals=2; plural=(n &gt; 1);&quot;</span>)</code></pre>
-        </div>
-      
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/backend/gettext/plural-forms/lexer.cr#L29" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/numbers/parser.cr#L28" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -429,6 +436,37 @@
 
 
 
+
+  <h2>
+    <a id="instance-method-detail" class="anchor" href="#instance-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Instance Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="parse-instance-method">
+      <div class="signature">
+        
+        def <strong>parse</strong>
+
+        <a class="method-permalink" href="#parse-instance-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Parse a number pattern</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/numbers/parser.cr#L337" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
 
 
 

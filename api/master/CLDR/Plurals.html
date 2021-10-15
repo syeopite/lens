@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Crystal Docs 1.1.1">
+<meta name="crystal_docs.project_version" content="v0.2.0-dev">
+<meta name="crystal_docs.project_name" content="Lens">
+
+  <meta name="crystal_docs.json_config_url" content="/lens/cry-versions.json">
+
+
+    <link rel="canonical" href="https://syeopite.github.io/lens/api/latest/CLDR/Plurals.html">
+
+<link href="../css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="../js/doc.js"></script>
+
+  <meta name="repository-name" content="Lens">
+  <title>CLDR::Plurals - Lens v0.2.0-dev</title>
+  <script type="text/javascript">
+    CrystalDocs.base_path = "../";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="../index.html">
+          Lens
+        </a>
+      </h1>
+
+      <span class="project-version">
+        v0.2.0-dev
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent open current" data-id="Lens/CLDR" data-name="cldr">
+      <a href="../CLDR.html">CLDR</a>
+      
+        <ul>
+  
+  <li class="parent " data-id="Lens/CLDR/Numbers" data-name="cldr::numbers">
+      <a href="../CLDR/Numbers.html">Numbers</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/CLDR/Numbers/PatternConstruct" data-name="cldr::numbers::patternconstruct">
+      <a href="../CLDR/Numbers/PatternConstruct.html">PatternConstruct</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/CLDR/Numbers/PatternFormatter" data-name="cldr::numbers::patternformatter(lang)">
+      <a href="../CLDR/Numbers/PatternFormatter.html">PatternFormatter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/CLDR/Numbers/PatternLexer" data-name="cldr::numbers::patternlexer">
+      <a href="../CLDR/Numbers/PatternLexer.html">PatternLexer</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/CLDR/Numbers/PatternParser" data-name="cldr::numbers::patternparser">
+      <a href="../CLDR/Numbers/PatternParser.html">PatternParser</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent open current" data-id="Lens/CLDR/Plurals" data-name="cldr::plurals">
+      <a href="../CLDR/Plurals.html">Plurals</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/CLDR/Plurals/Number" data-name="cldr::plurals::number">
+      <a href="../CLDR/Plurals/Number.html">Number</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="Lens/CrystalI18n" data-name="crystali18n">
+      <a href="../CrystalI18n.html">CrystalI18n</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/CrystalI18n/I18n" data-name="crystali18n::i18n">
+      <a href="../CrystalI18n/I18n.html">I18n</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="Lens/Gettext" data-name="gettext">
+      <a href="../Gettext.html">Gettext</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/Gettext/Catalogue" data-name="gettext::catalogue">
+      <a href="../Gettext/Catalogue.html">Catalogue</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/Gettext/MOBackend" data-name="gettext::mobackend">
+      <a href="../Gettext/MOBackend.html">MOBackend</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Lens/Gettext/PluralForm" data-name="gettext::pluralform">
+      <a href="../Gettext/PluralForm.html">PluralForm</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/Gettext/PluralForm/Interpreter" data-name="gettext::pluralform::interpreter">
+      <a href="../Gettext/PluralForm/Interpreter.html">Interpreter</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/Gettext/PluralForm/Parser" data-name="gettext::pluralform::parser">
+      <a href="../Gettext/PluralForm/Parser.html">Parser</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/Gettext/PluralForm/Scanner" data-name="gettext::pluralform::scanner">
+      <a href="../Gettext/PluralForm/Scanner.html">Scanner</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/Gettext/PluralForm/Token" data-name="gettext::pluralform::token">
+      <a href="../Gettext/PluralForm/Token.html">Token</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Lens/Gettext/POBackend" data-name="gettext::pobackend">
+      <a href="../Gettext/POBackend.html">POBackend</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class=" " data-id="Lens/Lens" data-name="lens">
+      <a href="../Lens.html">Lens</a>
+      
+    </li>
+  
+  <li class="parent " data-id="Lens/LensExceptions" data-name="lensexceptions">
+      <a href="../LensExceptions.html">LensExceptions</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/LensExceptions/LexError" data-name="lensexceptions::lexerror">
+      <a href="../LensExceptions/LexError.html">LexError</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/LensExceptions/MissingTranslation" data-name="lensexceptions::missingtranslation">
+      <a href="../LensExceptions/MissingTranslation.html">MissingTranslation</a>
+      
+    </li>
+  
+  <li class=" " data-id="Lens/LensExceptions/ParseError" data-name="lensexceptions::parseerror">
+      <a href="../LensExceptions/ParseError.html">ParseError</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+  <li class="parent " data-id="Lens/RubyI18n" data-name="rubyi18n">
+      <a href="../RubyI18n.html">RubyI18n</a>
+      
+        <ul>
+  
+  <li class=" " data-id="Lens/RubyI18n/Yaml" data-name="rubyi18n::yaml">
+      <a href="../RubyI18n/Yaml.html">Yaml</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1 class="type-name">
+
+  <span class="kind">module</span> CLDR::Plurals
+
+</h1>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2>
+    <a id="defined-in" class="anchor" href="#defined-in">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Defined in:
+  </h2>
+  
+    
+      <a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L7" target="_blank">
+        cldr/logic/number_properties.cr
+      </a>
+    
+    <br/>
+  
+
+
+
+
+
+
+
+  <h2>
+    <a id="class-method-summary" class="anchor" href="#class-method-summary">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Summary
+  </h2>
+  <ul class="list-summary">
+    
+      <li class="entry-summary">
+        <a href="#compute_number_properties%28source%29-class-method" class="signature"><strong>.compute_number_properties</strong>(source)</a>
+        
+          <div class="summary"><p>Computes and returns all the CLDR properties regarding a number</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get_f%28source%3ANumber%29%3AInt-class-method" class="signature"><strong>.get_f</strong>(source : Number) : Int</a>
+        
+          <div class="summary"><p>Get CLDR plural operand <code>f</code>, visible fraction digits in n, with trailing zeros.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get_f%28source%3AString%29%3AInt-class-method" class="signature"><strong>.get_f</strong>(source : String) : Int</a>
+        
+          <div class="summary"><p>Same as <code><a href="../CLDR/Plurals.html#get_f%28source%3ANumber%29%3AInt-class-method">.get_f(source : Number)</a></code> but for String</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get_i%28source%3ANumber%29%3AInt-class-method" class="signature"><strong>.get_i</strong>(source : Number) : Int</a>
+        
+          <div class="summary"><p>Get CLDR plural operand <code>i</code>, integer digits of n.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get_i%28source%3AString%29%3AInt-class-method" class="signature"><strong>.get_i</strong>(source : String) : Int</a>
+        
+          <div class="summary"><p>Same as <code><a href="../CLDR/Plurals.html#get_i%28source%3ANumber%29%3AInt-class-method">.get_i(source : Number)</a></code> but for String</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get_n%28source%3ANumber%29%3ANumber-class-method" class="signature"><strong>.get_n</strong>(source : Number) : Number</a>
+        
+          <div class="summary"><p>Get CLDR plural operand <code>n</code>, absolute value of the source number.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get_n%28source%3AString%29%3ANumber-class-method" class="signature"><strong>.get_n</strong>(source : String) : Number</a>
+        
+          <div class="summary"><p>Same as <code><a href="../CLDR/Plurals.html#get_n%28source%3ANumber%29%3ANumber-class-method">.get_n(source : Number)</a></code> but for String</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get_t%28source%3ANumber%29%3AInt-class-method" class="signature"><strong>.get_t</strong>(source : Number) : Int</a>
+        
+          <div class="summary"><p>Get CLDR plural operand <code>t</code>, visible fraction digits in n, without trailing zeros.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get_t%28source%3AString%29%3AInt-class-method" class="signature"><strong>.get_t</strong>(source : String) : Int</a>
+        
+          <div class="summary"><p>Same as <code><a href="../CLDR/Plurals.html#get_t%28source%3ANumber%29%3AInt-class-method">.get_t(source : Number)</a></code> but for String</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get_v%28source%3ANumber%29%3AInt-class-method" class="signature"><strong>.get_v</strong>(source : Number) : Int</a>
+        
+          <div class="summary"><p>Get CLDR plural operand <code>v</code>, number of visible fraction digits in n, with trailing zeros.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get_v%28source%3AString%29%3AInt-class-method" class="signature"><strong>.get_v</strong>(source : String) : Int</a>
+        
+          <div class="summary"><p>Same as <code><a href="../CLDR/Plurals.html#get_v%28source%3ANumber%29%3AInt-class-method">.get_v(source : Number)</a></code> but for String</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get_w%28source%3ANumber%29%3AInt-class-method" class="signature"><strong>.get_w</strong>(source : Number) : Int</a>
+        
+          <div class="summary"><p>Get CLDR plural operand <code>w</code>, number of visible fraction digits in n, without trailing zeros.</p></div>
+        
+      </li>
+    
+      <li class="entry-summary">
+        <a href="#get_w%28source%3AString%29%3AInt-class-method" class="signature"><strong>.get_w</strong>(source : String) : Int</a>
+        
+          <div class="summary"><p>Same as <code><a href="../CLDR/Plurals.html#get_w%28source%3ANumber%29%3AInt-class-method">.get_w(source : Number)</a></code> but for String</p></div>
+        
+      </li>
+    
+  </ul>
+
+
+
+
+
+
+
+<div class="methods-inherited">
+  
+</div>
+
+
+
+
+  <h2>
+    <a id="class-method-detail" class="anchor" href="#class-method-detail">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>
+    Class Method Detail
+  </h2>
+  
+    <div class="entry-detail" id="compute_number_properties(source)-class-method">
+      <div class="signature">
+        
+        def self.<strong>compute_number_properties</strong>(source)
+
+        <a class="method-permalink" href="#compute_number_properties%28source%29-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Computes and returns all the CLDR properties regarding a number</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L11" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get_f(source:Number):Int-class-method">
+      <div class="signature">
+        
+        def self.<strong>get_f</strong>(source : <a href="../CLDR/Plurals/Number.html">Number</a>) : Int
+
+        <a class="method-permalink" href="#get_f%28source%3ANumber%29%3AInt-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Get CLDR plural operand <code>f</code>, visible fraction digits in n, with trailing zeros.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L107" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get_f(source:String):Int-class-method">
+      <div class="signature">
+        
+        def self.<strong>get_f</strong>(source : String) : Int
+
+        <a class="method-permalink" href="#get_f%28source%3AString%29%3AInt-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../CLDR/Plurals.html#get_f%28source%3ANumber%29%3AInt-class-method">.get_f(source : Number)</a></code> but for String</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L116" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get_i(source:Number):Int-class-method">
+      <div class="signature">
+        
+        def self.<strong>get_i</strong>(source : <a href="../CLDR/Plurals/Number.html">Number</a>) : Int
+
+        <a class="method-permalink" href="#get_i%28source%3ANumber%29%3AInt-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Get CLDR plural operand <code>i</code>, integer digits of n.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L52" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get_i(source:String):Int-class-method">
+      <div class="signature">
+        
+        def self.<strong>get_i</strong>(source : String) : Int
+
+        <a class="method-permalink" href="#get_i%28source%3AString%29%3AInt-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../CLDR/Plurals.html#get_i%28source%3ANumber%29%3AInt-class-method">.get_i(source : Number)</a></code> but for String</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L57" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get_n(source:Number):Number-class-method">
+      <div class="signature">
+        
+        def self.<strong>get_n</strong>(source : <a href="../CLDR/Plurals/Number.html">Number</a>) : <a href="../CLDR/Plurals/Number.html">Number</a>
+
+        <a class="method-permalink" href="#get_n%28source%3ANumber%29%3ANumber-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Get CLDR plural operand <code>n</code>, absolute value of the source number.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L34" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get_n(source:String):Number-class-method">
+      <div class="signature">
+        
+        def self.<strong>get_n</strong>(source : String) : <a href="../CLDR/Plurals/Number.html">Number</a>
+
+        <a class="method-permalink" href="#get_n%28source%3AString%29%3ANumber-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../CLDR/Plurals.html#get_n%28source%3ANumber%29%3ANumber-class-method">.get_n(source : Number)</a></code> but for String</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L40" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get_t(source:Number):Int-class-method">
+      <div class="signature">
+        
+        def self.<strong>get_t</strong>(source : <a href="../CLDR/Plurals/Number.html">Number</a>) : Int
+
+        <a class="method-permalink" href="#get_t%28source%3ANumber%29%3AInt-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Get CLDR plural operand <code>t</code>, visible fraction digits in n, without trailing zeros.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L125" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get_t(source:String):Int-class-method">
+      <div class="signature">
+        
+        def self.<strong>get_t</strong>(source : String) : Int
+
+        <a class="method-permalink" href="#get_t%28source%3AString%29%3AInt-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../CLDR/Plurals.html#get_t%28source%3ANumber%29%3AInt-class-method">.get_t(source : Number)</a></code> but for String</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L137" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get_v(source:Number):Int-class-method">
+      <div class="signature">
+        
+        def self.<strong>get_v</strong>(source : <a href="../CLDR/Plurals/Number.html">Number</a>) : Int
+
+        <a class="method-permalink" href="#get_v%28source%3ANumber%29%3AInt-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Get CLDR plural operand <code>v</code>, number of visible fraction digits in n, with trailing zeros.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L62" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get_v(source:String):Int-class-method">
+      <div class="signature">
+        
+        def self.<strong>get_v</strong>(source : String) : Int
+
+        <a class="method-permalink" href="#get_v%28source%3AString%29%3AInt-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../CLDR/Plurals.html#get_v%28source%3ANumber%29%3AInt-class-method">.get_v(source : Number)</a></code> but for String</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L74" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get_w(source:Number):Int-class-method">
+      <div class="signature">
+        
+        def self.<strong>get_w</strong>(source : <a href="../CLDR/Plurals/Number.html">Number</a>) : Int
+
+        <a class="method-permalink" href="#get_w%28source%3ANumber%29%3AInt-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Get CLDR plural operand <code>w</code>, number of visible fraction digits in n, without trailing zeros.</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L83" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+    <div class="entry-detail" id="get_w(source:String):Int-class-method">
+      <div class="signature">
+        
+        def self.<strong>get_w</strong>(source : String) : Int
+
+        <a class="method-permalink" href="#get_w%28source%3AString%29%3AInt-class-method">#</a>
+      </div>
+      
+        <div class="doc">
+          
+          <p>Same as <code><a href="../CLDR/Plurals.html#get_w%28source%3ANumber%29%3AInt-class-method">.get_w(source : Number)</a></code> but for String</p>
+        </div>
+      
+      <br/>
+      <div>
+        
+          [<a href="https://github.com/syeopite/lens/blob/ed4fffca/src/cldr/logic/number_properties.cr#L95" target="_blank">View source</a>]
+        
+      </div>
+    </div>
+  
+
+
+
+
+
+
+</div>
+
+</body>
+</html>
