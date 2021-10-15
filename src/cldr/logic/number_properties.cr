@@ -1,5 +1,3 @@
-# :nodoc:
-#
 # EXPERIMENTAL: This entire module is a WIP. Nothing is guaranteed to be stable!
 #
 # NOTE: This is the module that'll eventually replace the current CLDR plurals

@@ -1,4 +1,5 @@
 module CLDR
+  # :nodoc:
   module Languages
     module EN
       DecimalSymbol                = "."
