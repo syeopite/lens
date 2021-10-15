@@ -21,8 +21,6 @@ module CLDR::Numbers
   # (Mostly) Based of off the pattern BNF specified in ICU4C's DecimalFormat docs
   # See https://unicode-org.github.io/icu-docs/apidoc/released/icu4c/classicu_1_1DecimalFormat.html
   #
-  # Note that the grammar chosen here is far stricter than other implementations like Python's babel
-  # or Ruby's RubyTwitterCLDR's, but still not as strict as pure ICU.
   class PatternParser < Lens::Base::Parser(Token, TokenTypes, PatternLexer)
     AFFIX_CHARACTERS = {TokenTypes::PercentSign, TokenTypes::PerMilleSign, TokenTypes::CurrencySymbol,
                         TokenTypes::StringLiteral, TokenTypes::Character, TokenTypes::MinusSign, TokenTypes::PlusSign}

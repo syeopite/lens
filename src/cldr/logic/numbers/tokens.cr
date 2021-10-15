@@ -23,7 +23,7 @@ module CLDR::Numbers
   end
 
   # Object representing a token from the grammar of CLDR number patterns
-  struct Token
+  private struct Token
     getter literal : (String | Int32)?
     getter column : Int32 | Int64
     getter token_type : TokenTypes
