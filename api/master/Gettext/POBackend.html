@@ -222,7 +222,7 @@
   </h2>
   
     
-      <a href="https://github.com/syeopite/lens/blob/3600e399/src/backend/gettext/po/backend.cr#L5" target="_blank">
+      <a href="https://github.com/syeopite/lens/blob/4e00116f/src/backend/gettext/po/backend.cr#L5" target="_blank">
         backend/gettext/po/backend.cr
       </a>
     
@@ -244,7 +244,7 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(locale_directory_path:String)-class-method" class="signature"><strong>.new</strong>(locale_directory_path : String)</a>
+        <a href="#new%28locale_directory_path%3AString%29-class-method" class="signature"><strong>.new</strong>(locale_directory_path : String)</a>
         
           <div class="summary"><p>Create a new PO backend instance that reads from the given locale directory path</p></div>
         
@@ -267,14 +267,14 @@
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#create:Hash(String,Catalogue)-instance-method" class="signature"><strong>#create</strong> : Hash(String, Catalogue)</a>
+        <a href="#create%3AHash%28String%2CCatalogue%29-instance-method" class="signature"><strong>#create</strong> : Hash(String, Catalogue)</a>
         
           <div class="summary"><p>Create message catalogue from the loaded locale files</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#parse:Hash(String,Catalogue)-instance-method" class="signature"><strong>#parse</strong> : Hash(String, Catalogue)</a>
+        <a href="#parse%3AHash%28String%2CCatalogue%29-instance-method" class="signature"><strong>#parse</strong> : Hash(String, Catalogue)</a>
         
           <div class="summary"><p>Parse tokens into message catalogues</p></div>
         
@@ -363,7 +363,7 @@
         
         def self.<strong>new</strong>(locale_directory_path : String)
 
-        <a class="method-permalink" href="#new(locale_directory_path:String)-class-method">#</a>
+        <a class="method-permalink" href="#new%28locale_directory_path%3AString%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -375,7 +375,7 @@
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/3600e399/src/backend/gettext/po/backend.cr#L11" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/4e00116f/src/backend/gettext/po/backend.cr#L11" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -399,7 +399,7 @@
         
         def <strong>create</strong> : Hash(String, <a href="../Gettext/Catalogue.html">Catalogue</a>)
 
-        <a class="method-permalink" href="#create:Hash(String,Catalogue)-instance-method">#</a>
+        <a class="method-permalink" href="#create%3AHash%28String%2CCatalogue%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -408,7 +408,7 @@
 <p>This is returned as a mapping of the language code to the catalogue
 in which the language code is taken from the <code>Language</code> header. If
 none can be found then the po file name is used as a fallback.</p>
-<p>As of v0.2 this is equivalent to <code><a href="../Gettext/POBackend.html#parse:Hash(String,Catalogue)-instance-method">#parse</a></code></p>
+<p>As of v0.2 this is equivalent to <code><a href="../Gettext/POBackend.html#parse%3AHash%28String%2CCatalogue%29-instance-method">#parse</a></code></p>
 <pre><code class="language-crystal">backend <span class="o">=</span> <span class="t">Gettext</span><span class="t">::</span><span class="t">POBackend</span>.<span class="k">new</span>(<span class="s">&quot;locales&quot;</span>)
 backend.create <span class="c"># =&gt; Hash(String, Catalogue)</span></code></pre>
         </div>
@@ -416,7 +416,7 @@ backend.create <span class="c"># =&gt; Hash(String, Catalogue)</span></code></pr
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/3600e399/src/backend/gettext/po/backend.cr#L43" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/4e00116f/src/backend/gettext/po/backend.cr#L43" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -426,7 +426,7 @@ backend.create <span class="c"># =&gt; Hash(String, Catalogue)</span></code></pr
         
         def <strong>parse</strong> : Hash(String, <a href="../Gettext/Catalogue.html">Catalogue</a>)
 
-        <a class="method-permalink" href="#parse:Hash(String,Catalogue)-instance-method">#</a>
+        <a class="method-permalink" href="#parse%3AHash%28String%2CCatalogue%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -442,7 +442,7 @@ backend.parse <span class="c"># =&gt; Hash(String, Catalogue)</span></code></pre
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/3600e399/src/backend/gettext/po/backend.cr#L24" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/4e00116f/src/backend/gettext/po/backend.cr#L24" target="_blank">View source</a>]
         
       </div>
     </div>

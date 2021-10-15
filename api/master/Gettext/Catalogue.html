@@ -224,7 +224,7 @@ do it for you! See <code><a href="../Gettext/MOBackend.html">Gettext::MOBackend<
   </h2>
   
     
-      <a href="https://github.com/syeopite/lens/blob/3600e399/src/backend/gettext/gettext.cr#L90" target="_blank">
+      <a href="https://github.com/syeopite/lens/blob/4e00116f/src/backend/gettext/gettext.cr#L90" target="_blank">
         backend/gettext/gettext.cr
       </a>
     
@@ -246,7 +246,7 @@ do it for you! See <code><a href="../Gettext/MOBackend.html">Gettext::MOBackend<
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#new(contents:Hash(String,Hash(Int8,String)))-class-method" class="signature"><strong>.new</strong>(contents : Hash(String, Hash(Int8, String)))</a>
+        <a href="#new%28contents%3AHash%28String%2CHash%28Int8%2CString%29%29%29-class-method" class="signature"><strong>.new</strong>(contents : Hash(String, Hash(Int8, String)))</a>
         
           <div class="summary"><p>Creates a message catalogue from parsed Gettext data</p></div>
         
@@ -269,42 +269,42 @@ do it for you! See <code><a href="../Gettext/MOBackend.html">Gettext::MOBackend<
   <ul class="list-summary">
     
       <li class="entry-summary">
-        <a href="#contents:Hash(String,Hash(Int8,String))-instance-method" class="signature"><strong>#contents</strong> : Hash(String, Hash(Int8, String))</a>
+        <a href="#contents%3AHash%28String%2CHash%28Int8%2CString%29%29-instance-method" class="signature"><strong>#contents</strong> : Hash(String, Hash(Int8, String))</a>
         
           <div class="summary"><p>Returns all messages within the catalogue</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#gettext(id:String)-instance-method" class="signature"><strong>#gettext</strong>(id : String)</a>
+        <a href="#gettext%28id%3AString%29-instance-method" class="signature"><strong>#gettext</strong>(id : String)</a>
         
           <div class="summary"><p>Fetches the translated message for the specific ID.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#headers:Hash(String,String)-instance-method" class="signature"><strong>#headers</strong> : Hash(String, String)</a>
+        <a href="#headers%3AHash%28String%2CString%29-instance-method" class="signature"><strong>#headers</strong> : Hash(String, String)</a>
         
           <div class="summary"><p>Returns a hash of the headers</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#ngettext(id:String,plural_id,n)-instance-method" class="signature"><strong>#ngettext</strong>(id : String, plural_id, n)</a>
+        <a href="#ngettext%28id%3AString%2Cplural_id%2Cn%29-instance-method" class="signature"><strong>#ngettext</strong>(id : String, plural_id, n)</a>
         
           <div class="summary"><p>Fetches the translated message for the specific ID with the correct plural form.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#npgettext(context,id,plural_id,n)-instance-method" class="signature"><strong>#npgettext</strong>(context, id, plural_id, n)</a>
+        <a href="#npgettext%28context%2Cid%2Cplural_id%2Cn%29-instance-method" class="signature"><strong>#npgettext</strong>(context, id, plural_id, n)</a>
         
           <div class="summary"><p>Fetches the translated message for the specific ID that is bound by context with the correct plural form.</p></div>
         
       </li>
     
       <li class="entry-summary">
-        <a href="#pgettext(context,id)-instance-method" class="signature"><strong>#pgettext</strong>(context, id)</a>
+        <a href="#pgettext%28context%2Cid%29-instance-method" class="signature"><strong>#pgettext</strong>(context, id)</a>
         
           <div class="summary"><p>Fetches the translated message for the specific ID that is bound by context.</p></div>
         
@@ -365,7 +365,7 @@ do it for you! See <code><a href="../Gettext/MOBackend.html">Gettext::MOBackend<
         
         def self.<strong>new</strong>(contents : Hash(String, Hash(Int8, String)))
 
-        <a class="method-permalink" href="#new(contents:Hash(String,Hash(Int8,String)))-class-method">#</a>
+        <a class="method-permalink" href="#new%28contents%3AHash%28String%2CHash%28Int8%2CString%29%29%29-class-method">#</a>
       </div>
       
         <div class="doc">
@@ -376,7 +376,7 @@ do it for you! See <code><a href="../Gettext/MOBackend.html">Gettext::MOBackend<
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/3600e399/src/backend/gettext/gettext.cr#L112" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/4e00116f/src/backend/gettext/gettext.cr#L112" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -400,14 +400,14 @@ do it for you! See <code><a href="../Gettext/MOBackend.html">Gettext::MOBackend<
         
         def <strong>contents</strong> : Hash(String, Hash(Int8, String))
 
-        <a class="method-permalink" href="#contents:Hash(String,Hash(Int8,String))-instance-method">#</a>
+        <a class="method-permalink" href="#contents%3AHash%28String%2CHash%28Int8%2CString%29%29-instance-method">#</a>
       </div>
       
         <div class="doc">
           
           <p>Returns all messages within the catalogue</p>
 <p>You should <strong>never</strong> have to deal with this method under normal circumstances.
-Please use the <code><a href="../Gettext/Catalogue.html#gettext(id:String)-instance-method">#gettext</a></code> family of methods to translate your application instead.</p>
+Please use the <code><a href="../Gettext/Catalogue.html#gettext%28id%3AString%29-instance-method">#gettext</a></code> family of methods to translate your application instead.</p>
 <pre><code class="language-crystal">catalogue <span class="o">=</span> <span class="t">Gettext</span><span class="t">::</span><span class="t">MOBackend</span>.<span class="k">new</span>(<span class="s">&quot;examples&quot;</span>).create[<span class="s">&quot;en-US&quot;</span>]
 catalogue.contents <span class="c"># =&gt; {...}</span></code></pre>
         </div>
@@ -415,7 +415,7 @@ catalogue.contents <span class="c"># =&gt; {...}</span></code></pre>
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/3600e399/src/backend/gettext/gettext.cr#L109" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/4e00116f/src/backend/gettext/gettext.cr#L109" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -425,7 +425,7 @@ catalogue.contents <span class="c"># =&gt; {...}</span></code></pre>
         
         def <strong>gettext</strong>(id : String)
 
-        <a class="method-permalink" href="#gettext(id:String)-instance-method">#</a>
+        <a class="method-permalink" href="#gettext%28id%3AString%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -439,7 +439,7 @@ catalogue.gettext(<span class="s">&quot;I don&#39;t exist&quot;</span>) <span cl
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/3600e399/src/backend/gettext/gettext.cr#L144" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/4e00116f/src/backend/gettext/gettext.cr#L144" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -449,7 +449,7 @@ catalogue.gettext(<span class="s">&quot;I don&#39;t exist&quot;</span>) <span cl
         
         def <strong>headers</strong> : Hash(String, String)
 
-        <a class="method-permalink" href="#headers:Hash(String,String)-instance-method">#</a>
+        <a class="method-permalink" href="#headers%3AHash%28String%2CString%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -462,7 +462,7 @@ catalogue.headers[<span class="s">&quot;Plural-Forms&quot;</span>] <span class="
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/3600e399/src/backend/gettext/gettext.cr#L97" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/4e00116f/src/backend/gettext/gettext.cr#L97" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -472,7 +472,7 @@ catalogue.headers[<span class="s">&quot;Plural-Forms&quot;</span>] <span class="
         
         def <strong>ngettext</strong>(id : String, plural_id, n)
 
-        <a class="method-permalink" href="#ngettext(id:String,plural_id,n)-instance-method">#</a>
+        <a class="method-permalink" href="#ngettext%28id%3AString%2Cplural_id%2Cn%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -490,7 +490,7 @@ catalogue.ngettext(<span class="s">&quot;I have %d pear&quot;</span>, <span clas
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/3600e399/src/backend/gettext/gettext.cr#L163" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/4e00116f/src/backend/gettext/gettext.cr#L163" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -500,7 +500,7 @@ catalogue.ngettext(<span class="s">&quot;I have %d pear&quot;</span>, <span clas
         
         def <strong>npgettext</strong>(context, id, plural_id, n)
 
-        <a class="method-permalink" href="#npgettext(context,id,plural_id,n)-instance-method">#</a>
+        <a class="method-permalink" href="#npgettext%28context%2Cid%2Cplural_id%2Cn%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -518,7 +518,7 @@ catalogue.npgettext(<span class="s">&quot;CopyPasteMenu&quot;</span>, <span clas
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/3600e399/src/backend/gettext/gettext.cr#L206" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/4e00116f/src/backend/gettext/gettext.cr#L206" target="_blank">View source</a>]
         
       </div>
     </div>
@@ -528,7 +528,7 @@ catalogue.npgettext(<span class="s">&quot;CopyPasteMenu&quot;</span>, <span clas
         
         def <strong>pgettext</strong>(context, id)
 
-        <a class="method-permalink" href="#pgettext(context,id)-instance-method">#</a>
+        <a class="method-permalink" href="#pgettext%28context%2Cid%29-instance-method">#</a>
       </div>
       
         <div class="doc">
@@ -543,7 +543,7 @@ catalogue.pgettext(<span class="s">&quot;CopyPasteMenu&quot;</span>, <span class
       <br/>
       <div>
         
-          [<a href="https://github.com/syeopite/lens/blob/3600e399/src/backend/gettext/gettext.cr#L187" target="_blank">View source</a>]
+          [<a href="https://github.com/syeopite/lens/blob/4e00116f/src/backend/gettext/gettext.cr#L187" target="_blank">View source</a>]
         
       </div>
     </div>
