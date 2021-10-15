@@ -5,6 +5,17 @@ require "../../src/cldr/logic/numbers/parser"
 require "../../src/cldr/logic/numbers/formatter"
 require "../../src/cldr/languages/en/numbers"
 
+macro test_pattern_format(pattern, validations)
+  it "Can format pattern: '#{{{pattern}}}'" do
+    rules, metadata = CLDR::Numbers::PatternParser.new({{pattern}}).parse
+    formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
+
+    {{validations}}.each do |input, output|
+      formatter.format(input).should(eq(output))
+    end
+  end
+end
+
 describe CLDR::Numbers::PatternLexer do
   it "Can scan pattern #,##0.##" do
     Digest::SHA256.hexdigest(CLDR::Numbers::PatternLexer.new("#,##0.##").scan.to_s).should(eq("8e1924de25f4aea2eaff8e167ab1daee7f7bbf31beaefd25421153f924a00277"))
@@ -202,10 +213,6 @@ describe CLDR::Numbers::PatternFormatter do
   # it "Can format pattern: '#,##0.00 ¤'" do
   # end
 
-  # TODO
-  # it "Can format pattern: '@@##,###'" do
-  # end
-
   it "Can format pattern: '#,###.0,##,0##'" do
     rules, metadata = CLDR::Numbers::PatternParser.new("#,###.0,##,0##").parse
     formatter = CLDR::Numbers::PatternFormatter(CLDR::Languages::EN).new(rules, metadata)
@@ -270,5 +277,56 @@ describe CLDR::Numbers::PatternFormatter do
         formatter.format(n)
       end
     end
+  end
+
+  describe "Significant: " do
+    # Mostly taken from https://github.com/python-babel/babel/blob/3af52a974d4606237f0d5381425e526adf28610f/tests/test_numbers.py#L61-L96
+
+    test_pattern_format("@", {
+      {1.12, "1"},
+      {0, "0"},
+      {0.1, "0.1"},
+    })
+
+    test_pattern_format("@@", {
+      {123004, "120000"},
+      {1.1, "1.1"},
+      {1, "1.0"},
+    })
+
+    test_pattern_format("@@@", {
+      {0.0001, "0.000100"},
+      {0.0001234, "0.000123"},
+      {0.12345, "0.123"},
+    })
+
+    test_pattern_format("@@@#", {
+      {0.0001234, "0.0001234"},
+      {0.000123, "0.000123"},
+      {0.00012, "0.000120"},
+    })
+
+    test_pattern_format("@@##", {
+      {3.14159, "3.142"},
+      {1.23004, "1.23"},
+      {123.41, "123.4"},
+    })
+
+    # This currently fails. We'll come back to you later...
+    # test_pattern_format("@@,@@", {
+    #   {1230.04, "12,30"},
+    # })
+
+    test_pattern_format("@@,##", {
+      {1230.04, "12,30"},
+    })
+
+    test_pattern_format("@@@@@##", {
+      {1.1, "1.1000"},
+    })
+
+    test_pattern_format("@@@#####", {
+      {1023, "1023"},
+    })
   end
 end

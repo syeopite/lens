@@ -214,7 +214,7 @@ module CLDR::Numbers
     end
 
     # Internal method for handling number formats.
-    private def internal_format(integer, fractional, negative = false)
+    private def internal_format(integer, fractional, negative = false, sig_pattern = false)
       # Construct instructions for the specific number
       if negative
         # Use default prefix but with addition of a minus sign in front when none
@@ -256,10 +256,53 @@ module CLDR::Numbers
             io << grouped.reverse
           end
         end
+
+        # Significant figure patterns have empty fractional rulesets. However, we'll still have to add
+        # the decimal values to the final formatted result. And we also know we can do this because the total
+        # amount of sig digits is less than or equal to the maximum allowed.
+        if sig_pattern && @instructions.fractional.empty?
+          io << "#{Lang::DecimalSymbol}#{fractional}"
+        end
+      end
+
+      # Pads with 0 if the total sigfig count is less than the minimum.
+      if sig_pattern
+        if fractional.empty?
+          total_sig_figs = (integer.rstrip("0").size)
+        else
+          total_sig_figs = (integer.lstrip("0").size + fractional.lstrip("0").size)
+        end
+
+        if total_sig_figs < @metadata.minimum_significant_figures.not_nil! && total_sig_figs != 0
+          to_pad_amount = @metadata.minimum_significant_figures.not_nil! - total_sig_figs
+
+          if fractional.empty?
+            formatted_fractional = "#{Lang::DecimalSymbol}"
+          end
+
+          formatted_fractional = formatted_fractional.not_nil! + ("0" * to_pad_amount)
+        end
       end
 
       formatted_suffix = self.format_affix(suffix)
       return "#{formatted_prefix}#{formatted_int.reverse}#{formatted_fractional}#{formatted_suffix}"
+    end
+
+    # Preserves X amounts of significant digits
+    #
+    # Pretty much an wrapper for Number.significant
+    private def round_significant(number)
+      if number.is_a? Float
+        digits = number.to_s.size - 1 # Decimal point
+      else
+        digits = number.to_s.size
+      end
+
+      if digits >= @metadata.maximum_significant_figures.not_nil!
+        number = self.preserve_x_amount_of_sigfig(number, @metadata.maximum_significant_figures.not_nil!)
+      end
+
+      return true, number.to_s
     end
 
     # Formats a number (given as string) based on the pattern set by the instance.
@@ -272,7 +315,16 @@ module CLDR::Numbers
     # formatter.format("1000.1236") # => 1,000.124
     # ```
     def format(number : String)
-      numerical_components = number.split "."
+      # The presence of minimum_significant_figures means that the pattern is a significant figure pattern
+      if @metadata.minimum_significant_figures
+        # If the amount of digits in number is greater than the maximum significant figures allowed,
+        # we'll go ahead and around it down to that. Otherwise, we just confirm that the pattern is in fact a
+        # significant figure pattern
+        sig_pattern, number = self.round_significant(number.to_f)
+        numerical_components = number.split "."
+      else
+        numerical_components = number.split "."
+      end
 
       case numerical_components.size
       when 2 then integer, fractional = numerical_components
@@ -302,27 +354,95 @@ module CLDR::Numbers
         raise ArgumentError.new("Invalid number: '#{number}' given to #format of PatternFormatter")
       end
 
-      return self.internal_format(integer, fractional, negative: negative)
+      return self.internal_format(integer, fractional, negative: negative, sig_pattern: sig_pattern)
     end
 
     # Formats a number based on the pattern set by the instance
     def format(number : Int)
-      if number.negative?
-        return self.internal_format(number.abs.to_s, "", negative: true)
+      negative = number.negative?
+      number = number.abs if negative
+
+      # The presence of minimum_significant_figures means that the pattern is a significant figure pattern
+      if @metadata.minimum_significant_figures
+        # If the amount of digits in number is greater than the maximum significant figures allowed,
+        # we'll go ahead and around it down to that. Otherwise, we just confirm that the pattern is in fact a
+        # significant figure pattern
+        sig_pattern, number = self.round_significant(number)
       else
-        return self.internal_format(number.to_s, "")
+        number = number.to_s
+        sig_pattern = false
+      end
+
+      if negative
+        return self.internal_format(number, "", negative: true, sig_pattern: sig_pattern)
+      else
+        return self.internal_format(number, "", sig_pattern: sig_pattern)
       end
     end
 
     # Formats a number based on the pattern set by the instance
     def format(number : Float)
-      integer, fractional = number.abs.to_s.split "."
+      negative = number.negative?
+      number = number.abs if negative
 
-      if number.negative?
-        return self.internal_format(integer, fractional, negative: true)
+      # The presence of minimum_significant_figures means that the pattern is a significant figure pattern
+      if @metadata.minimum_significant_figures
+        # If the amount of digits in number is greater than the maximum significant figures allowed,
+        # we'll go ahead and around it down to that. Otherwise, we just confirm that the pattern is in fact a
+        # significant figure pattern
+        sig_pattern, number = self.round_significant(number)
       else
-        return self.internal_format(integer, fractional)
+        number = number.to_s
+        sig_pattern = false
       end
+
+      numerical_components = number.split "."
+
+      case numerical_components.size
+      when 2 then integer, fractional = numerical_components
+      when 1 then integer, fractional = numerical_components[0], ""
+      else        raise "Unreachable"
+      end
+
+      if negative
+        return self.internal_format(integer, fractional, negative: true, sig_pattern: sig_pattern)
+      else
+        return self.internal_format(integer, fractional, sig_pattern: sig_pattern)
+      end
+    end
+
+    # This is a reimplementation of #significant with some patches for accuracy,
+    # and limited to only base 10.
+    private def preserve_x_amount_of_sigfig(number, digits)
+      if digits < 0
+        raise ArgumentError.new "digits should be non-negative"
+      end
+
+      if number == 0
+        return number.to_s
+      end
+
+      x = number.to_f
+
+      log = Math.log10(number.abs)
+
+      exponent = (log - digits + 1).floor
+
+      if exponent < 0
+        y = 10 ** -exponent
+        value = (x * y).round / y
+      else
+        y = 10 ** exponent
+        value = (x / y).round * y
+      end
+
+      value = value.to_s
+
+      if value.ends_with?(".0")
+        return value[...-2]
+      end
+
+      return value
     end
   end
 end
